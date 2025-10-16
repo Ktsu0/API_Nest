@@ -1,0 +1,1 @@
+{"version":3,"file":"bancoDados.js","sourceRoot":"","sources":["../../../src/cardsSerie/models/bancoDados.ts"],"names":[],"mappings":";;;AAGa,QAAA,SAAS,GAAY;IAChC;QACE,EAAE,EAAE,GAAG;QACP,MAAM,EAAE,cAAc;QACtB,SAAS,EAAE;YACT,SAAS,EAAE,cAAc;YACzB,IAAI,EAAE,aAAa;SACpB;QACD,QAAQ,EACN,mMAAmM;QACrM,MAAM,EAAE,8BAA8B;KACvC;CA8aF,CAAC"}

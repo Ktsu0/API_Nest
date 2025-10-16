@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Olá Mundo - Minecraft</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+            rel="stylesheet">
+        <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            image-rendering: pixelated;
+            overflow: hidden;
+        }
+
+        /* GIF de background (inicialmente oculto) */
+        #bg-gif {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            pointer-events: none;
+            display: none; /* fica escondido até a tocha ser acesa */
+        }
+
+        .minecraft-text {
+            color: #FFAA00;
+            text-shadow: 
+                3px 3px 0px #3F3F3F,
+                -3px -3px 0px #3F3F3F,
+                3px -3px 0px #3F3F3F,
+                -3px 3px 0px #3F3F3F,
+                3px 0px 0px #3F3F3F,
+                0px 3px 0px #3F3F3F,
+                -3px 0px 0px #3F3F3F,
+                0px -3px 0px #3F3F3F;
+        }
+
+        .pixel-block {
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+        }
+        .stone { background-color: #787878; border: 2px solid; border-color: #AFAFAF #5E5E5E #5E5E5E #AFAFAF; }
+        .dirt { background-color: #B97A57; border: 2px solid; border-color: #D69E7B #8C5A41 #8C5A41 #D69E7B; }
+        .torch-handle { background-color: #6F5131; border: 2px solid; border-color: #8C6F4C #513B24 #513B24 #8C6F4C; }
+        .torch-flame { background-color: #FFAA00; border: 2px solid #FFD700; box-shadow: 0 0 15px 5px #FFAA00; animation: flicker 1.5s infinite alternate; }
+        .stone-button {
+            background-color: #787878;
+            border: 4px solid;
+            border-color: #AFAFAF #5E5E5E #5E5E5E #AFAFAF;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+        .stone-button:active {
+            border-color: #5E5E5E #AFAFAF #AFAFAF #5E5E5E;
+            transform: scale(0.95);
+        }
+        .dark-cave {
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(30, 25, 20, 0.5) 0%, rgba(10, 8, 5, 0.9) 150px, #000 300px);
+            transition: all 1s ease;
+        }
+        .lit-cave {
+            background: transparent;
+            transition: all 1s ease;
+        }
+        @keyframes flicker {
+            0%, 100% { box-shadow: 0 0 15px 5px #FFAA00, 0 0 25px 10px #FF6600; }
+            50% { box-shadow: 0 0 20px 8px #FFAA00, 0 0 30px 12px #FF6600; }
+        }
+    </style>
+    </head>
+    <body class="bg-black overflow-hidden">
+        <main id="scene"
+            class="w-screen h-screen flex flex-col items-center justify-center dark-cave transition-all duration-1000">
+
+            <!-- GIF de background (inicialmente oculto) -->
+            <img id="bg-gif"
+                src="https://24.media.tumblr.com/tumblr_mb6chtMPSM1qf3tseo1_500.gif"
+                alt="Background animado" />
+
+            <!-- Mensagem central -->
+            <h1 id="message"
+                class="text-5xl md:text-7xl text-center opacity-0 transform -translate-y-10 transition-all duration-1000 delay-500 minecraft-text mb-16">
+                Olá Mundo
+            </h1>
+
+            <!-- Grid com tocha e botão -->
+            <div class="flex flex-col items-center">
+                <div class="grid grid-cols-5">
+                    <div class="pixel-block"></div>
+                    <div class="pixel-block"></div>
+                    <div class="pixel-block torch-flame"></div>
+                    <div class="pixel-block"></div>
+                    <div class="pixel-block"></div>
+
+                    <div class="pixel-block"></div>
+                    <div class="pixel-block"></div>
+                    <div class="pixel-block torch-handle"></div>
+                    <div class="pixel-block"></div>
+                    <div class="pixel-block"></div>
+
+                    <div class="pixel-block stone"></div>
+                    <div class="pixel-block stone"></div>
+                    <div class="pixel-block torch-handle"></div>
+                    <div class="pixel-block stone"></div>
+                    <div class="pixel-block stone"></div>
+
+                    <div class="pixel-block stone"></div>
+                    <div class="pixel-block stone"></div>
+                    <div class="pixel-block torch-handle"></div>
+                    <div class="pixel-block stone"></div>
+                    <div class="pixel-block stone"></div>
+
+                    <div class="pixel-block dirt"></div>
+                    <div class="pixel-block dirt"></div>
+                    <div id="light-button"
+                        class="pixel-block stone-button col-span-1 h-[20px] w-[20px] m-auto"></div>
+                    <div class="pixel-block dirt"></div>
+                    <div class="pixel-block dirt"></div>
+                </div>
+            </div>
+            <audio id="background-music" loop>
+                <source src="./assets/music.mp3" type="audio/mp3">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </main>
+
+        <script>
+    const scene = document.getElementById('scene');
+    const button = document.getElementById('light-button');
+    const message = document.getElementById('message');
+    const torchFlame = document.querySelector('.torch-flame');
+    const bgGif = document.getElementById('bg-gif');
+    // 💡 NOVO: Captura o elemento de áudio
+    const music = document.getElementById('background-music'); 
+
+    function updateTorchGlow() {
+        if (!scene.classList.contains('lit-cave')) {
+            const rect = torchFlame.getBoundingClientRect();
+            const torchX = rect.left + rect.width / 2;
+            const torchY = rect.top + rect.height / 2;
+            scene.style.setProperty('--x', `${torchX}px`);
+            scene.style.setProperty('--y', `${torchY}px`);
+        }
+    }
+
+    window.addEventListener('mousemove', updateTorchGlow);
+    window.addEventListener('resize', updateTorchGlow);
+
+    button.addEventListener('click', () => {
+        if (!scene.classList.contains('lit-cave')) {
+            // Lógica visual
+            scene.classList.remove('dark-cave');
+            scene.classList.add('lit-cave');
+            message.classList.remove('opacity-0', '-translate-y-10');
+            message.classList.add('opacity-100', 'translate-y-0');
+            bgGif.style.display = 'block'; // mostrar GIF
+
+            // 💡 NOVO: Inicia a música aqui, após a interação do usuário
+            // A função play() retorna uma Promise, por isso usamos .catch() para evitar erros no console.
+            music.volume = 0.5; // Opcional: define o volume (0.0 a 1.0)
+            music.play().catch(error => {
+                console.log('Autoplay impedido:', error);
+            });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', updateTorchGlow);
+</script>
+    </body>
+</html>
