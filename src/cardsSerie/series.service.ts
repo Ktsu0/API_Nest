@@ -3,7 +3,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Serie } from './models/series.model';
 import { topSeries } from './models/bancoDados';
 import * as levenshtein from 'fast-levenshtein';
-
 @Injectable()
 export class SeriesService {
   private series: Serie[] = topSeries;
@@ -99,14 +98,13 @@ export class SeriesService {
 
     return seriesFiltradas;
   }
+
   updateSerie(id: string, updatedData: Partial<Serie>): Serie {
     const index = this.series.findIndex((serie) => serie.id === id);
     if (index === -1) {
       throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
     }
-
     const current = this.series[index];
-
     this.series[index] = {
       ...current,
       ...updatedData,
@@ -128,5 +126,17 @@ export class SeriesService {
     const titulo = this.series[index].titulo;
     this.series.splice(index, 1);
     return `Série "${titulo}" removida com sucesso.`;
+  }
+
+  atualizarEstoque(id: string, quantidade: number): void {
+    const serie = this.series.find((s) => s.id === id);
+
+    if (!serie) {
+      throw new NotFoundException(
+        `Série com ID "${id}" não encontrada para atualizar estoque.`,
+      );
+    }
+
+    serie.estoque = Math.max(0, serie.estoque - quantidade);
   }
 }

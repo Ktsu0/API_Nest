@@ -12,4 +12,5 @@ export declare class SeriesService {
     findTitulo(searchTerm: string): Serie[];
     updateSerie(id: string, updatedData: Partial<Serie>): Serie;
     deleteSerie(id: string): string;
+    atualizarEstoque(id: string, quantidade: number): void;
 }

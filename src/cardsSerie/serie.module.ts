@@ -4,7 +4,10 @@ import { SeriesController } from './series.controller';
 import { SeriesService } from './series.service';
 
 @Module({
+  imports: [],
   controllers: [SeriesController],
-  providers: [SeriesService],     
+  providers: [SeriesService],
+
+  exports: [SeriesService],
 })
 export class SeriesModule {}

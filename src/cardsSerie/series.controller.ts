@@ -53,6 +53,7 @@ export class SeriesController {
     this.seriesService.addAvaliacao(id, avaliacao);
     return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
   }
+
   @Put(':id')
   updateSerie(
     @Param('id') id: string,

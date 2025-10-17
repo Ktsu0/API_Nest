@@ -15,8 +15,10 @@ let SeriesModule = class SeriesModule {
 exports.SeriesModule = SeriesModule;
 exports.SeriesModule = SeriesModule = __decorate([
     (0, common_1.Module)({
+        imports: [],
         controllers: [series_controller_1.SeriesController],
         providers: [series_service_1.SeriesService],
+        exports: [series_service_1.SeriesService],
     })
 ], SeriesModule);
 //# sourceMappingURL=serie.module.js.map

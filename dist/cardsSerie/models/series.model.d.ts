@@ -7,5 +7,7 @@ export interface Serie {
     };
     detalhes: string;
     imagem: string;
+    estoque: number;
+    valorUnitario: number;
     avaliacao?: number;
 }

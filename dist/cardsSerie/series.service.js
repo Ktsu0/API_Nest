@@ -139,6 +139,13 @@ let SeriesService = class SeriesService {
         this.series.splice(index, 1);
         return `Série "${titulo}" removida com sucesso.`;
     }
+    atualizarEstoque(id, quantidade) {
+        const serie = this.series.find((s) => s.id === id);
+        if (!serie) {
+            throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada para atualizar estoque.`);
+        }
+        serie.estoque = Math.max(0, serie.estoque - quantidade);
+    }
 };
 exports.SeriesService = SeriesService;
 exports.SeriesService = SeriesService = __decorate([
