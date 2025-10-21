@@ -11,12 +11,13 @@ const common_1 = require("@nestjs/common");
 const carrinho_controller_1 = require("./carrinho.controller");
 const carrinho_service_1 = require("./carrinho.service");
 const serie_module_1 = require("../cardsSerie/serie.module");
+const anime_module_1 = require("../cardsAnime/anime.module");
 let CarrinhoModule = class CarrinhoModule {
 };
 exports.CarrinhoModule = CarrinhoModule;
 exports.CarrinhoModule = CarrinhoModule = __decorate([
     (0, common_1.Module)({
-        imports: [serie_module_1.SeriesModule],
+        imports: [anime_module_1.AnimeModule, serie_module_1.SeriesModule],
         controllers: [carrinho_controller_1.CarrinhoController],
         providers: [carrinho_service_1.CarrinhoService],
     })

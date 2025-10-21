@@ -6,21 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.AnimeModule = void 0;
 const common_1 = require("@nestjs/common");
-const serie_module_1 = require("./cardsSerie/serie.module");
-const app_controller_1 = require("./app.controller");
-const users_module_1 = require("./users/users.module");
-const carrinho_module_1 = require("./carrinho/carrinho.module");
-const anime_module_1 = require("./cardsAnime/anime.module");
-let AppModule = class AppModule {
+const anime_controller_1 = require("./anime.controller");
+const anime_service_1 = require("./anime.service");
+let AnimeModule = class AnimeModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.AnimeModule = AnimeModule;
+exports.AnimeModule = AnimeModule = __decorate([
     (0, common_1.Module)({
-        imports: [serie_module_1.SeriesModule, users_module_1.UserModule, carrinho_module_1.CarrinhoModule, anime_module_1.AnimeModule],
-        controllers: [app_controller_1.AppController],
-        providers: [],
+        imports: [],
+        controllers: [anime_controller_1.AnimeController],
+        providers: [anime_service_1.AnimeService],
+        exports: [anime_service_1.AnimeService],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], AnimeModule);
+//# sourceMappingURL=anime.module.js.map
