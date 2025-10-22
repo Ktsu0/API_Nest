@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const path_1 = require("path");
 let AppController = class AppController {
     root(res) {
-        res.sendFile((0, path_1.join)(__dirname, 'public', 'index.html'));
+        res.sendFile((0, path_1.join)(__dirname, '..', 'public', 'index.html'));
     }
 };
 exports.AppController = AppController;

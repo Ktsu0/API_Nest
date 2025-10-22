@@ -48,6 +48,11 @@
             height: 20px;
             box-sizing: border-box;
         }
+        .pixel-image {
+            pointer-events: none;
+            image-rendering: pixelated;
+        }   
+
         .stone { background-color: #787878; border: 2px solid; border-color: #AFAFAF #5E5E5E #5E5E5E #AFAFAF; }
         .dirt { background-color: #B97A57; border: 2px solid; border-color: #D69E7B #8C5A41 #8C5A41 #D69E7B; }
         .torch-handle { background-color: #6F5131; border: 2px solid; border-color: #8C6F4C #513B24 #513B24 #8C6F4C; }
@@ -86,10 +91,51 @@
                 src="https://24.media.tumblr.com/tumblr_mb6chtMPSM1qf3tseo1_500.gif"
                 alt="Background animado" />
 
+            <img id="gif-1"
+                src="https://i.gifer.com/origin/c5/c5db38375f8f93e17b30049a63f15c81_w200.gif"
+                alt="Fumo"
+                class="absolute w-30 h-30 opacity-0 transition-opacity duration-1000 pixel-image"
+                style="z-index: 10;">
+            <img id="gif-2"
+                src="https://media.tenor.com/ZfHkNSiuE1YAAAAM/bayden-star20-bayden.gif"
+                alt="Gordo"
+                class="absolute w-30 h-30 opacity-0 transition-opacity duration-1500 pixel-image"
+                style="z-index: 10;">
+            <img id="gif-3"
+                src="https://media.tenor.com/GxF2TEss5KsAAAAM/vegeta.gif"
+                alt="Vegeta"
+                class="absolute w-30 h-40 opacity-0 transition-opacity duration-2000 pixel-image"
+                style="z-index: 10;">
+            <img id="gif-4"
+                src="https://preview.redd.it/primate-gifs-grooming-japanese-macaques-dancing-verreauxs-v0-3k8vsarplhyd1.gif?width=500&auto=webp&s=483eb65f3d52ec20c0a55962c4dc96ce4ac9bb91"
+                alt="Macaco"
+                class="absolute w-24 h-24 opacity-0 transition-opacity duration-1000 pixel-image"
+                style="z-index: 10;">
+            <img id="gif-5"
+                src="https://usagif.com/wp-content/uploads/gifs/dancing-pig-6.gif"
+                alt="Porco"
+                class="absolute w-20 h-20 opacity-0 transition-opacity duration-1000 pixel-image"
+                style="z-index: 10;">
+            <img id="gif-6"
+                src="https://cdn.dicionariopopular.com/imagens/numero-nove.gif"
+                alt="Br"
+                class="absolute w-24 h-24 opacity-0 transition-opacity duration-1000 pixel-image"
+                style="z-index: 10;">
+            <img id="gif-7"
+                src="https://gifman.net/wp-content/uploads/2019/06/cara-de-espanto-patrick-03.gif"
+                alt="Lula"
+                class="absolute w-34 h-34 opacity-0 transition-opacity duration-1000 pixel-image"
+                style="z-index: 10;">
+            <img id="gif-8"
+                src="https://www.icegif.com/wp-content/uploads/2023/05/icegif-79.gif"
+                alt="Esqueleto"
+                class="absolute w-34 h-34 opacity-0 transition-opacity duration-1000 pixel-image"
+                style="z-index: 10;">
+
             <!-- Mensagem central -->
             <h1 id="message"
                 class="text-5xl md:text-7xl text-center opacity-0 transform -translate-y-10 transition-all duration-1000 delay-500 minecraft-text mb-16">
-                Olá Mundo
+                Bem Vindo!
             </h1>
 
             <!-- Grid com tocha e botão -->
@@ -139,11 +185,22 @@
     const message = document.getElementById('message');
     const torchFlame = document.querySelector('.torch-flame');
     const bgGif = document.getElementById('bg-gif');
-    // 💡 NOVO: Captura o elemento de áudio
-    const music = document.getElementById('background-music'); 
+    const music = document.getElementById('background-music');
+
+    // 💡 NOVO: Captura os novos GIFs
+    const randomGifs = [
+        document.getElementById('gif-1'),
+        document.getElementById('gif-2'),
+        document.getElementById('gif-3'),
+        document.getElementById('gif-4'),
+        document.getElementById('gif-5'),
+        document.getElementById('gif-6'),
+        document.getElementById('gif-7'),
+        document.getElementById('gif-8'),
+    ];
 
     function updateTorchGlow() {
-        if (!scene.classList.contains('lit-cave')) {
+        if (scene.classList.contains('dark-cave')) {
             const rect = torchFlame.getBoundingClientRect();
             const torchX = rect.left + rect.width / 2;
             const torchY = rect.top + rect.height / 2;
@@ -152,27 +209,80 @@
         }
     }
 
-    window.addEventListener('mousemove', updateTorchGlow);
-    window.addEventListener('resize', updateTorchGlow);
+    // 💡 NOVA FUNÇÃO: Move, mostra e esconde um GIF
+    function animateGif(gif, minDelay, maxDelay) {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Função recursiva para loop infinito
+        function loop() {
+            // Posição Aleatória (evita aparecer muito perto das bordas)
+            const randomX = Math.random() * (viewportWidth * 0.8) + (viewportWidth * 0.1);
+            const randomY = Math.random() * (viewportHeight * 0.8) + (viewportHeight * 0.1);
+            
+            // Tempo Aleatório para aparecer e desaparecer
+            const showTime = Math.random() * (maxDelay - minDelay) + minDelay;
+            const hideTime = Math.random() * 3000 + 1500; 
+
+            // 1. Move para a nova posição e prepara para mostrar
+            gif.style.left = `${randomX}px`;
+            gif.style.top = `${randomY}px`;
+            
+            // 2. Aparece
+            setTimeout(() => {
+                gif.classList.remove('opacity-0');
+                gif.classList.add('opacity-100');
+            }, showTime);
+
+            // 3. Desaparece
+            setTimeout(() => {
+                gif.classList.remove('opacity-100');
+                gif.classList.add('opacity-0');
+            }, showTime + hideTime);
+
+            // 4. Agenda o próximo loop
+            setTimeout(loop, showTime + hideTime + 500); // 500ms de pausa
+        }
+        
+        // Inicia o loop
+        loop();
+    }
+
+    function startGifsLoop() {
+
+        animateGif(randomGifs[0], 1000, 3000); 
+        animateGif(randomGifs[1], 500, 2500); 
+        animateGif(randomGifs[2], 2000, 5000); 
+        animateGif(randomGifs[3], 3000, 6000);
+        animateGif(randomGifs[4], 1000, 3000); 
+        animateGif(randomGifs[5], 500, 2500); 
+        animateGif(randomGifs[6], 2000, 5000); 
+        animateGif(randomGifs[7], 3000, 6000); 
+    }
+
 
     button.addEventListener('click', () => {
-        if (!scene.classList.contains('lit-cave')) {
+        if (scene.classList.contains('dark-cave')) {
             // Lógica visual
             scene.classList.remove('dark-cave');
             scene.classList.add('lit-cave');
             message.classList.remove('opacity-0', '-translate-y-10');
             message.classList.add('opacity-100', 'translate-y-0');
             bgGif.style.display = 'block'; // mostrar GIF
+            
+            // 💡 NOVO: Inicia os GIFs
+            startGifsLoop(); 
 
-            // 💡 NOVO: Inicia a música aqui, após a interação do usuário
-            // A função play() retorna uma Promise, por isso usamos .catch() para evitar erros no console.
-            music.volume = 0.5; // Opcional: define o volume (0.0 a 1.0)
+            // Lógica de áudio
+            music.volume = 0.5;
             music.play().catch(error => {
                 console.log('Autoplay impedido:', error);
             });
         }
     });
 
+    window.addEventListener('mousemove', updateTorchGlow);
+    window.addEventListener('resize', updateTorchGlow);
     document.addEventListener('DOMContentLoaded', updateTorchGlow);
 </script>
     </body>
