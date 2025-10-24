@@ -11,6 +11,11 @@ import {
 
 import { SeriesService } from './series.service';
 import type { Serie } from './models/series.model';
+import { CreateCard } from 'src/dto/cards/createCard';
+import { AvaliacaoDTO } from 'src/dto/cards/avaliacao';
+import { UpdateCardDto } from 'src/dto/cards/updateCard';
+import { IdParamDto } from 'src/dto/cards/idParam';
+import { TemaParamDto } from 'src/dto/cards/temaParam';
 
 @Controller('series')
 export class SeriesController {
@@ -22,12 +27,12 @@ export class SeriesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Serie {
-    return this.seriesService.findOne(id);
+  findOne(@Param('id') params: IdParamDto): Serie {
+    return this.seriesService.findOne(params.id);
   }
   @Get('tema/:tema')
-  findTema(@Param('tema') tema: string): Serie[] {
-    return this.seriesService.findTema(tema);
+  findTema(@Param('tema') params: TemaParamDto): Serie[] {
+    return this.seriesService.findTema(params.tema);
   }
   @Get('ordem/alfabetica')
   ordemAlfabetica(): Serie[] {
@@ -41,30 +46,30 @@ export class SeriesController {
     return this.seriesService.findTitulo(q);
   }
   @Post()
-  addSerie(@Body() serie: Serie): any {
+  addSerie(@Body() serie: CreateCard): any {
     return this.seriesService.addSerie(serie);
   }
 
   @Post(':id/avaliacao')
   addAvaliacao(
     @Param('id') id: string,
-    @Body('avaliacao') avaliacao: number,
+    @Body('avaliacao') avaliacaoDTO: AvaliacaoDTO,
   ): string {
-    this.seriesService.addAvaliacao(id, avaliacao);
-    return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
+    this.seriesService.addAvaliacao(id, avaliacaoDTO.avaliacao);
+    return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
   }
 
   @Put(':id')
   updateSerie(
     @Param('id') id: string,
-    @Body() updatedData: Partial<Serie>,
+    @Body() updatedData: UpdateCardDto,
   ): Serie {
     const serie = this.seriesService.updateSerie(id, updatedData);
     return serie;
   }
 
   @Delete(':id')
-  deleteSerie(@Param('id') id: string): string {
-    return this.seriesService.deleteSerie(id);
+  deleteSerie(@Param('id') params: IdParamDto): string {
+    return this.seriesService.deleteSerie(params.id);
   }
 }

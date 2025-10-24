@@ -11,6 +11,11 @@ import {
 
 import { AnimeService } from './anime.service';
 import type { Animes } from './models/animes.model';
+import { CreateCard } from 'src/dto/cards/createCard';
+import { AvaliacaoDTO } from 'src/dto/cards/avaliacao';
+import { UpdateCardDto } from 'src/dto/cards/updateCard';
+import { IdParamDto } from 'src/dto/cards/idParam';
+import { TemaParamDto } from 'src/dto/cards/temaParam';
 
 @Controller('animes')
 export class AnimeController {
@@ -22,12 +27,12 @@ export class AnimeController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Animes {
-    return this.animesService.findOne(id);
+  findOne(@Param('id') params: IdParamDto): Animes {
+    return this.animesService.findOne(params.id);
   }
   @Get('tema/:tema')
-  findTema(@Param('tema') tema: string): Animes[] {
-    return this.animesService.findTema(tema);
+  findTema(@Param('tema') params: TemaParamDto): Animes[] {
+    return this.animesService.findTema(params.tema);
   }
   @Get('ordem/alfabetica')
   ordemAlfabetica(): Animes[] {
@@ -41,30 +46,30 @@ export class AnimeController {
     return this.animesService.findTitulo(q);
   }
   @Post()
-  addAnime(@Body() anime: Animes): any {
+  addAnime(@Body() anime: CreateCard): any {
     return this.animesService.addAnime(anime);
   }
 
   @Post(':id/avaliacao')
   addAvaliacao(
     @Param('id') id: string,
-    @Body('avaliacao') avaliacao: number,
+    @Body('avaliacao') avaliacaoDTO: AvaliacaoDTO,
   ): string {
-    this.animesService.addAvaliacao(id, avaliacao);
-    return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
+    this.animesService.addAvaliacao(id, avaliacaoDTO.avaliacao);
+    return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
   }
 
   @Put(':id')
   updateAnime(
     @Param('id') id: string,
-    @Body() updatedData: Partial<Animes>,
+    @Body() updatedData: UpdateCardDto,
   ): Animes {
     const anime = this.animesService.updateAnime(id, updatedData);
     return anime;
   }
 
   @Delete(':id')
-  deleteAnime(@Param('id') id: string): string {
-    return this.animesService.deleteAnime(id);
+  deleteAnime(@Param('id') params: IdParamDto): string {
+    return this.animesService.deleteAnime(params.id);
   }
 }

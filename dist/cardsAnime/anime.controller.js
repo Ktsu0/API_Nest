@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnimeController = void 0;
 const common_1 = require("@nestjs/common");
 const anime_service_1 = require("./anime.service");
+const createCard_1 = require("../dto/createCard");
 let AnimeController = class AnimeController {
     animesService;
     constructor(animesService) {
@@ -91,7 +92,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [createCard_1.CreateCard]),
     __metadata("design:returntype", Object)
 ], AnimeController.prototype, "addAnime", null);
 __decorate([

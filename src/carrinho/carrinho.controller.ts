@@ -1,21 +1,17 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { CarrinhoService } from './carrinho.service';
-import type {
-  CarrinhoInputItem,
-  CarrinhoValidacao,
-} from './models/carrinho.model';
+import { CarInput } from './../dto/carrinho/carInput';
+import { CarValidacao } from './../dto/carrinho/carValid';
 
 @Controller('series/carrinho')
 export class CarrinhoController {
   constructor(private readonly carrinhoService: CarrinhoService) {}
   @Post('validar')
-  validarCarrinho(
-    @Body() itensCarrinho: CarrinhoInputItem[],
-  ): CarrinhoValidacao {
+  validarCarrinho(@Body() itensCarrinho: CarInput[]): CarValidacao {
     return this.carrinhoService.validarCarrinho(itensCarrinho);
   }
   @Post('comprar')
-  finalizarCompra(@Body() itensCarrinho: CarrinhoInputItem[]): string[] {
+  finalizarCompra(@Body() itensCarrinho: CarInput[]): string[] {
     return this.carrinhoService.finalizarCompra(itensCarrinho);
   }
 }

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeriesController = void 0;
 const common_1 = require("@nestjs/common");
 const series_service_1 = require("./series.service");
+const createCard_1 = require("../dto/createCard");
 let SeriesController = class SeriesController {
     seriesService;
     constructor(seriesService) {
@@ -91,7 +92,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [createCard_1.CreateCard]),
     __metadata("design:returntype", Object)
 ], SeriesController.prototype, "addSerie", null);
 __decorate([
