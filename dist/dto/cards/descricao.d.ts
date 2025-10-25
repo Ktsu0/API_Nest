@@ -1,4 +1,4 @@
-export declare class descricao {
+export declare class Descricao {
     temporada: string;
     tema: string;
 }

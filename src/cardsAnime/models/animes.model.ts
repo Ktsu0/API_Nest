@@ -10,4 +10,5 @@ export interface Animes {
   estoque: number;
   valorUnitario: number;
   avaliacao?: number;
+  tipo?: string;
 }

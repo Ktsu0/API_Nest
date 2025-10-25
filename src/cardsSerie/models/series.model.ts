@@ -10,4 +10,5 @@ export interface Serie {
   estoque: number;
   valorUnitario: number;
   avaliacao?: number;
+  tipo?: string;
 }

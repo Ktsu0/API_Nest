@@ -27,7 +27,7 @@ export class SeriesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') params: IdParamDto): Serie {
+  findOne(@Param() params: IdParamDto): Serie {
     return this.seriesService.findOne(params.id);
   }
   @Get('tema/:tema')
@@ -67,9 +67,8 @@ export class SeriesController {
     const serie = this.seriesService.updateSerie(id, updatedData);
     return serie;
   }
-
   @Delete(':id')
-  deleteSerie(@Param('id') params: IdParamDto): string {
+  deleteSerie(@Param() params: IdParamDto): string {
     return this.seriesService.deleteSerie(params.id);
   }
 }

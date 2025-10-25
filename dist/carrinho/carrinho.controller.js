@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarrinhoController = void 0;
 const common_1 = require("@nestjs/common");
 const carrinho_service_1 = require("./carrinho.service");
+const carValid_1 = require("./../dto/carrinho/carValid");
 let CarrinhoController = class CarrinhoController {
     carrinhoService;
     constructor(carrinhoService) {
@@ -33,7 +34,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", carValid_1.CarValidacao)
 ], CarrinhoController.prototype, "validarCarrinho", null);
 __decorate([
     (0, common_1.Post)('comprar'),
@@ -43,7 +44,7 @@ __decorate([
     __metadata("design:returntype", Array)
 ], CarrinhoController.prototype, "finalizarCompra", null);
 exports.CarrinhoController = CarrinhoController = __decorate([
-    (0, common_1.Controller)('series/carrinho'),
+    (0, common_1.Controller)('carrinho'),
     __metadata("design:paramtypes", [carrinho_service_1.CarrinhoService])
 ], CarrinhoController);
 //# sourceMappingURL=carrinho.controller.js.map

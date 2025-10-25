@@ -67,7 +67,7 @@ export class AnimeService {
     const Anime = this.Animes.find((s) => s.id === id);
 
     if (!Anime) {
-      throw new Error(`Anime com ID "${id}" não encontrada.`);
+      throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
     }
     Anime.avaliacao = avaliacao;
   }

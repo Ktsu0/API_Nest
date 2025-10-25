@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { SeriesService } from 'src/cardsSerie/series.service';
-import { CarrinhoValidacao, CarrinhoInputItem } from './models/carrinho.model';
+import { SeriesService } from './../cardsSerie/series.service';
+import { AnimeService } from './../cardsAnime/anime.service';
+import {
+  CarrinhoValidacao,
+  CarrinhoInputItem,
+  CarrinhoItem,
+} from './models/carrinho.model';
 import { Serie } from './../cardsSerie/models/series.model';
+import { Animes } from './../cardsAnime/models/animes.model';
 
 @Injectable()
 export class CarrinhoService {
-  constructor(private readonly seriesService: SeriesService) {}
+  constructor(
+    private readonly seriesService: SeriesService,
+    private readonly animesService: AnimeService,
+  ) {}
 
   validarCarrinho(itensCarrinho: CarrinhoInputItem[]): CarrinhoValidacao {
     const validacao: CarrinhoValidacao = {
@@ -21,25 +30,29 @@ export class CarrinhoService {
     let valorTotal = 0;
 
     for (const item of itensCarrinho) {
-      const serie = this.seriesService.findOne(item.id) as Serie | undefined;
+      // Seleciona o serviço correto
+      let produto: Serie | Animes | undefined;
+      if (item.tipo === 'serie') produto = this.seriesService.findOne(item.id);
+      else if (item.tipo === 'anime')
+        produto = this.animesService.findOne(item.id);
 
-      if (!serie) {
+      if (!produto) {
         validacao.validacao.erros.push(
-          `Série com ID ${item.id} não encontrada.`,
+          `${item.tipo === 'serie' ? 'Série' : 'Anime'} com ID ${item.id} não encontrada.`,
         );
         continue;
       }
 
-      const { id, titulo, estoque, valorUnitario } = serie;
+      const { id, titulo, estoque, valorUnitario } = produto;
       const quantidade = item.quantidade;
 
-      // 2. Validações básicas
+      // Validação básica de quantidade
       if (quantidade <= 0) {
         validacao.validacao.erros.push(`Quantidade inválida para ${titulo}.`);
         continue;
       }
 
-      // 3. Validação de Estoque
+      // Validação de estoque
       if (quantidade > estoque) {
         validacao.validacao.erros.push(
           `Estoque insuficiente para ${titulo}. Pedido: ${quantidade}, Disponível: ${estoque}.`,
@@ -47,44 +60,39 @@ export class CarrinhoService {
       }
 
       const valorItem = valorUnitario * quantidade;
-
-      // 4. Acumular totais e criar o item processado
       totalItens += quantidade;
       valorTotal += valorItem;
 
+      // Adiciona ao carrinho
       validacao.items.push({
-        serieId: id,
-        titulo: titulo,
-        valorUnitario: valorUnitario,
+        tipo: item.tipo,
+        produtoId: id,
+        titulo,
+        valorUnitario,
         quantidadeDesejada: quantidade,
         estoqueDisponivel: estoque,
       });
     }
 
-    // 5. Finalizar totais
     validacao.validacao.totalItens = totalItens;
-    // Arredondamento para garantir duas casas decimais no cálculo
     validacao.validacao.valorTotal = parseFloat(valorTotal.toFixed(2));
 
     return validacao;
   }
 
-  /**
-   * Simula a compra, verifica o estoque novamente e atualiza o estado (baixa no estoque).
-   */
   finalizarCompra(itensCarrinho: CarrinhoInputItem[]): string[] {
     const validacao = this.validarCarrinho(itensCarrinho);
 
-    // Se a validação encontrar erros, a compra é impedida.
     if (validacao.validacao.erros.length > 0) {
-      // Retorna a lista de erros para ser exibida ao usuário
       return validacao.validacao.erros;
     }
 
-    // Simulação de baixa no estoque: chama o SeriesService para atualizar.
+    // Baixa no estoque
     for (const item of itensCarrinho) {
-      // Presumo que SeriesService tem um método para atualizar o estoque internamente.
-      this.seriesService.atualizarEstoque(item.id, item.quantidade);
+      if (item.tipo === 'serie')
+        this.seriesService.atualizarEstoque(item.id, item.quantidade);
+      else if (item.tipo === 'anime')
+        this.animesService.atualizarEstoque(item.id, item.quantidade);
     }
 
     return [

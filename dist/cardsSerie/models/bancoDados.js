@@ -13,6 +13,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '2',
@@ -25,6 +26,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '3',
@@ -37,6 +39,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 59.99,
+        tipo: 'serie',
     },
     {
         id: '4',
@@ -49,6 +52,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '5',
@@ -61,6 +65,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '6',
@@ -73,6 +78,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 59.99,
+        tipo: 'serie',
     },
     {
         id: '7',
@@ -85,6 +91,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '8',
@@ -97,6 +104,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '9',
@@ -109,6 +117,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 29.99,
+        tipo: 'serie',
     },
     {
         id: '10',
@@ -121,6 +130,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '11',
@@ -133,6 +143,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '12',
@@ -145,6 +156,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 69.99,
+        tipo: 'serie',
     },
     {
         id: '13',
@@ -157,6 +169,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '14',
@@ -169,6 +182,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 79.99,
+        tipo: 'serie',
     },
     {
         id: '15',
@@ -181,6 +195,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 29.99,
+        tipo: 'serie',
     },
     {
         id: '16',
@@ -193,6 +208,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '17',
@@ -205,6 +221,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '18',
@@ -217,6 +234,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '19',
@@ -229,6 +247,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 69.99,
+        tipo: 'serie',
     },
     {
         id: '20',
@@ -241,6 +260,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 29.99,
+        tipo: 'serie',
     },
     {
         id: '21',
@@ -253,6 +273,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '22',
@@ -265,6 +286,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '23',
@@ -277,6 +299,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '24',
@@ -289,6 +312,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '25',
@@ -301,6 +325,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 79.99,
+        tipo: 'serie',
     },
     {
         id: '26',
@@ -313,6 +338,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '27',
@@ -325,6 +351,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '28',
@@ -337,6 +364,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '29',
@@ -349,6 +377,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '30',
@@ -361,6 +390,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '31',
@@ -373,6 +403,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '32',
@@ -385,6 +416,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '33',
@@ -397,6 +429,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '34',
@@ -409,6 +442,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
     {
         id: '35',
@@ -421,6 +455,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '36',
@@ -433,6 +468,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '37',
@@ -445,6 +481,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 59.99,
+        tipo: 'serie',
     },
     {
         id: '38',
@@ -457,6 +494,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 69.99,
+        tipo: 'serie',
     },
     {
         id: '39',
@@ -469,6 +507,7 @@ exports.topSeries = [
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
         valorUnitario: 49.99,
+        tipo: 'serie',
     },
     {
         id: '40',
@@ -481,6 +520,7 @@ exports.topSeries = [
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
         valorUnitario: 39.99,
+        tipo: 'serie',
     },
 ];
 //# sourceMappingURL=bancoDados.js.map

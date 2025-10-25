@@ -1,8 +1,9 @@
 import { CarrinhoService } from './carrinho.service';
-import type { CarrinhoInputItem, CarrinhoValidacao } from './models/carrinho.model';
+import { CarInput } from './../dto/carrinho/carInput';
+import { CarValidacao } from './../dto/carrinho/carValid';
 export declare class CarrinhoController {
     private readonly carrinhoService;
     constructor(carrinhoService: CarrinhoService);
-    validarCarrinho(itensCarrinho: CarrinhoInputItem[]): CarrinhoValidacao;
-    finalizarCompra(itensCarrinho: CarrinhoInputItem[]): string[];
+    validarCarrinho(itensCarrinho: CarInput[]): CarValidacao;
+    finalizarCompra(itensCarrinho: CarInput[]): string[];
 }

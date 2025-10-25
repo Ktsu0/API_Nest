@@ -1,5 +1,6 @@
 export interface CarrinhoItem {
-    serieId: string;
+    tipo: 'serie' | 'anime';
+    produtoId: string;
     titulo: string;
     valorUnitario: number;
     quantidadeDesejada: number;
@@ -14,6 +15,7 @@ export interface CarrinhoValidacao {
     };
 }
 export interface CarrinhoInputItem {
+    tipo: 'serie' | 'anime';
     id: string;
     quantidade: number;
 }

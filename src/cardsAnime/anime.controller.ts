@@ -27,7 +27,7 @@ export class AnimeController {
   }
 
   @Get(':id')
-  findOne(@Param('id') params: IdParamDto): Animes {
+  findOne(@Param() params: IdParamDto): Animes {
     return this.animesService.findOne(params.id);
   }
   @Get('tema/:tema')
@@ -69,7 +69,7 @@ export class AnimeController {
   }
 
   @Delete(':id')
-  deleteAnime(@Param('id') params: IdParamDto): string {
+  deleteAnime(@Param() params: IdParamDto): string {
     return this.animesService.deleteAnime(params.id);
   }
 }

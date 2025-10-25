@@ -9,62 +9,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateCard = void 0;
+exports.CarItem = void 0;
 const class_validator_1 = require("class-validator");
-const descricao_1 = require("./descricao");
-class CreateCard {
-    id;
+class CarItem {
+    tipo;
+    produtoId;
     titulo;
-    descricao;
-    detalhes;
-    imagem;
-    estoque;
     valorUnitario;
-    avaliacao;
+    quantidadeDesejada;
+    estoqueDisponivel;
 }
-exports.CreateCard = CreateCard;
-__decorate([
-    (0, class_validator_1.Allow)(),
-    __metadata("design:type", String)
-], CreateCard.prototype, "id", void 0);
+exports.CarItem = CarItem;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateCard.prototype, "titulo", void 0);
-__decorate([
-    (0, class_validator_1.IsObject)(),
-    __metadata("design:type", descricao_1.descricao)
-], CreateCard.prototype, "descricao", void 0);
+], CarItem.prototype, "tipo", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateCard.prototype, "detalhes", void 0);
+], CarItem.prototype, "produtoId", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsUrl)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateCard.prototype, "imagem", void 0);
+], CarItem.prototype, "titulo", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
-], CreateCard.prototype, "estoque", void 0);
+], CarItem.prototype, "valorUnitario", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
-], CreateCard.prototype, "valorUnitario", void 0);
+], CarItem.prototype, "quantidadeDesejada", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsPositive)(),
-    (0, class_validator_1.Max)(5),
-    (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
-], CreateCard.prototype, "avaliacao", void 0);
-//# sourceMappingURL=createCard.js.map
+], CarItem.prototype, "estoqueDisponivel", void 0);
+//# sourceMappingURL=carItem.js.map

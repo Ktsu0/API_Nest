@@ -3,7 +3,11 @@ import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 export class CarItem {
   @IsString()
   @IsNotEmpty()
-  serieId: string;
+  tipo: 'serie' | 'anime';
+
+  @IsString()
+  @IsNotEmpty()
+  produtoId: string;
 
   @IsString()
   @IsNotEmpty()

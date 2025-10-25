@@ -48,4 +48,8 @@ export class CreateCard {
   @Max(5)
   @Min(1)
   avaliacao?: number;
+
+  @IsOptional()
+  @IsString()
+  tipo?: string;
 }

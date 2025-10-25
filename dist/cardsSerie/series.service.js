@@ -94,7 +94,7 @@ let SeriesService = class SeriesService {
     addAvaliacao(id, avaliacao) {
         const serie = this.series.find((s) => s.id === id);
         if (!serie) {
-            throw new Error(`Série com ID "${id}" não encontrada.`);
+            throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
         }
         serie.avaliacao = avaliacao;
     }

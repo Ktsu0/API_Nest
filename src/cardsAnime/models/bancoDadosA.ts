@@ -14,6 +14,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 25,
     valorUnitario: 59.9,
+    tipo: 'anime',
   },
   {
     id: '2',
@@ -28,6 +29,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 18,
     valorUnitario: 45.0,
+    tipo: 'anime',
   },
   {
     id: '3',
@@ -42,6 +44,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 35,
     valorUnitario: 65.5,
+    tipo: 'anime',
   },
   {
     id: '4',
@@ -56,6 +59,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 30,
     valorUnitario: 58.9,
+    tipo: 'anime',
   },
   {
     id: '5',
@@ -70,6 +74,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 22,
     valorUnitario: 51.99,
+    tipo: 'anime',
   },
   {
     id: '6',
@@ -84,6 +89,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 28,
     valorUnitario: 54.9,
+    tipo: 'anime',
   },
   {
     id: '7',
@@ -98,6 +104,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 33,
     valorUnitario: 61.99,
+    tipo: 'anime',
   },
   {
     id: '8',
@@ -112,6 +119,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 15,
     valorUnitario: 52.5,
+    tipo: 'anime',
   },
   {
     id: '9',
@@ -126,6 +134,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 27,
     valorUnitario: 47.9,
+    tipo: 'anime',
   },
   {
     id: '10',
@@ -140,6 +149,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 12,
     valorUnitario: 40.0,
+    tipo: 'anime',
   },
   {
     id: '11',
@@ -154,6 +164,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 19,
     valorUnitario: 53.0,
+    tipo: 'anime',
   },
   {
     id: '12',
@@ -168,6 +179,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 17,
     valorUnitario: 48.5,
+    tipo: 'anime',
   },
   {
     id: '13',
@@ -182,6 +194,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 26,
     valorUnitario: 56.9,
+    tipo: 'anime',
   },
   {
     id: '14',
@@ -196,6 +209,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 31,
     valorUnitario: 60.5,
+    tipo: 'anime',
   },
   {
     id: '15',
@@ -210,6 +224,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 23,
     valorUnitario: 49.0,
+    tipo: 'anime',
   },
   {
     id: '16',
@@ -224,6 +239,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 14,
     valorUnitario: 55.0,
+    tipo: 'anime',
   },
   {
     id: '17',
@@ -238,6 +254,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 16,
     valorUnitario: 57.5,
+    tipo: 'anime',
   },
   {
     id: '18',
@@ -252,6 +269,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 10,
     valorUnitario: 62.0,
+    tipo: 'anime',
   },
   {
     id: '19',
@@ -266,6 +284,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 29,
     valorUnitario: 50.99,
+    tipo: 'anime',
   },
   {
     id: '20',
@@ -280,6 +299,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 40,
     valorUnitario: 39.9,
+    tipo: 'anime',
   },
   {
     id: '21',
@@ -294,6 +314,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 21,
     valorUnitario: 53.5,
+    tipo: 'anime',
   },
   {
     id: '22',
@@ -308,6 +329,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 13,
     valorUnitario: 58.0,
+    tipo: 'anime',
   },
   {
     id: '23',
@@ -322,6 +344,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 15,
     valorUnitario: 46.9,
+    tipo: 'anime',
   },
   {
     id: '24',
@@ -336,6 +359,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 24,
     valorUnitario: 50.0,
+    tipo: 'anime',
   },
   {
     id: '25',
@@ -350,6 +374,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 9,
     valorUnitario: 63.99,
+    tipo: 'anime',
   },
   {
     id: '26',
@@ -364,6 +389,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 11,
     valorUnitario: 44.5,
+    tipo: 'anime',
   },
   {
     id: '27',
@@ -378,6 +404,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 8,
     valorUnitario: 68.0,
+    tipo: 'anime',
   },
   {
     id: '28',
@@ -392,6 +419,7 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 18,
     valorUnitario: 59.5,
+    tipo: 'anime',
   },
   {
     id: '29',
@@ -406,6 +434,7 @@ export const topAnimes: Animes[] = [
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 17,
     valorUnitario: 54.0,
+    tipo: 'anime',
   },
   {
     id: '30',
@@ -420,5 +449,6 @@ export const topAnimes: Animes[] = [
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 14,
     valorUnitario: 47.5,
+    tipo: 'anime',
   },
 ];

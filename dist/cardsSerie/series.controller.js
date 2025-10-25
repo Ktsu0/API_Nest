@@ -15,7 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeriesController = void 0;
 const common_1 = require("@nestjs/common");
 const series_service_1 = require("./series.service");
-const createCard_1 = require("../dto/createCard");
+const createCard_1 = require("../dto/cards/createCard");
+const avaliacao_1 = require("../dto/cards/avaliacao");
+const updateCard_1 = require("../dto/cards/updateCard");
+const idParam_1 = require("../dto/cards/idParam");
+const temaParam_1 = require("../dto/cards/temaParam");
 let SeriesController = class SeriesController {
     seriesService;
     constructor(seriesService) {
@@ -24,11 +28,11 @@ let SeriesController = class SeriesController {
     findAll() {
         return this.seriesService.findAll();
     }
-    findOne(id) {
-        return this.seriesService.findOne(id);
+    findOne(params) {
+        return this.seriesService.findOne(params.id);
     }
-    findTema(tema) {
-        return this.seriesService.findTema(tema);
+    findTema(params) {
+        return this.seriesService.findTema(params.tema);
     }
     ordemAlfabetica() {
         return this.seriesService.ordemAlfabetica();
@@ -42,16 +46,16 @@ let SeriesController = class SeriesController {
     addSerie(serie) {
         return this.seriesService.addSerie(serie);
     }
-    addAvaliacao(id, avaliacao) {
-        this.seriesService.addAvaliacao(id, avaliacao);
-        return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
+    addAvaliacao(id, avaliacaoDTO) {
+        this.seriesService.addAvaliacao(id, avaliacaoDTO.avaliacao);
+        return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
     }
     updateSerie(id, updatedData) {
         const serie = this.seriesService.updateSerie(id, updatedData);
         return serie;
     }
-    deleteSerie(id) {
-        return this.seriesService.deleteSerie(id);
+    deleteSerie(params) {
+        return this.seriesService.deleteSerie(params.id);
     }
 };
 exports.SeriesController = SeriesController;
@@ -63,16 +67,16 @@ __decorate([
 ], SeriesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
     __metadata("design:returntype", Object)
 ], SeriesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Get)('tema/:tema'),
     __param(0, (0, common_1.Param)('tema')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [temaParam_1.TemaParamDto]),
     __metadata("design:returntype", Array)
 ], SeriesController.prototype, "findTema", null);
 __decorate([
@@ -100,7 +104,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)('avaliacao')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:paramtypes", [String, avaliacao_1.AvaliacaoDTO]),
     __metadata("design:returntype", String)
 ], SeriesController.prototype, "addAvaliacao", null);
 __decorate([
@@ -108,14 +112,14 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, updateCard_1.UpdateCardDto]),
     __metadata("design:returntype", Object)
 ], SeriesController.prototype, "updateSerie", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
     __metadata("design:returntype", String)
 ], SeriesController.prototype, "deleteSerie", null);
 exports.SeriesController = SeriesController = __decorate([

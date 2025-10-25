@@ -1,22 +1,25 @@
 export interface CarrinhoItem {
-  serieId: string;
+  tipo: 'serie' | 'anime';
+  produtoId: string;
   titulo: string;
   valorUnitario: number;
   quantidadeDesejada: number;
   estoqueDisponivel: number;
 }
 
+// Resultado da validação do carrinho
 export interface CarrinhoValidacao {
   items: CarrinhoItem[];
   validacao: {
     totalItens: number;
     valorTotal: number;
-    erros: string[]; // Para erros de estoque ou validação
+    erros: string[];
   };
 }
 
-// Além disso, vamos definir o DTO de entrada para o carrinho:
+// DTO de entrada para o carrinho
 export interface CarrinhoInputItem {
-  id: string; // ID da série
-  quantidade: number; // Quantidade desejada
+  tipo: 'serie' | 'anime';
+  id: string;
+  quantidade: number;
 }
