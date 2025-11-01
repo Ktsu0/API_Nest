@@ -1,23 +1,40 @@
-import { Injectable } from '@nestjs/common';
+// src/users/users.service.ts
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
+// 💡 Importe os DTOs, ajustando o caminho conforme sua estrutura
+import { CreateUserDto } from 'src/dto/users/createUser'; // DTO de Criação
+import { UpdateUserDto } from 'src/dto/users/updateUser'; // DTO de Atualização
+import { LoginUserDto } from 'src/dto/users/loginUser'; // DTO de Login
+
 import type { User } from './users.model';
+import { usuarios } from './model/bancoUsers';
 
 @Injectable()
 export class UserService {
-  private users: User[] = [];
+  private users: User[] = [...usuarios];
 
-  // Retorna todos os usuários
+  // ----------------------------------------------------
+  // GET (Leitura)
+  // ----------------------------------------------------
+
   getAllUsers(): User[] {
     return this.users;
   }
 
-  // Adiciona um novo usuário
-  addUser(data: {
-    email: string;
-    password: string;
-    firstName?: string;
-    lastName?: string;
-  }): User {
+  findUserByEmail(email: string): User | undefined {
+    return this.users.find((u) => u.email === email);
+  }
+
+  findUserById(id: string): User | undefined {
+    return this.users.find((u) => u.id === id);
+  }
+
+  // ----------------------------------------------------
+  // POST (Criação)
+  // ----------------------------------------------------
+
+  // 💡 USANDO CreateUserDto
+  addUser(data: CreateUserDto): User {
     const newUser: User = {
       id: uuidv4(),
       email: data.email,
@@ -29,13 +46,49 @@ export class UserService {
     return newUser;
   }
 
-  // Busca um usuário pelo email
-  findUserByEmail(email: string): User | undefined {
-    return this.users.find((u) => u.email === email);
+  // ----------------------------------------------------
+  // PUT (Atualização)
+  // ----------------------------------------------------
+
+  // 💡 USANDO UpdateUserDto
+  updateUser(id: string, data: UpdateUserDto): User {
+    const index = this.users.findIndex((u) => u.id === id);
+
+    if (index === -1) {
+      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    }
+
+    const updatedUser: User = {
+      ...this.users[index],
+      ...data, // O DTO garante que só campos existentes sejam passados
+      id: id,
+    };
+
+    this.users[index] = updatedUser;
+    return updatedUser;
   }
 
-  // Login do usuário
-  loginUser(data: { email: string; password: string }): User | undefined {
+  // ----------------------------------------------------
+  // DELETE (Remoção)
+  // ----------------------------------------------------
+
+  deleteUser(id: string): boolean {
+    const initialLength = this.users.length;
+    this.users = this.users.filter((u) => u.id !== id);
+
+    if (this.users.length === initialLength) {
+      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    }
+
+    return true;
+  }
+
+  // ----------------------------------------------------
+  // LOGIN
+  // ----------------------------------------------------
+
+  // 💡 USANDO LoginUserDto
+  loginUser(data: LoginUserDto): User | undefined {
     return this.users.find(
       (u) => u.email === data.email && u.password === data.password,
     );

@@ -9,10 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const uuid_1 = require("uuid");
+const bancoUsers_1 = require("./model/bancoUsers");
 let UserService = class UserService {
-    users = [];
+    users = [...bancoUsers_1.usuarios];
     getAllUsers() {
         return this.users;
+    }
+    findUserByEmail(email) {
+        return this.users.find((u) => u.email === email);
+    }
+    findUserById(id) {
+        return this.users.find((u) => u.id === id);
     }
     addUser(data) {
         const newUser = {
@@ -25,8 +32,26 @@ let UserService = class UserService {
         this.users.push(newUser);
         return newUser;
     }
-    findUserByEmail(email) {
-        return this.users.find((u) => u.email === email);
+    updateUser(id, data) {
+        const index = this.users.findIndex((u) => u.id === id);
+        if (index === -1) {
+            throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
+        }
+        const updatedUser = {
+            ...this.users[index],
+            ...data,
+            id: id,
+        };
+        this.users[index] = updatedUser;
+        return updatedUser;
+    }
+    deleteUser(id) {
+        const initialLength = this.users.length;
+        this.users = this.users.filter((u) => u.id !== id);
+        if (this.users.length === initialLength) {
+            throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
+        }
+        return true;
     }
     loginUser(data) {
         return this.users.find((u) => u.email === data.email && u.password === data.password);

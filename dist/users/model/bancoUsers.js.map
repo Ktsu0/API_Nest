@@ -1,0 +1,1 @@
+{"version":3,"file":"bancoUsers.js","sourceRoot":"","sources":["../../../src/users/model/bancoUsers.ts"],"names":[],"mappings":";;;AACa,QAAA,QAAQ,GAAW;IAC9B;QACE,EAAE,EAAE,GAAG;QACP,KAAK,EAAE,yBAAyB;QAChC,QAAQ,EAAE,UAAU;QACpB,SAAS,EAAE,SAAS;QACpB,QAAQ,EAAE,QAAQ;KACnB;CACF,CAAC"}

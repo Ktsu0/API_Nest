@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
+const loginUser_1 = require("../dto/users/loginUser");
+const createUser_1 = require("../dto/users/createUser");
+const updateUser_1 = require("../dto/users/updateUser");
 let UserController = class UserController {
     userService;
     constructor(userService) {
@@ -22,6 +25,13 @@ let UserController = class UserController {
     }
     getUsers() {
         return this.userService.getAllUsers();
+    }
+    getUserById(id) {
+        const user = this.userService.findUserById(id);
+        if (!user) {
+            throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
+        }
+        return user;
     }
     addUser(body) {
         const existingUser = this.userService.findUserByEmail(body.email);
@@ -37,6 +47,21 @@ let UserController = class UserController {
         }
         return user;
     }
+    updateUser(id, body) {
+        if (!this.userService.findUserById(id)) {
+            throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
+        }
+        if (body.email) {
+            const existingUser = this.userService.findUserByEmail(body.email);
+            if (existingUser && existingUser.id !== id) {
+                throw new common_1.BadRequestException('Este e-mail já está em uso por outro usuário.');
+            }
+        }
+        return this.userService.updateUser(id, body);
+    }
+    deleteUser(id) {
+        this.userService.deleteUser(id);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -46,19 +71,42 @@ __decorate([
     __metadata("design:returntype", Array)
 ], UserController.prototype, "getUsers", null);
 __decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Object)
+], UserController.prototype, "getUserById", null);
+__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [createUser_1.CreateUserDto]),
     __metadata("design:returntype", Object)
 ], UserController.prototype, "addUser", null);
 __decorate([
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [loginUser_1.LoginUserDto]),
     __metadata("design:returntype", Object)
 ], UserController.prototype, "loginUser", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, updateUser_1.UpdateUserDto]),
+    __metadata("design:returntype", Object)
+], UserController.prototype, "updateUser", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, common_1.HttpCode)(204),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UserService])
