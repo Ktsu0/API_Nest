@@ -1,15 +1,15 @@
 import { UserService } from './users.service';
-import { LoginUserDto } from 'src/dto/users/loginUser';
-import { CreateUserDto } from 'src/dto/users/createUser';
-import { UpdateUserDto } from 'src/dto/users/updateUser';
-import type { User } from './users.model';
+import { LoginUserDto } from './dto/loginUser';
+import { CreateUserDto } from './dto/createUser';
+import { UpdateUserDto } from './dto/updateUser';
+import type { User } from './model/users.model';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     getUsers(): User[];
     getUserById(id: string): User;
-    addUser(body: CreateUserDto): User;
-    loginUser(body: LoginUserDto): User;
-    updateUser(id: string, body: UpdateUserDto): User;
+    addUser(body: CreateUserDto): Promise<User>;
+    loginUser(body: LoginUserDto): Promise<User>;
+    updateUser(id: string, body: UpdateUserDto): Promise<User>;
     deleteUser(id: string): void;
 }

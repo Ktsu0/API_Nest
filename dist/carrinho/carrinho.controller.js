@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarrinhoController = void 0;
 const common_1 = require("@nestjs/common");
 const carrinho_service_1 = require("./carrinho.service");
-const carValid_1 = require("./../dto/carrinho/carValid");
+const carValid_1 = require("./dto/carValid");
 let CarrinhoController = class CarrinhoController {
     carrinhoService;
     constructor(carrinhoService) {

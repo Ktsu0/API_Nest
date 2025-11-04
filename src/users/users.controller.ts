@@ -1,4 +1,3 @@
-// src/users/users.controller.ts
 import {
   Body,
   Controller,
@@ -12,17 +11,17 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './users.service';
-import { LoginUserDto } from 'src/dto/users/loginUser';
-import { CreateUserDto } from 'src/dto/users/createUser';
-import { UpdateUserDto } from 'src/dto/users/updateUser';
-import type { User } from './users.model';
+import { LoginUserDto } from './dto/loginUser';
+import { CreateUserDto } from './dto/createUser';
+import { UpdateUserDto } from './dto/updateUser';
+import type { User } from './model/users.model';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   // ----------------------------------------------------
-  // GET (Leitura)
+  // GET (Leitura) - Métodos Síncronos
   // ----------------------------------------------------
 
   @Get()
@@ -40,20 +39,21 @@ export class UserController {
   }
 
   // ----------------------------------------------------
-  // POST (Criação e Login)
+  // POST (Criação e Login) - Métodos Assíncronos
   // ----------------------------------------------------
 
   @Post()
-  addUser(@Body() body: CreateUserDto): User {
+  async addUser(@Body() body: CreateUserDto): Promise<User> {
     const existingUser = this.userService.findUserByEmail(body.email);
     if (existingUser) {
       throw new BadRequestException('Usuário já registrado com este e-mail.');
     }
-    return this.userService.addUser(body);
+    return await this.userService.addUser(body);
   }
+
   @Post('login')
-  loginUser(@Body() body: LoginUserDto): User {
-    const user = this.userService.loginUser(body);
+  async loginUser(@Body() body: LoginUserDto): Promise<User> {
+    const user = await this.userService.loginUser(body);
     if (!user) {
       throw new BadRequestException('E-mail ou senha inválidos.');
     }
@@ -61,14 +61,19 @@ export class UserController {
   }
 
   // ----------------------------------------------------
-  // PUT (Atualização)
+  // PUT (Atualização) - Método Assíncrono
   // ----------------------------------------------------
 
   @Put(':id')
-  updateUser(@Param('id') id: string, @Body() body: UpdateUserDto): User {
+  async updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateUserDto,
+  ): Promise<User> {
     if (!this.userService.findUserById(id)) {
       throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
     }
+
+    // Verifica a disponibilidade do novo e-mail (se fornecido)
     if (body.email) {
       const existingUser = this.userService.findUserByEmail(body.email);
       if (existingUser && existingUser.id !== id) {
@@ -77,18 +82,17 @@ export class UserController {
         );
       }
     }
-
-    // 3. Executa a atualização
-    return this.userService.updateUser(id, body);
+    return await this.userService.updateUser(id, body);
   }
 
   // ----------------------------------------------------
-  // DELETE (Remoção)
+  // DELETE (Remoção) - Método Síncrono
   // ----------------------------------------------------
 
   @Delete(':id')
   @HttpCode(204)
   deleteUser(@Param('id') id: string): void {
+    // Assumindo que deleteUser é síncrono
     this.userService.deleteUser(id);
   }
 }

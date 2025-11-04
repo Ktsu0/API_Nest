@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SeriesService } from './../cardsSerie/series.service';
 import { AnimeService } from './../cardsAnime/anime.service';
-import {
-  CarrinhoValidacao,
-  CarrinhoInputItem,
-  CarrinhoItem,
-} from './models/carrinho.model';
+import { CarrinhoValidacao, CarrinhoInputItem } from './models/carrinho.model';
 import { Serie } from './../cardsSerie/models/series.model';
 import { Animes } from './../cardsAnime/models/animes.model';
 

@@ -1,14 +1,15 @@
-import { CreateUserDto } from 'src/dto/users/createUser';
-import { UpdateUserDto } from 'src/dto/users/updateUser';
-import { LoginUserDto } from 'src/dto/users/loginUser';
-import type { User } from './users.model';
+import { CreateUserDto } from './dto/createUser';
+import { UpdateUserDto } from './dto/updateUser';
+import { LoginUserDto } from './dto/loginUser';
+import type { User } from './model/users.model';
 export declare class UserService {
+    private readonly saltRounds;
     private users;
     getAllUsers(): User[];
     findUserByEmail(email: string): User | undefined;
     findUserById(id: string): User | undefined;
-    addUser(data: CreateUserDto): User;
-    updateUser(id: string, data: UpdateUserDto): User;
+    addUser(data: CreateUserDto): Promise<User>;
+    updateUser(id: string, data: UpdateUserDto): Promise<User>;
     deleteUser(id: string): boolean;
-    loginUser(data: LoginUserDto): User | undefined;
+    loginUser(data: LoginUserDto): Promise<User | undefined>;
 }

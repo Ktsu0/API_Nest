@@ -1,24 +1,23 @@
-// src/users/users.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-// 💡 Importe os DTOs, ajustando o caminho conforme sua estrutura
-import { CreateUserDto } from 'src/dto/users/createUser'; // DTO de Criação
-import { UpdateUserDto } from 'src/dto/users/updateUser'; // DTO de Atualização
-import { LoginUserDto } from 'src/dto/users/loginUser'; // DTO de Login
-
-import type { User } from './users.model';
+import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/createUser';
+import { UpdateUserDto } from './dto/updateUser';
+import { LoginUserDto } from './dto/loginUser';
+import type { User } from './model/users.model';
 import { usuarios } from './model/bancoUsers';
 
 @Injectable()
 export class UserService {
+  private readonly saltRounds = 10;
   private users: User[] = [...usuarios];
 
   // ----------------------------------------------------
-  // GET (Leitura)
+  // GET (Leitura) - Sem alterações
   // ----------------------------------------------------
 
   getAllUsers(): User[] {
-    return this.users;
+    return this.users.map(({ password, ...user }) => user as User);
   }
 
   findUserByEmail(email: string): User | undefined {
@@ -26,50 +25,65 @@ export class UserService {
   }
 
   findUserById(id: string): User | undefined {
-    return this.users.find((u) => u.id === id);
+    const user = this.users.find((u) => u.id === id);
+    if (!user) return undefined;
+    const { password, ...safeUser } = user;
+    return safeUser as User;
   }
 
   // ----------------------------------------------------
-  // POST (Criação)
+  // POST (Criação) - Hashing da Senha
   // ----------------------------------------------------
 
-  // 💡 USANDO CreateUserDto
-  addUser(data: CreateUserDto): User {
+  async addUser(data: CreateUserDto): Promise<User> {
+    const hashedPassword = await bcrypt.hash(data.password, this.saltRounds);
+
     const newUser: User = {
       id: uuidv4(),
       email: data.email,
-      password: data.password,
+      password: hashedPassword,
       firstName: data.firstName || '',
       lastName: data.lastName || '',
+      Cpf: data.Cpf || '',
+      telefone: data.telefone || '',
+      cep: data.cep || '',
+      genero: data.genero || '',
+      nascimento: data.nascimento || '',
     };
     this.users.push(newUser);
-    return newUser;
+    const { password, ...safeUser } = newUser;
+    return safeUser as User;
   }
 
   // ----------------------------------------------------
-  // PUT (Atualização)
+  // PUT (Atualização) - Permite atualizar a senha com hash
   // ----------------------------------------------------
 
-  // 💡 USANDO UpdateUserDto
-  updateUser(id: string, data: UpdateUserDto): User {
+  async updateUser(id: string, data: UpdateUserDto): Promise<User> {
     const index = this.users.findIndex((u) => u.id === id);
 
     if (index === -1) {
       throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
     }
+    let newPasswordHash: string | undefined;
+    if (data.password) {
+      newPasswordHash = await bcrypt.hash(data.password, this.saltRounds);
+    }
 
     const updatedUser: User = {
       ...this.users[index],
-      ...data, // O DTO garante que só campos existentes sejam passados
+      ...data,
+      password: newPasswordHash || this.users[index].password,
       id: id,
     };
 
     this.users[index] = updatedUser;
-    return updatedUser;
+    const { password, ...safeUser } = updatedUser;
+    return safeUser as User;
   }
 
   // ----------------------------------------------------
-  // DELETE (Remoção)
+  // DELETE (Remoção) - Sem alterações
   // ----------------------------------------------------
 
   deleteUser(id: string): boolean {
@@ -84,13 +98,22 @@ export class UserService {
   }
 
   // ----------------------------------------------------
-  // LOGIN
+  // LOGIN - Comparação do Hash
   // ----------------------------------------------------
 
-  // 💡 USANDO LoginUserDto
-  loginUser(data: LoginUserDto): User | undefined {
-    return this.users.find(
-      (u) => u.email === data.email && u.password === data.password,
-    );
+  async loginUser(data: LoginUserDto): Promise<User | undefined> {
+    const user = this.users.find((u) => u.email === data.email);
+
+    if (!user) {
+      return undefined;
+    }
+    const isMatch = await bcrypt.compare(data.password, user.password);
+
+    if (isMatch) {
+      const { password, ...safeUser } = user;
+      return safeUser as User;
+    }
+
+    return undefined;
   }
 }

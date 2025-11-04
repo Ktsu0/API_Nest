@@ -11,11 +11,11 @@ import {
 
 import { SeriesService } from './series.service';
 import type { Serie } from './models/series.model';
-import { CreateCard } from 'src/dto/cards/createCard';
-import { AvaliacaoDTO } from 'src/dto/cards/avaliacao';
-import { UpdateCardDto } from 'src/dto/cards/updateCard';
-import { IdParamDto } from 'src/dto/cards/idParam';
-import { TemaParamDto } from 'src/dto/cards/temaParam';
+import { CreateCard } from 'src/dtoCards/createCard';
+import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
+import { UpdateCardDto } from 'src/dtoCards/updateCard';
+import { IdParamDto } from 'src/dtoCards/idParam';
+import { TemaParamDto } from 'src/dtoCards/temaParam';
 
 @Controller('series')
 export class SeriesController {

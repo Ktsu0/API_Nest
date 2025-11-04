@@ -1,10 +1,10 @@
 import { AnimeService } from './anime.service';
 import type { Animes } from './models/animes.model';
-import { CreateCard } from 'src/dto/cards/createCard';
-import { AvaliacaoDTO } from 'src/dto/cards/avaliacao';
-import { UpdateCardDto } from 'src/dto/cards/updateCard';
-import { IdParamDto } from 'src/dto/cards/idParam';
-import { TemaParamDto } from 'src/dto/cards/temaParam';
+import { CreateCard } from 'src/dtoCards/createCard';
+import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
+import { UpdateCardDto } from 'src/dtoCards/updateCard';
+import { IdParamDto } from 'src/dtoCards/idParam';
+import { TemaParamDto } from 'src/dtoCards/temaParam';
 export declare class AnimeController {
     private readonly animesService;
     constructor(animesService: AnimeService);

@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { CarrinhoService } from './carrinho.service';
-import { CarInput } from './../dto/carrinho/carInput';
-import { CarValidacao } from './../dto/carrinho/carValid';
+import { CarInput } from './dto/carInput';
+import { CarValidacao } from './dto/carValid';
 @Controller('carrinho')
 export class CarrinhoController {
   constructor(private readonly carrinhoService: CarrinhoService) {}

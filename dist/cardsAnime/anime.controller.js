@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnimeController = void 0;
 const common_1 = require("@nestjs/common");
 const anime_service_1 = require("./anime.service");
-const createCard_1 = require("../dto/cards/createCard");
-const avaliacao_1 = require("../dto/cards/avaliacao");
-const updateCard_1 = require("../dto/cards/updateCard");
-const idParam_1 = require("../dto/cards/idParam");
-const temaParam_1 = require("../dto/cards/temaParam");
+const createCard_1 = require("../dtoCards/createCard");
+const avaliacao_1 = require("../dtoCards/avaliacao");
+const updateCard_1 = require("../dtoCards/updateCard");
+const idParam_1 = require("../dtoCards/idParam");
+const temaParam_1 = require("../dtoCards/temaParam");
 let AnimeController = class AnimeController {
     animesService;
     constructor(animesService) {
