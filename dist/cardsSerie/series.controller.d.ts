@@ -1,5 +1,5 @@
 import { SeriesService } from './series.service';
-import type { Serie } from './models/series.model';
+import type { Serie } from 'src/model/series.model';
 import { CreateCard } from 'src/dtoCards/createCard';
 import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';

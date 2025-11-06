@@ -1,5 +1,5 @@
 import { AnimeService } from './anime.service';
-import type { Animes } from './models/animes.model';
+import type { Serie } from 'src/model/series.model';
 import { CreateCard } from 'src/dtoCards/createCard';
 import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';
@@ -8,13 +8,13 @@ import { TemaParamDto } from 'src/dtoCards/temaParam';
 export declare class AnimeController {
     private readonly animesService;
     constructor(animesService: AnimeService);
-    findAll(): Animes[];
-    findOne(params: IdParamDto): Animes;
-    findTema(params: TemaParamDto): Animes[];
-    ordemAlfabetica(): Animes[];
-    findByTitle(q: string): Animes[];
+    findAll(): Serie[];
+    findOne(params: IdParamDto): Serie;
+    findTema(params: TemaParamDto): Serie[];
+    ordemAlfabetica(): Serie[];
+    findByTitle(q: string): Serie[];
     addAnime(anime: CreateCard): any;
     addAvaliacao(id: string, avaliacaoDTO: AvaliacaoDTO): string;
-    updateAnime(id: string, updatedData: UpdateCardDto): Animes;
+    updateAnime(id: string, updatedData: UpdateCardDto): Serie;
     deleteAnime(params: IdParamDto): string;
 }

@@ -1,23 +1,25 @@
 // src/Animes/Animes.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Animes } from './models/animes.model';
+import { Serie } from 'src/model/series.model';
 import * as levenshtein from 'fast-levenshtein';
-import { topAnimes } from './models/bancoDadosA';
+import { catalogoCompleto } from 'src/model/bancoDados';
 @Injectable()
 export class AnimeService {
-  private Animes: Animes[] = topAnimes;
+  private Animes: Serie[] = catalogoCompleto.filter(
+    (item) => item.tipo === 'anime',
+  );
 
-  findAll(): Animes[] {
+  findAll(): Serie[] {
     return this.Animes;
   }
-  findOne(id: string): Animes {
+  findOne(id: string): Serie {
     const AnimeEncontrada = this.Animes.find((Anime) => Anime.id === id);
     if (!AnimeEncontrada) {
       throw new NotFoundException(`Anime com ID "${id}" não encontrada.`);
     }
     return AnimeEncontrada;
   }
-  findTema(tema: string): Animes[] {
+  findTema(tema: string): Serie[] {
     const temaBusca = this.normalize(tema);
 
     const AnimesFiltradas = this.Animes.filter((Anime) => {
@@ -38,15 +40,15 @@ export class AnimeService {
       .toLowerCase();
   }
 
-  addAnime(Anime: Animes): Animes {
+  addAnime(Anime: Serie): Serie {
     const novoId =
       Date.now().toString() + Math.floor(Math.random() * 1000).toString();
-    const novaAnime = { ...Anime, id: novoId };
+    const novaAnime = { ...Anime, id: novoId, tipo: 'anime' };
     this.Animes.push(novaAnime);
     return novaAnime;
   }
 
-  updateImage(id: string, novaImagem: string): Animes {
+  updateImage(id: string, novaImagem: string): Serie {
     const AnimeEncontrada = this.Animes.find((Anime) => Anime.id === id);
     if (!AnimeEncontrada) {
       throw new NotFoundException(`Anime com ID "${id}" não encontrada.`);
@@ -55,7 +57,7 @@ export class AnimeService {
     return AnimeEncontrada;
   }
 
-  ordemAlfabetica(): Animes[] {
+  ordemAlfabetica(): Serie[] {
     const AnimesCopia = [...this.Animes];
 
     AnimesCopia.sort((a, b) => a.titulo.localeCompare(b.titulo));
@@ -72,7 +74,7 @@ export class AnimeService {
     Anime.avaliacao = avaliacao;
   }
 
-  findTitulo(searchTerm: string): Animes[] {
+  findTitulo(searchTerm: string): Serie[] {
     const termBusca = this.normalize(searchTerm);
 
     let AnimesFiltradas = this.Animes.filter((Anime) => {
@@ -97,7 +99,7 @@ export class AnimeService {
     return AnimesFiltradas;
   }
 
-  updateAnime(id: string, updatedData: Partial<Animes>): Animes {
+  updateAnime(id: string, updatedData: Partial<Serie>): Serie {
     const index = this.Animes.findIndex((Anime) => Anime.id === id);
     if (index === -1) {
       throw new NotFoundException(`Anime com ID "${id}" não encontrada.`);

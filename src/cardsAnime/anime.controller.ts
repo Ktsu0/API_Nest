@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 
 import { AnimeService } from './anime.service';
-import type { Animes } from './models/animes.model';
+import type { Serie } from 'src/model/series.model';
 import { CreateCard } from 'src/dtoCards/createCard';
 import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';
@@ -22,24 +22,24 @@ export class AnimeController {
   constructor(private readonly animesService: AnimeService) {}
 
   @Get()
-  findAll(): Animes[] {
+  findAll(): Serie[] {
     return this.animesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param() params: IdParamDto): Animes {
+  findOne(@Param() params: IdParamDto): Serie {
     return this.animesService.findOne(params.id);
   }
   @Get('tema/:tema')
-  findTema(@Param('tema') params: TemaParamDto): Animes[] {
+  findTema(@Param('tema') params: TemaParamDto): Serie[] {
     return this.animesService.findTema(params.tema);
   }
   @Get('ordem/alfabetica')
-  ordemAlfabetica(): Animes[] {
+  ordemAlfabetica(): Serie[] {
     return this.animesService.ordemAlfabetica();
   }
   @Get('search')
-  findByTitle(@Query('q') q: string): Animes[] {
+  findByTitle(@Query('q') q: string): Serie[] {
     if (!q) {
       return this.animesService.findAll();
     }
@@ -63,7 +63,7 @@ export class AnimeController {
   updateAnime(
     @Param('id') id: string,
     @Body() updatedData: UpdateCardDto,
-  ): Animes {
+  ): Serie {
     const anime = this.animesService.updateAnime(id, updatedData);
     return anime;
   }

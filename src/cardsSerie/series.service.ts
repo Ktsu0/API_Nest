@@ -1,11 +1,13 @@
 // src/series/series.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Serie } from './models/series.model';
-import { topSeries } from './models/bancoDados';
+import { Serie } from 'src/model/series.model';
+import { catalogoCompleto } from 'src/model/bancoDados';
 import * as levenshtein from 'fast-levenshtein';
 @Injectable()
 export class SeriesService {
-  private series: Serie[] = topSeries;
+  private series: Serie[] = catalogoCompleto.filter(
+    (item) => item.tipo === 'serie',
+  );
 
   findAll(): Serie[] {
     return this.series;
@@ -43,7 +45,7 @@ export class SeriesService {
   addSerie(serie: Serie): Serie {
     const novoId =
       Date.now().toString() + Math.floor(Math.random() * 1000).toString();
-    const novaSerie = { ...serie, id: novoId };
+    const novaSerie = { ...serie, id: novoId, tipo: 'serie' };
     this.series.push(novaSerie);
     return novaSerie;
   }

@@ -41,10 +41,10 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeriesService = void 0;
 const common_1 = require("@nestjs/common");
-const bancoDados_1 = require("./models/bancoDados");
+const bancoDados_1 = require("../model/bancoDados");
 const levenshtein = __importStar(require("fast-levenshtein"));
 let SeriesService = class SeriesService {
-    series = bancoDados_1.topSeries;
+    series = bancoDados_1.catalogoCompleto.filter((item) => item.tipo === 'serie');
     findAll() {
         return this.series;
     }
@@ -74,7 +74,7 @@ let SeriesService = class SeriesService {
     }
     addSerie(serie) {
         const novoId = Date.now().toString() + Math.floor(Math.random() * 1000).toString();
-        const novaSerie = { ...serie, id: novoId };
+        const novaSerie = { ...serie, id: novoId, tipo: 'serie' };
         this.series.push(novaSerie);
         return novaSerie;
     }

@@ -1,4 +1,4 @@
-import { Serie } from './models/series.model';
+import { Serie } from 'src/model/series.model';
 export declare class SeriesService {
     private series;
     findAll(): Serie[];

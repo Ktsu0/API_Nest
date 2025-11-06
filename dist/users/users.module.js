@@ -10,12 +10,20 @@ exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const users_controller_1 = require("./users.controller");
+const passport_1 = require("@nestjs/passport");
+const jwt_1 = require("@nestjs/jwt");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
+        imports: [
+            passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
+            jwt_1.JwtModule.register({
+                secret: 'MKSDNG1519782DSAFDHSDG5S4F56AF5D1G56FD1H2B1FD894GFB21VC3848FSA7E8W9QE7J7U98JKLI98L7UI45J61S25DA9AD78DSAF1D3H51FD7H8F4JHGF123XCVXVKLSADQWIUEETSKMCXZ8972131S56D4GJJHKLIUOUITYWEEQISKLAMD',
+                signOptions: { expiresIn: '1h' },
+            }),
+        ],
         controllers: [users_controller_1.UserController],
         providers: [users_service_1.UserService],
     })

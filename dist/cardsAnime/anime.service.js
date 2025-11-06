@@ -42,9 +42,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnimeService = void 0;
 const common_1 = require("@nestjs/common");
 const levenshtein = __importStar(require("fast-levenshtein"));
-const bancoDadosA_1 = require("./models/bancoDadosA");
+const bancoDados_1 = require("../model/bancoDados");
 let AnimeService = class AnimeService {
-    Animes = bancoDadosA_1.topAnimes;
+    Animes = bancoDados_1.catalogoCompleto.filter((item) => item.tipo === 'anime');
     findAll() {
         return this.Animes;
     }
@@ -74,7 +74,7 @@ let AnimeService = class AnimeService {
     }
     addAnime(Anime) {
         const novoId = Date.now().toString() + Math.floor(Math.random() * 1000).toString();
-        const novaAnime = { ...Anime, id: novoId };
+        const novaAnime = { ...Anime, id: novoId, tipo: 'anime' };
         this.Animes.push(novaAnime);
         return novaAnime;
     }

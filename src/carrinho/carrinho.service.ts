@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SeriesService } from './../cardsSerie/series.service';
 import { AnimeService } from './../cardsAnime/anime.service';
 import { CarrinhoValidacao, CarrinhoInputItem } from './models/carrinho.model';
-import { Serie } from './../cardsSerie/models/series.model';
-import { Animes } from './../cardsAnime/models/animes.model';
+import { Serie } from 'src/model/series.model';
 
 @Injectable()
 export class CarrinhoService {
@@ -27,19 +26,31 @@ export class CarrinhoService {
 
     for (const item of itensCarrinho) {
       // Seleciona o serviço correto
-      let produto: Serie | Animes | undefined;
+      let produto: Serie | undefined;
       if (item.tipo === 'serie') produto = this.seriesService.findOne(item.id);
       else if (item.tipo === 'anime')
         produto = this.animesService.findOne(item.id);
 
       if (!produto) {
+        try {
+          produto = this.seriesService.findOne(item.id);
+        } catch (e) {}
+        if (!produto) {
+          try {
+            produto = this.animesService.findOne(item.id);
+          } catch (e) {}
+        }
+      }
+      if (!produto) {
+        // Falhou em ambas as buscas
         validacao.validacao.erros.push(
-          `${item.tipo === 'serie' ? 'Série' : 'Anime'} com ID ${item.id} não encontrada.`,
+          `Produto com ID ${item.id} não encontrado em nenhum catálogo.`,
         );
         continue;
       }
-
+      // Produto encontrado
       const { id, titulo, estoque, valorUnitario } = produto;
+      const tipoProduto = produto.tipo as 'serie' | 'anime';
       const quantidade = item.quantidade;
 
       // Validação básica de quantidade
@@ -61,7 +72,7 @@ export class CarrinhoService {
 
       // Adiciona ao carrinho
       validacao.items.push({
-        tipo: item.tipo,
+        tipo: tipoProduto,
         produtoId: id,
         titulo,
         valorUnitario,

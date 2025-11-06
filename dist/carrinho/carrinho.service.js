@@ -38,10 +38,23 @@ let CarrinhoService = class CarrinhoService {
             else if (item.tipo === 'anime')
                 produto = this.animesService.findOne(item.id);
             if (!produto) {
-                validacao.validacao.erros.push(`${item.tipo === 'serie' ? 'Série' : 'Anime'} com ID ${item.id} não encontrada.`);
+                try {
+                    produto = this.seriesService.findOne(item.id);
+                }
+                catch (e) { }
+                if (!produto) {
+                    try {
+                        produto = this.animesService.findOne(item.id);
+                    }
+                    catch (e) { }
+                }
+            }
+            if (!produto) {
+                validacao.validacao.erros.push(`Produto com ID ${item.id} não encontrado em nenhum catálogo.`);
                 continue;
             }
             const { id, titulo, estoque, valorUnitario } = produto;
+            const tipoProduto = produto.tipo;
             const quantidade = item.quantidade;
             if (quantidade <= 0) {
                 validacao.validacao.erros.push(`Quantidade inválida para ${titulo}.`);
@@ -54,7 +67,7 @@ let CarrinhoService = class CarrinhoService {
             totalItens += quantidade;
             valorTotal += valorItem;
             validacao.items.push({
-                tipo: item.tipo,
+                tipo: tipoProduto,
                 produtoId: id,
                 titulo,
                 valorUnitario,
