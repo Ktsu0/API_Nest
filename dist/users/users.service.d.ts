@@ -1,15 +1,20 @@
+import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
 import { LoginUserDto } from './dto/loginUser';
 import type { User } from './model/users.model';
 export declare class UserService {
+    private readonly jwtService;
     private readonly saltRounds;
     private users;
-    getAllUsers(): User[];
+    constructor(jwtService: JwtService);
+    private createToken;
+    loginUser(data: LoginUserDto): Promise<string | undefined>;
+    addUser(data: CreateUserDto): Promise<string>;
+    updateUser(id: string, data: UpdateUserDto): Promise<string>;
+    getAllUsers(): Omit<User, 'password'>[];
     findUserByEmail(email: string): User | undefined;
     findUserById(id: string): User | undefined;
-    addUser(data: CreateUserDto): Promise<User>;
-    updateUser(id: string, data: UpdateUserDto): Promise<User>;
+    findUserSafeById(id: string): Omit<User, 'password'> | undefined;
     deleteUser(id: string): boolean;
-    loginUser(data: LoginUserDto): Promise<User | undefined>;
 }

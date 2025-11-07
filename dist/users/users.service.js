@@ -38,27 +38,41 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+const jwt_1 = require("@nestjs/jwt");
 const uuid_1 = require("uuid");
 const bcrypt = __importStar(require("bcrypt"));
 const bancoUsers_1 = require("./model/bancoUsers");
 let UserService = class UserService {
+    jwtService;
     saltRounds = 10;
     users = [...bancoUsers_1.usuarios];
-    getAllUsers() {
-        return this.users.map(({ password, ...user }) => user);
+    constructor(jwtService) {
+        this.jwtService = jwtService;
     }
-    findUserByEmail(email) {
-        return this.users.find((u) => u.email === email);
+    createToken(user) {
+        const payload = {
+            email: user.email,
+            sub: user.id,
+        };
+        return this.jwtService.sign(payload);
     }
-    findUserById(id) {
-        const user = this.users.find((u) => u.id === id);
-        if (!user)
+    async loginUser(data) {
+        const user = this.users.find((u) => u.email === data.email);
+        if (!user) {
             return undefined;
-        const { password, ...safeUser } = user;
-        return safeUser;
+        }
+        const isMatch = await bcrypt.compare(data.password, user.password);
+        if (isMatch) {
+            const token = this.createToken(user);
+            return token;
+        }
+        return undefined;
     }
     async addUser(data) {
         const hashedPassword = await bcrypt.hash(data.password, this.saltRounds);
@@ -75,8 +89,8 @@ let UserService = class UserService {
             nascimento: data.nascimento || '',
         };
         this.users.push(newUser);
-        const { password, ...safeUser } = newUser;
-        return safeUser;
+        const token = this.createToken(newUser);
+        return token;
     }
     async updateUser(id, data) {
         const index = this.users.findIndex((u) => u.id === id);
@@ -94,7 +108,23 @@ let UserService = class UserService {
             id: id,
         };
         this.users[index] = updatedUser;
-        const { password, ...safeUser } = updatedUser;
+        const newToken = this.createToken(updatedUser);
+        return newToken;
+    }
+    getAllUsers() {
+        return this.users.map(({ password, ...user }) => user);
+    }
+    findUserByEmail(email) {
+        return this.users.find((u) => u.email === email);
+    }
+    findUserById(id) {
+        return this.users.find((u) => u.id === id);
+    }
+    findUserSafeById(id) {
+        const user = this.users.find((u) => u.id === id);
+        if (!user)
+            return undefined;
+        const { password, ...safeUser } = user;
         return safeUser;
     }
     deleteUser(id) {
@@ -105,21 +135,10 @@ let UserService = class UserService {
         }
         return true;
     }
-    async loginUser(data) {
-        const user = this.users.find((u) => u.email === data.email);
-        if (!user) {
-            return undefined;
-        }
-        const isMatch = await bcrypt.compare(data.password, user.password);
-        if (isMatch) {
-            const { password, ...safeUser } = user;
-            return safeUser;
-        }
-        return undefined;
-    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [jwt_1.JwtService])
 ], UserService);
 //# sourceMappingURL=users.service.js.map

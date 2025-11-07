@@ -16,6 +16,7 @@ exports.CarrinhoController = void 0;
 const common_1 = require("@nestjs/common");
 const carrinho_service_1 = require("./carrinho.service");
 const carValid_1 = require("./dto/carValid");
+const jwt_auth_guard_1 = require("../users/guards/jwt-auth.guard");
 let CarrinhoController = class CarrinhoController {
     carrinhoService;
     constructor(carrinhoService) {
@@ -44,6 +45,7 @@ __decorate([
     __metadata("design:returntype", Array)
 ], CarrinhoController.prototype, "finalizarCompra", null);
 exports.CarrinhoController = CarrinhoController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
     (0, common_1.Controller)('carrinho'),
     __metadata("design:paramtypes", [carrinho_service_1.CarrinhoService])
 ], CarrinhoController);

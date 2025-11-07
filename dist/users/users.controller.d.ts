@@ -6,10 +6,11 @@ import type { User } from './model/users.model';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    getUsers(): User[];
-    getUserById(id: string): User;
-    addUser(body: CreateUserDto): Promise<User>;
-    loginUser(body: LoginUserDto): Promise<User>;
-    updateUser(id: string, body: UpdateUserDto): Promise<User>;
-    deleteUser(id: string): void;
+    addUser(body: CreateUserDto): Promise<string>;
+    loginUser(body: LoginUserDto): Promise<string>;
+    getUsers(): Omit<User, 'password'>[];
+    getUserById(id: string): Omit<User, 'password'>;
+    getProfile(req: any): Omit<User, 'password'>;
+    updateUser(id: string, body: UpdateUserDto, req: any): Promise<string>;
+    deleteUser(id: string, req: any): void;
 }

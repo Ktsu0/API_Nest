@@ -1,9 +1,10 @@
-// src/app.module.ts (Atualizado)
 import { Module } from '@nestjs/common';
 import { UserService } from './users.service';
 import { UserController } from './users.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+// Importe a classe da sua estratégia JWT (ajuste o caminho se for diferente)
+import { JwtStrategy } from 'src/users/stategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, JwtStrategy],
+  exports: [UserService, JwtStrategy],
 })
 export class UserModule {}

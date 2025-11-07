@@ -20,6 +20,7 @@ const avaliacao_1 = require("../dtoCards/avaliacao");
 const updateCard_1 = require("../dtoCards/updateCard");
 const idParam_1 = require("../dtoCards/idParam");
 const temaParam_1 = require("../dtoCards/temaParam");
+const jwt_auth_guard_1 = require("../users/guards/jwt-auth.guard");
 let SeriesController = class SeriesController {
     seriesService;
     constructor(seriesService) {
@@ -123,6 +124,7 @@ __decorate([
     __metadata("design:returntype", String)
 ], SeriesController.prototype, "deleteSerie", null);
 exports.SeriesController = SeriesController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
     (0, common_1.Controller)('series'),
     __metadata("design:paramtypes", [series_service_1.SeriesService])
 ], SeriesController);

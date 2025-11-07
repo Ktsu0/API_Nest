@@ -7,6 +7,7 @@ import {
   Query,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 
 import { AnimeService } from './anime.service';
@@ -16,7 +17,9 @@ import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';
 import { IdParamDto } from 'src/dtoCards/idParam';
 import { TemaParamDto } from 'src/dtoCards/temaParam';
+import { JwtAutGuard } from 'src/users/guards/jwt-auth.guard';
 
+@UseGuards(JwtAutGuard)
 @Controller('animes')
 export class AnimeController {
   constructor(private readonly animesService: AnimeService) {}

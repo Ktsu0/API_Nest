@@ -12,6 +12,7 @@ const users_service_1 = require("./users.service");
 const users_controller_1 = require("./users.controller");
 const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
+const jwt_strategy_1 = require("./stategies/jwt.strategy");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
@@ -25,7 +26,8 @@ exports.UserModule = UserModule = __decorate([
             }),
         ],
         controllers: [users_controller_1.UserController],
-        providers: [users_service_1.UserService],
+        providers: [users_service_1.UserService, jwt_strategy_1.JwtStrategy],
+        exports: [users_service_1.UserService, jwt_strategy_1.JwtStrategy],
     })
 ], UserModule);
 //# sourceMappingURL=users.module.js.map
