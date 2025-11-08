@@ -78,7 +78,7 @@ export class UserService {
     // 1. Gera o token para o novo usuário
     const token = this.createToken(newUser);
 
-    // 2. Retorna APENAS o token
+    // 2. Retorna APENAS o tokens
     return token;
   }
 
