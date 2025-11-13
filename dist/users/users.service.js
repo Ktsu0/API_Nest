@@ -70,7 +70,7 @@ let UserService = class UserService {
         const isMatch = await bcrypt.compare(data.password, user.password);
         if (isMatch) {
             const token = this.createToken(user);
-            return token;
+            return { access_token: token };
         }
         return undefined;
     }
@@ -90,7 +90,7 @@ let UserService = class UserService {
         };
         this.users.push(newUser);
         const token = this.createToken(newUser);
-        return token;
+        return { access_token: token };
     }
     async updateUser(id, data) {
         const index = this.users.findIndex((u) => u.id === id);

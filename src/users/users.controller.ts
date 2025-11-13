@@ -9,17 +9,17 @@ import {
   BadRequestException,
   Param,
   NotFoundException,
-  UseGuards, // ⬅️ Novo Import
-  Req, // ⬅️ Novo Import
-  UnauthorizedException, // ⬅️ Novo Import
+  UseGuards,
+  Req,
+  UnauthorizedException,
+  Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { UserService } from './users.service';
 import { LoginUserDto } from './dto/loginUser';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
 import type { User } from './model/users.model';
-
-// Importe seu guard JWT
 import { JwtAutGuard } from 'src/users/guards/jwt-auth.guard';
 
 @Controller('users')
@@ -31,26 +31,43 @@ export class UserController {
   // ----------------------------------------------------
 
   @Post()
-  async addUser(@Body() body: CreateUserDto): Promise<string> {
-    // ⬅️ Retorna APENAS o Token
-    const existingUser = this.userService.findUserByEmail(body.email);
-    if (existingUser) {
-      throw new BadRequestException('Usuário já registrado com este e-mail.');
-    }
-    // userService.addUser agora retorna o token (string)
-    return await this.userService.addUser(body);
+  async addUser(
+    @Res({ passthrough: true }) res: Response,
+    @Body() registerDto: CreateUserDto,
+  ) {
+    const { access_token } = await this.userService.addUser(registerDto);
+
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 60 * 1,
+    });
+
+    return { message: 'Registro bem-sucedido' };
   }
 
   @Post('login')
-  async loginUser(@Body() body: LoginUserDto): Promise<string> {
-    // ⬅️ Retorna APENAS o Token
-    // userService.loginUser agora retorna o token (string) ou undefined
-    const token = await this.userService.loginUser(body);
+  async login(
+    @Res({ passthrough: true }) res: Response,
+    @Body() loginDto: LoginUserDto,
+  ) {
+    const result = await this.userService.loginUser(loginDto);
 
-    if (!token) {
+    if (!result) {
       throw new BadRequestException('E-mail ou senha inválidos.');
     }
-    return token;
+
+    const { access_token } = result;
+
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 1000 * 60 * 60 * 1,
+    });
+
+    return { message: 'Login bem-sucedido' };
   }
 
   // ----------------------------------------------------

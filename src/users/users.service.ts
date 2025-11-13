@@ -33,7 +33,9 @@ export class UserService {
   // LOGIN - Retorna APENAS o Token ⬅️ MODIFICADO
   // ----------------------------------------------------
 
-  async loginUser(data: LoginUserDto): Promise<string | undefined> {
+  async loginUser(
+    data: LoginUserDto,
+  ): Promise<{ access_token: any } | undefined> {
     // ⬅️ Tipo de retorno alterado
     const user = this.users.find((u) => u.email === data.email);
 
@@ -47,7 +49,7 @@ export class UserService {
       const token = this.createToken(user);
 
       // 2. Retorna APENAS o token
-      return token;
+      return { access_token: token };
     }
 
     return undefined;
@@ -57,7 +59,7 @@ export class UserService {
   // POST (Criação) - Hashing da Senha E Retorna APENAS o Token ⬅️ MODIFICADO
   // ----------------------------------------------------
 
-  async addUser(data: CreateUserDto): Promise<string> {
+  async addUser(data: CreateUserDto): Promise<{ access_token: string }> {
     // ⬅️ Tipo de retorno alterado
     const hashedPassword = await bcrypt.hash(data.password, this.saltRounds);
 
@@ -79,7 +81,7 @@ export class UserService {
     const token = this.createToken(newUser);
 
     // 2. Retorna APENAS o tokens
-    return token;
+    return { access_token: token };
   }
 
   // ----------------------------------------------------

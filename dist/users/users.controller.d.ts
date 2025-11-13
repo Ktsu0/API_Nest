@@ -1,3 +1,4 @@
+import type { Response } from 'express';
 import { UserService } from './users.service';
 import { LoginUserDto } from './dto/loginUser';
 import { CreateUserDto } from './dto/createUser';
@@ -6,8 +7,12 @@ import type { User } from './model/users.model';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    addUser(body: CreateUserDto): Promise<string>;
-    loginUser(body: LoginUserDto): Promise<string>;
+    addUser(res: Response, registerDto: CreateUserDto): Promise<{
+        message: string;
+    }>;
+    login(res: Response, loginDto: LoginUserDto): Promise<{
+        message: string;
+    }>;
     getUsers(): Omit<User, 'password'>[];
     getUserById(id: string): Omit<User, 'password'>;
     getProfile(req: any): Omit<User, 'password'>;

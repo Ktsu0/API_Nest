@@ -9,8 +9,12 @@ export declare class UserService {
     private users;
     constructor(jwtService: JwtService);
     private createToken;
-    loginUser(data: LoginUserDto): Promise<string | undefined>;
-    addUser(data: CreateUserDto): Promise<string>;
+    loginUser(data: LoginUserDto): Promise<{
+        access_token: any;
+    } | undefined>;
+    addUser(data: CreateUserDto): Promise<{
+        access_token: string;
+    }>;
     updateUser(id: string, data: UpdateUserDto): Promise<string>;
     getAllUsers(): Omit<User, 'password'>[];
     findUserByEmail(email: string): User | undefined;
