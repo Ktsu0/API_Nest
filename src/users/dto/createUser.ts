@@ -2,47 +2,43 @@ import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   // --- Autenticação ---
-
-  @IsEmail({}, { message: 'O e-mail fornecido não é válido.' })
-  @IsNotEmpty({ message: 'O e-mail é obrigatório para o registro.' })
+  @IsEmail()
+  @IsNotEmpty()
   email: string;
 
-  @IsString({ message: 'A senha deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'A senha é obrigatória.' })
-  @MinLength(6, { message: 'A senha deve ter pelo menos 6 caracteres.' })
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(6)
   password: string;
 
   // --- Informações Pessoais ---
-
-  @IsString({ message: 'O nome deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'O primeiro nome é obrigatório.' })
+  @IsString()
+  @IsNotEmpty()
   firstName: string;
 
-  @IsString({ message: 'O sobrenome deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'O sobrenome é obrigatório.' })
+  @IsString()
+  @IsNotEmpty()
   lastName: string;
 
-  // --- Detalhes de Contato/Endereço ---
+  // --- Contato ---
+  @IsString()
+  @IsNotEmpty()
+  Cpf: string;
 
-  @IsString({ message: 'O CPF deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'O CPF é obrigatório.' })
-  Cpf: string; // Nota: Você pode querer adicionar validação regex para CPF
-
-  @IsString({ message: 'O telefone deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'O telefone é obrigatório.' })
+  @IsString()
+  @IsNotEmpty()
   telefone: string;
 
-  @IsString({ message: 'O CEP deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'O CEP é obrigatório.' })
-  cep: string; // Nota: Você pode querer adicionar validação regex para CEP
+  @IsString()
+  @IsNotEmpty()
+  cep: string;
 
-  // --- Outros Detalhes ---
-
-  @IsString({ message: 'O campo gênero deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'O gênero é obrigatório.' })
+  // --- Outros ---
+  @IsString()
+  @IsNotEmpty()
   genero: string;
 
-  @IsString({ message: 'A data de nascimento deve ser um texto válido.' })
-  @IsNotEmpty({ message: 'A data de nascimento é obrigatória.' })
+  @IsString()
+  @IsNotEmpty()
   nascimento: string;
 }

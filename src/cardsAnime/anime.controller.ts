@@ -18,8 +18,11 @@ import { UpdateCardDto } from 'src/dtoCards/updateCard';
 import { IdParamDto } from 'src/dtoCards/idParam';
 import { TemaParamDto } from 'src/dtoCards/temaParam';
 import { JwtAutGuard } from 'src/users/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/users/guards/roles.guard';
+import { RolesG } from 'src/users/decorators/roles.decorator';
+import { Roles } from 'src/users/model/roles.enum';
 
-@UseGuards(JwtAutGuard)
+@UseGuards(JwtAutGuard, RolesGuard)
 @Controller('animes')
 export class AnimeController {
   constructor(private readonly animesService: AnimeService) {}
@@ -48,6 +51,7 @@ export class AnimeController {
     }
     return this.animesService.findTitulo(q);
   }
+  @RolesG(Roles.ADMIN)
   @Post()
   addAnime(@Body() anime: CreateCard): any {
     return this.animesService.addAnime(anime);
@@ -62,6 +66,7 @@ export class AnimeController {
     return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
   }
 
+  @RolesG(Roles.ADMIN)
   @Put(':id')
   updateAnime(
     @Param('id') id: string,
@@ -71,6 +76,7 @@ export class AnimeController {
     return anime;
   }
 
+  @RolesG(Roles.ADMIN)
   @Delete(':id')
   deleteAnime(@Param() params: IdParamDto): string {
     return this.animesService.deleteAnime(params.id);

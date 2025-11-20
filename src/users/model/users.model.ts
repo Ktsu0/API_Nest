@@ -1,3 +1,5 @@
+import { Roles } from './roles.enum';
+
 export interface User {
   id: string;
   email: string;
@@ -9,4 +11,5 @@ export interface User {
   cep: string;
   genero: string;
   nascimento: string;
+  roles: [Roles];
 }

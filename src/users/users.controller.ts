@@ -1,18 +1,19 @@
 import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  HttpCode,
-  BadRequestException,
-  Param,
-  NotFoundException,
-  UseGuards,
   Req,
-  UnauthorizedException,
   Res,
+  Get,
+  Put,
+  Body,
+  Post,
+  Param,
+  Delete,
+  Request,
+  HttpCode,
+  UseGuards,
+  Controller,
+  NotFoundException,
+  BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { UserService } from './users.service';
@@ -62,8 +63,8 @@ export class UserController {
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: false, //process.env.NODE_ENV === 'production'
+      sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 1,
     });
 
@@ -73,6 +74,12 @@ export class UserController {
   // ----------------------------------------------------
   // ROTAS PROTEGIDAS (Exigem Token Válido)
   // ----------------------------------------------------
+
+  @UseGuards(JwtAutGuard)
+  @Get('role')
+  getRole(@Request() req) {
+    return { roles: req.user.roles };
+  }
 
   @UseGuards(JwtAutGuard) // ⬅️ Protegido
   @Get()

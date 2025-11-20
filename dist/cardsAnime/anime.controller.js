@@ -21,6 +21,9 @@ const updateCard_1 = require("../dtoCards/updateCard");
 const idParam_1 = require("../dtoCards/idParam");
 const temaParam_1 = require("../dtoCards/temaParam");
 const jwt_auth_guard_1 = require("../users/guards/jwt-auth.guard");
+const roles_guard_1 = require("../users/guards/roles.guard");
+const roles_decorator_1 = require("../users/decorators/roles.decorator");
+const roles_enum_1 = require("../users/model/roles.enum");
 let AnimeController = class AnimeController {
     animesService;
     constructor(animesService) {
@@ -94,6 +97,7 @@ __decorate([
     __metadata("design:returntype", Array)
 ], AnimeController.prototype, "findByTitle", null);
 __decorate([
+    (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -109,6 +113,7 @@ __decorate([
     __metadata("design:returntype", String)
 ], AnimeController.prototype, "addAvaliacao", null);
 __decorate([
+    (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -117,6 +122,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], AnimeController.prototype, "updateAnime", null);
 __decorate([
+    (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
@@ -124,7 +130,7 @@ __decorate([
     __metadata("design:returntype", String)
 ], AnimeController.prototype, "deleteAnime", null);
 exports.AnimeController = AnimeController = __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, common_1.Controller)('animes'),
     __metadata("design:paramtypes", [anime_service_1.AnimeService])
 ], AnimeController);

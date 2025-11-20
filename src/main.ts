@@ -15,13 +15,16 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true, // 3. 🔑 ESSENCIAL: Permite o envio e recebimento de cookies
+    credentials: true,
   });
+
+  app.set('trust proxy', 1);
 
   app.useGlobalPipes(
     new ValidationPipe({
-      forbidNonWhitelisted: true,
+      whitelist: true,
       transform: true,
+      forbidNonWhitelisted: true,
     }),
   );
 

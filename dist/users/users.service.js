@@ -48,6 +48,7 @@ const jwt_1 = require("@nestjs/jwt");
 const uuid_1 = require("uuid");
 const bcrypt = __importStar(require("bcrypt"));
 const bancoUsers_1 = require("./model/bancoUsers");
+const roles_enum_1 = require("./model/roles.enum");
 let UserService = class UserService {
     jwtService;
     saltRounds = 10;
@@ -59,23 +60,22 @@ let UserService = class UserService {
         const payload = {
             email: user.email,
             sub: user.id,
+            roles: user.roles,
         };
         return this.jwtService.sign(payload);
     }
     async loginUser(data) {
         const user = this.users.find((u) => u.email === data.email);
-        if (!user) {
+        if (!user)
             return undefined;
-        }
         const isMatch = await bcrypt.compare(data.password, user.password);
-        if (isMatch) {
-            const token = this.createToken(user);
-            return { access_token: token };
-        }
-        return undefined;
+        if (!isMatch)
+            return undefined;
+        return { access_token: this.createToken(user) };
     }
     async addUser(data) {
         const hashedPassword = await bcrypt.hash(data.password, this.saltRounds);
+        const role = data.email === 'teste1@gmail.com' ? roles_enum_1.Roles.ADMIN : roles_enum_1.Roles.USER;
         const newUser = {
             id: (0, uuid_1.v4)(),
             email: data.email,
@@ -87,10 +87,10 @@ let UserService = class UserService {
             cep: data.cep || '',
             genero: data.genero || '',
             nascimento: data.nascimento || '',
+            roles: [role],
         };
         this.users.push(newUser);
-        const token = this.createToken(newUser);
-        return { access_token: token };
+        return { access_token: this.createToken(newUser) };
     }
     async updateUser(id, data) {
         const index = this.users.findIndex((u) => u.id === id);
@@ -105,14 +105,12 @@ let UserService = class UserService {
             ...this.users[index],
             ...data,
             password: newPasswordHash || this.users[index].password,
-            id: id,
         };
         this.users[index] = updatedUser;
-        const newToken = this.createToken(updatedUser);
-        return newToken;
+        return this.createToken(updatedUser);
     }
     getAllUsers() {
-        return this.users.map(({ password, ...user }) => user);
+        return this.users.map(({ password, ...u }) => u);
     }
     findUserByEmail(email) {
         return this.users.find((u) => u.email === email);
@@ -121,16 +119,16 @@ let UserService = class UserService {
         return this.users.find((u) => u.id === id);
     }
     findUserSafeById(id) {
-        const user = this.users.find((u) => u.id === id);
+        const user = this.findUserById(id);
         if (!user)
             return undefined;
-        const { password, ...safeUser } = user;
-        return safeUser;
+        const { password, ...safe } = user;
+        return safe;
     }
     deleteUser(id) {
-        const initialLength = this.users.length;
+        const before = this.users.length;
         this.users = this.users.filter((u) => u.id !== id);
-        if (this.users.length === initialLength) {
+        if (this.users.length === before) {
             throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
         }
         return true;

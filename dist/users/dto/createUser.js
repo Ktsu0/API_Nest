@@ -24,49 +24,49 @@ class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([
-    (0, class_validator_1.IsEmail)({}, { message: 'O e-mail fornecido não é válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'O e-mail é obrigatório para o registro.' }),
+    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'A senha deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'A senha é obrigatória.' }),
-    (0, class_validator_1.MinLength)(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MinLength)(6),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'O nome deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'O primeiro nome é obrigatório.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "firstName", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'O sobrenome deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'O sobrenome é obrigatório.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "lastName", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'O CPF deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'O CPF é obrigatório.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "Cpf", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'O telefone deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'O telefone é obrigatório.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "telefone", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'O CEP deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'O CEP é obrigatório.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "cep", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'O campo gênero deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'O gênero é obrigatório.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "genero", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: 'A data de nascimento deve ser um texto válido.' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'A data de nascimento é obrigatória.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "nascimento", void 0);
 //# sourceMappingURL=createUser.js.map

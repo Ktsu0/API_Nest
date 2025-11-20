@@ -13,6 +13,9 @@ export declare class UserController {
     login(res: Response, loginDto: LoginUserDto): Promise<{
         message: string;
     }>;
+    getRole(req: any): {
+        roles: any;
+    };
     getUsers(): Omit<User, 'password'>[];
     getUserById(id: string): Omit<User, 'password'>;
     getProfile(req: any): Omit<User, 'password'>;

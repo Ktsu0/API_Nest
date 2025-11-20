@@ -14,9 +14,11 @@ async function bootstrap() {
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true,
     });
+    app.set('trust proxy', 1);
     app.useGlobalPipes(new common_1.ValidationPipe({
-        forbidNonWhitelisted: true,
+        whitelist: true,
         transform: true,
+        forbidNonWhitelisted: true,
     }));
     await app.listen(process.env.PORT ?? 5000);
 }

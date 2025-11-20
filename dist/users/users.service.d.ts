@@ -10,7 +10,7 @@ export declare class UserService {
     constructor(jwtService: JwtService);
     private createToken;
     loginUser(data: LoginUserDto): Promise<{
-        access_token: any;
+        access_token: string;
     } | undefined>;
     addUser(data: CreateUserDto): Promise<{
         access_token: string;

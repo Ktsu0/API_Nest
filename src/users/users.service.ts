@@ -7,8 +7,7 @@ import { UpdateUserDto } from './dto/updateUser';
 import { LoginUserDto } from './dto/loginUser';
 import type { User } from './model/users.model';
 import { usuarios } from './model/bancoUsers';
-
-// A interface AuthResponse foi removida, pois o retorno será apenas a string do token.
+import { Roles } from './model/roles.enum';
 
 @Injectable()
 export class UserService {
@@ -18,50 +17,40 @@ export class UserService {
   constructor(private readonly jwtService: JwtService) {}
 
   // ----------------------------------------------------
-  // FUNÇÃO PRIVADA: Geração do Token JWT (Inalterada)
+  // TOKEN JWT
   // ----------------------------------------------------
-
   private createToken(user: User): string {
     const payload = {
       email: user.email,
       sub: user.id,
+      roles: user.roles,
     };
     return this.jwtService.sign(payload);
   }
 
   // ----------------------------------------------------
-  // LOGIN - Retorna APENAS o Token ⬅️ MODIFICADO
+  // LOGIN
   // ----------------------------------------------------
-
   async loginUser(
     data: LoginUserDto,
-  ): Promise<{ access_token: any } | undefined> {
-    // ⬅️ Tipo de retorno alterado
+  ): Promise<{ access_token: string } | undefined> {
     const user = this.users.find((u) => u.email === data.email);
 
-    if (!user) {
-      return undefined;
-    }
+    if (!user) return undefined;
+
     const isMatch = await bcrypt.compare(data.password, user.password);
+    if (!isMatch) return undefined;
 
-    if (isMatch) {
-      // 1. Gera o token
-      const token = this.createToken(user);
-
-      // 2. Retorna APENAS o token
-      return { access_token: token };
-    }
-
-    return undefined;
+    return { access_token: this.createToken(user) };
   }
 
   // ----------------------------------------------------
-  // POST (Criação) - Hashing da Senha E Retorna APENAS o Token ⬅️ MODIFICADO
+  // CRIAR USUÁRIO
   // ----------------------------------------------------
-
   async addUser(data: CreateUserDto): Promise<{ access_token: string }> {
-    // ⬅️ Tipo de retorno alterado
     const hashedPassword = await bcrypt.hash(data.password, this.saltRounds);
+
+    const role = data.email === 'teste1@gmail.com' ? Roles.ADMIN : Roles.USER;
 
     const newUser: User = {
       id: uuidv4(),
@@ -74,27 +63,24 @@ export class UserService {
       cep: data.cep || '',
       genero: data.genero || '',
       nascimento: data.nascimento || '',
+      roles: [role],
     };
+
     this.users.push(newUser);
 
-    // 1. Gera o token para o novo usuário
-    const token = this.createToken(newUser);
-
-    // 2. Retorna APENAS o tokens
-    return { access_token: token };
+    return { access_token: this.createToken(newUser) };
   }
 
   // ----------------------------------------------------
-  // PUT (Atualização) - Retorna APENAS o Token ⬅️ MODIFICADO
+  // ATUALIZAR USUÁRIO
   // ----------------------------------------------------
-
   async updateUser(id: string, data: UpdateUserDto): Promise<string> {
-    // ⬅️ Tipo de retorno alterado
     const index = this.users.findIndex((u) => u.id === id);
 
     if (index === -1) {
       throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
     }
+
     let newPasswordHash: string | undefined;
 
     if (data.password) {
@@ -105,26 +91,18 @@ export class UserService {
       ...this.users[index],
       ...data,
       password: newPasswordHash || this.users[index].password,
-      id: id,
     };
 
     this.users[index] = updatedUser;
 
-    // 1. Cria um novo token para o usuário atualizado
-    const newToken = this.createToken(updatedUser);
-
-    // 2. Retorna APENAS o novo token
-    return newToken;
+    return this.createToken(updatedUser);
   }
 
   // ----------------------------------------------------
-  // GET (Leitura) - Mantidos
+  // GET
   // ----------------------------------------------------
-
   getAllUsers(): Omit<User, 'password'>[] {
-    return this.users.map(
-      ({ password, ...user }) => user as Omit<User, 'password'>,
-    );
+    return this.users.map(({ password, ...u }) => u);
   }
 
   findUserByEmail(email: string): User | undefined {
@@ -136,21 +114,21 @@ export class UserService {
   }
 
   findUserSafeById(id: string): Omit<User, 'password'> | undefined {
-    const user = this.users.find((u) => u.id === id);
+    const user = this.findUserById(id);
     if (!user) return undefined;
-    const { password, ...safeUser } = user;
-    return safeUser as Omit<User, 'password'>;
+
+    const { password, ...safe } = user;
+    return safe;
   }
 
   // ----------------------------------------------------
-  // DELETE (Remoção) - Mantido
+  // DELETE
   // ----------------------------------------------------
-
   deleteUser(id: string): boolean {
-    const initialLength = this.users.length;
+    const before = this.users.length;
     this.users = this.users.filter((u) => u.id !== id);
 
-    if (this.users.length === initialLength) {
+    if (this.users.length === before) {
       throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
     }
 

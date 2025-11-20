@@ -42,11 +42,14 @@ let UserController = class UserController {
         const { access_token } = result;
         res.cookie('access_token', access_token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: false,
+            sameSite: 'lax',
             maxAge: 1000 * 60 * 60 * 1,
         });
         return { message: 'Login bem-sucedido' };
+    }
+    getRole(req) {
+        return { roles: req.user.roles };
     }
     getUsers() {
         return this.userService.getAllUsers();
@@ -97,6 +100,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, loginUser_1.LoginUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
+    (0, common_1.Get)('role'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getRole", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
     (0, common_1.Get)(),
