@@ -2,11 +2,12 @@
 import { Module } from '@nestjs/common';
 import { AnimeController } from './anime.controller';
 import { AnimeService } from './anime.service';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   imports: [],
   controllers: [AnimeController],
-  providers: [AnimeService],
+  providers: [AnimeService, PrismaService],
 
   exports: [AnimeService],
 })

@@ -5,6 +5,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 // Importe a classe da sua estratégia JWT (ajuste o caminho se for diferente)
 import { JwtStrategy } from 'src/users/stategies/jwt.strategy';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { JwtStrategy } from 'src/users/stategies/jwt.strategy';
     }),
   ],
   controllers: [UserController],
-  providers: [UserService, JwtStrategy],
+  providers: [UserService, JwtStrategy, PrismaService],
   exports: [UserService, JwtStrategy],
 })
 export class UserModule {}

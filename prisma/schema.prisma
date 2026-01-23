@@ -1,0 +1,115 @@
+// https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProdutoTipo {
+  SERIE
+  ANIME
+}
+
+model Serie {
+  id            Int     @id @default(autoincrement())
+  titulo        String
+  detalhes      String
+  imagem        String
+  estoque       Int     @db.Check(estoque >= 0)
+  valorUnitario Float
+  avaliacao     Float?
+  tipo          String?
+
+  metaId        Int
+  meta          SerieMeta @relation(
+    fields: [metaId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([tipo])
+}
+
+model SerieMeta {
+  id         Int    @id @default(autoincrement())
+  temporada String
+  tema      String
+
+  serie     Serie[]
+
+  @@index([tema])
+  @@index([temporada])
+}
+
+model Carrinho {
+  id        Int     @id @default(autoincrement())
+
+  sessionId String? @unique
+
+  userId    String?
+  user      User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items     CarrinhoItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+
+model CarrinhoItem {
+  id          Int         @id @default(autoincrement())
+
+  carrinhoId Int
+  carrinho   Carrinho   @relation(
+    fields: [carrinhoId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  produtoId  Int
+  tipo       ProdutoTipo
+  quantidade Int
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([carrinhoId, produtoId, tipo])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+
+  firstName String
+  lastName  String
+
+  cpf       String   @unique
+  telefone  String
+  cep       String
+  genero    String
+  nascimento DateTime
+
+  roles     Role[]  @default([USER])
+
+  carrinhos Carrinho[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+}
