@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SeriesService } from './../cardsSerie/series.service';
 import { AnimeService } from './../cardsAnime/anime.service';
 import { CarrinhoValidacao, CarrinhoInputItem } from './models/carrinho.model';
-import { Serie } from 'src/model/series.model';
+import { Serie, ProdutoTipo, Prisma } from '@prisma/client';
 
 @Injectable()
 export class CarrinhoService {
@@ -11,7 +11,12 @@ export class CarrinhoService {
     private readonly animesService: AnimeService,
   ) {}
 
-  validarCarrinho(itensCarrinho: CarrinhoInputItem[]): CarrinhoValidacao {
+  // ==============================
+  // Validação completa do carrinho
+  // ==============================
+  async validarCarrinho(
+    itensCarrinho: CarrinhoInputItem[],
+  ): Promise<CarrinhoValidacao> {
     const validacao: CarrinhoValidacao = {
       items: [],
       validacao: {
@@ -22,88 +27,96 @@ export class CarrinhoService {
     };
 
     let totalItens = 0;
-    let valorTotal = 0;
+    let valorTotal = new Prisma.Decimal(0);
 
     for (const item of itensCarrinho) {
-      // Seleciona o serviço correto
-      let produto: Serie | undefined;
-      if (item.tipo === 'serie') produto = this.seriesService.findOne(item.id);
-      else if (item.tipo === 'anime')
-        produto = this.animesService.findOne(item.id);
+      let produto: Serie | null = null;
+
+      // Seleção direta pelo tipo
+      try {
+        if (item.tipo === 'serie') {
+          produto = await this.seriesService.findOne(item.id);
+        } else if (item.tipo === 'anime') {
+          produto = await this.animesService.findOne(item.id);
+        }
+      } catch {
+        produto = null;
+      }
 
       if (!produto) {
-        try {
-          produto = this.seriesService.findOne(item.id);
-        } catch (e) {}
-        if (!produto) {
-          try {
-            produto = this.animesService.findOne(item.id);
-          } catch (e) {}
-        }
-      }
-      if (!produto) {
-        // Falhou em ambas as buscas
         validacao.validacao.erros.push(
           `Produto com ID ${item.id} não encontrado em nenhum catálogo.`,
         );
         continue;
       }
-      // Produto encontrado
-      const { id, titulo, estoque, valorUnitario } = produto;
-      const tipoProduto = produto.tipo as 'serie' | 'anime';
+
+      const { id, titulo, estoque, valorUnitario, tipo } = produto;
       const quantidade = item.quantidade;
 
-      // Validação básica de quantidade
+      // ==============================
+      // Validações de negócio
+      // ==============================
       if (quantidade <= 0) {
-        validacao.validacao.erros.push(`Quantidade inválida para ${titulo}.`);
+        validacao.validacao.erros.push(`Quantidade inválida para "${titulo}".`);
         continue;
       }
 
-      // Validação de estoque
       if (quantidade > estoque) {
         validacao.validacao.erros.push(
-          `Estoque insuficiente para ${titulo}. Pedido: ${quantidade}, Disponível: ${estoque}.`,
+          `Estoque insuficiente para "${titulo}". Pedido: ${quantidade}, Disponível: ${estoque}.`,
         );
       }
 
-      const valorItem = valorUnitario * quantidade;
-      totalItens += quantidade;
-      valorTotal += valorItem;
+      // ==============================
+      // Cálculo financeiro com Decimal
+      // ==============================
+      const valorItem = valorUnitario.mul(quantidade);
 
-      // Adiciona ao carrinho
+      totalItens += quantidade;
+      valorTotal = valorTotal.add(valorItem);
+
+      // ==============================
+      // Registro do item validado
+      // ==============================
       validacao.items.push({
-        tipo: tipoProduto,
+        tipo: tipo === ProdutoTipo.SERIE ? 'serie' : 'anime',
         produtoId: id,
         titulo,
-        valorUnitario,
+        valorUnitario: valorUnitario.toNumber(),
         quantidadeDesejada: quantidade,
         estoqueDisponivel: estoque,
       });
     }
 
     validacao.validacao.totalItens = totalItens;
-    validacao.validacao.valorTotal = parseFloat(valorTotal.toFixed(2));
+    validacao.validacao.valorTotal = Number(valorTotal.toFixed(2));
 
     return validacao;
   }
 
-  finalizarCompra(itensCarrinho: CarrinhoInputItem[]): string[] {
-    const validacao = this.validarCarrinho(itensCarrinho);
+  // ==============================
+  // Finalização da compra
+  // ==============================
+  async finalizarCompra(itensCarrinho: CarrinhoInputItem[]): Promise<string[]> {
+    const validacao = await this.validarCarrinho(itensCarrinho);
 
     if (validacao.validacao.erros.length > 0) {
       return validacao.validacao.erros;
     }
 
-    // Baixa no estoque
+    // Baixa de estoque transacional por tipo
     for (const item of itensCarrinho) {
-      if (item.tipo === 'serie')
-        this.seriesService.atualizarEstoque(item.id, item.quantidade);
-      else if (item.tipo === 'anime')
-        this.animesService.atualizarEstoque(item.id, item.quantidade);
+      if (item.tipo === 'serie') {
+        await this.seriesService.atualizarEstoque(item.id, item.quantidade);
+      } else if (item.tipo === 'anime') {
+        await this.animesService.atualizarEstoque(item.id, item.quantidade);
+      }
     }
 
     return [
-      `Compra de ${validacao.validacao.totalItens} itens no total de R$ ${validacao.validacao.valorTotal.toFixed(2)} finalizada com sucesso.`,
+      `Compra de ${validacao.validacao.totalItens} itens no total de R$ ${validacao.validacao.valorTotal.toFixed(
+        2,
+      )} finalizada com sucesso.`,
     ];
   }
 }

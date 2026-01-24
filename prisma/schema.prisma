@@ -12,104 +12,78 @@ datasource db {
 enum ProdutoTipo {
   SERIE
   ANIME
+
+  @@map("produto_tipo")
 }
 
 model Serie {
-  id            Int     @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   titulo        String
   detalhes      String
   imagem        String
-  estoque       Int     @db.Check(estoque >= 0)
-  valorUnitario Float
-  avaliacao     Float?
-  tipo          String?
+  estoque       Int
+  valorUnitario Decimal  @map("valor_unitario")
+  avaliacao     Decimal?
+  tipo          String
 
-  metaId        Int
-  meta          SerieMeta @relation(
-    fields: [metaId],
-    references: [id],
-    onDelete: Cascade
-  )
+  metaId        Int      @map("meta_id")
+  meta          SerieMeta @relation(fields: [metaId], references: [id])
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([tipo])
+  @@map("series")
 }
+
 
 model SerieMeta {
   id         Int    @id @default(autoincrement())
   temporada String
   tema      String
 
-  serie     Serie[]
+  series    Serie[]
 
   @@index([tema])
   @@index([temporada])
+  @@map("serie_meta")
 }
+
 
 model Carrinho {
   id        Int     @id @default(autoincrement())
 
-  sessionId String? @unique
+  sessionId String? @unique @map("session_id")
 
-  userId    String?
-  user      User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ownerId  String? @map("owner_id")
+  // ID do usuário vindo do provedor externo (Supabase, Clerk, etc)
 
   items     CarrinhoItem[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@index([userId])
+  @@index([ownerId])
+  @@map("carrinho")
 }
+
 
 
 model CarrinhoItem {
-  id          Int         @id @default(autoincrement())
+  id          Int @id @default(autoincrement())
 
-  carrinhoId Int
-  carrinho   Carrinho   @relation(
-    fields: [carrinhoId],
-    references: [id],
-    onDelete: Cascade
-  )
+  carrinhoId Int @map("carrinho_id")
+  carrinho   Carrinho @relation(fields: [carrinhoId], references: [id], onDelete: Cascade)
 
-  produtoId  Int
+  produtoId  Int @map("produto_id")
   tipo       ProdutoTipo
   quantidade Int
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime @map("created_at")
+  updatedAt  DateTime @map("updated_at")
 
   @@unique([carrinhoId, produtoId, tipo])
+  @@map("carrinho_item")
 }
 
-enum Role {
-  USER
-  ADMIN
-}
 
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-
-  firstName String
-  lastName  String
-
-  cpf       String   @unique
-  telefone  String
-  cep       String
-  genero    String
-  nascimento DateTime
-
-  roles     Role[]  @default([USER])
-
-  carrinhos Carrinho[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([email])
-}
