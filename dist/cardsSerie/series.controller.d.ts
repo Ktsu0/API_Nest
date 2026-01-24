@@ -1,5 +1,5 @@
 import { SeriesService } from './series.service';
-import type { Serie } from 'src/model/series.model';
+import { Serie } from '@prisma/client';
 import { CreateCard } from 'src/dtoCards/createCard';
 import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';
@@ -8,13 +8,13 @@ import { TemaParamDto } from 'src/dtoCards/temaParam';
 export declare class SeriesController {
     private readonly seriesService;
     constructor(seriesService: SeriesService);
-    findAll(): Serie[];
-    findOne(params: IdParamDto): Serie;
-    findTema(params: TemaParamDto): Serie[];
-    ordemAlfabetica(): Serie[];
-    findByTitle(q: string): Serie[];
+    findAll(): Promise<Serie[]>;
+    findOne(params: IdParamDto): Promise<Serie>;
+    findTema(params: TemaParamDto): Promise<Serie[]>;
+    ordemAlfabetica(): Promise<Serie[]>;
+    findByTitle(q: string): Promise<Serie[]>;
     addSerie(serie: CreateCard): any;
-    addAvaliacao(id: string, avaliacaoDTO: AvaliacaoDTO): string;
-    updateSerie(id: string, updatedData: UpdateCardDto): Serie;
-    deleteSerie(params: IdParamDto): string;
+    addAvaliacao(id: string, avaliacaoDTO: AvaliacaoDTO): Promise<string>;
+    updateSerie(id: string, updatedData: UpdateCardDto): Promise<Serie>;
+    deleteSerie(params: IdParamDto): Promise<string>;
 }

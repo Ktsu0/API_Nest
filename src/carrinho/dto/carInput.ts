@@ -5,9 +5,9 @@ export class CarInput {
   @IsNotEmpty()
   tipo: 'serie' | 'anime';
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  id: string;
+  id: number;
 
   @IsNumber()
   @IsNotEmpty()

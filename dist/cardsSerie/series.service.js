@@ -38,33 +38,19 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeriesService = void 0;
 const common_1 = require("@nestjs/common");
-const bancoDados_1 = require("../model/bancoDados");
+const prisma_service_1 = require("../prisma.service");
+const client_1 = require("@prisma/client");
 const levenshtein = __importStar(require("fast-levenshtein"));
 let SeriesService = class SeriesService {
-    series = bancoDados_1.catalogoCompleto.filter((item) => item.tipo === 'serie');
-    findAll() {
-        return this.series;
-    }
-    findOne(id) {
-        const serieEncontrada = this.series.find((serie) => serie.id === id);
-        if (!serieEncontrada) {
-            throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
-        }
-        return serieEncontrada;
-    }
-    findTema(tema) {
-        const temaBusca = this.normalize(tema);
-        const seriesFiltradas = this.series.filter((serie) => {
-            const temaSerie = this.normalize(serie.descricao.tema);
-            return temaSerie.includes(temaBusca);
-        });
-        if (seriesFiltradas.length === 0) {
-            throw new common_1.NotFoundException(`Série com tema "${tema}" não encontrada.`);
-        }
-        return seriesFiltradas;
+    prisma;
+    constructor(prisma) {
+        this.prisma = prisma;
     }
     normalize(texto) {
         return texto
@@ -72,83 +58,200 @@ let SeriesService = class SeriesService {
             .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase();
     }
-    addSerie(serie) {
-        const novoId = Date.now().toString() + Math.floor(Math.random() * 1000).toString();
-        const novaSerie = { ...serie, id: novoId, tipo: 'serie' };
-        this.series.push(novaSerie);
-        return novaSerie;
+    async findAll() {
+        return this.prisma.serie.findMany({
+            where: {
+                tipo: client_1.ProdutoTipo.SERIE,
+            },
+            include: {
+                meta: true,
+            },
+            orderBy: {
+                titulo: 'asc',
+            },
+        });
     }
-    updateImage(id, novaImagem) {
-        const serieEncontrada = this.series.find((serie) => serie.id === id);
-        if (!serieEncontrada) {
-            throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
-        }
-        serieEncontrada.imagem = novaImagem;
-        return serieEncontrada;
-    }
-    ordemAlfabetica() {
-        const seriesCopia = [...this.series];
-        seriesCopia.sort((a, b) => a.titulo.localeCompare(b.titulo));
-        return seriesCopia;
-    }
-    addAvaliacao(id, avaliacao) {
-        const serie = this.series.find((s) => s.id === id);
+    async findOne(id) {
+        const serie = await this.prisma.serie.findUnique({
+            where: { id },
+            include: {
+                meta: true,
+            },
+        });
         if (!serie) {
             throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
         }
-        serie.avaliacao = avaliacao;
+        return serie;
     }
-    findTitulo(searchTerm) {
-        const termBusca = this.normalize(searchTerm);
-        let seriesFiltradas = this.series.filter((serie) => {
-            const tituloSerie = this.normalize(serie.titulo);
-            return tituloSerie.includes(termBusca);
+    async findTema(tema) {
+        const temaBusca = this.normalize(tema);
+        const series = await this.prisma.serie.findMany({
+            where: {
+                meta: {
+                    tema: {
+                        contains: temaBusca,
+                    },
+                },
+                tipo: client_1.ProdutoTipo.SERIE,
+            },
+            include: {
+                meta: true,
+            },
         });
-        if (seriesFiltradas.length === 0 && termBusca.length >= 3) {
+        if (!series.length) {
+            throw new common_1.NotFoundException(`Série com tema "${tema}" não encontrada.`);
+        }
+        return series;
+    }
+    async findTitulo(searchTerm) {
+        const termBusca = this.normalize(searchTerm);
+        let series = await this.prisma.serie.findMany({
+            where: {
+                titulo: {
+                    contains: termBusca,
+                    mode: 'insensitive',
+                },
+                tipo: client_1.ProdutoTipo.SERIE,
+            },
+            include: {
+                meta: true,
+            },
+        });
+        if (!series.length && termBusca.length >= 3) {
+            const todas = await this.prisma.serie.findMany({
+                where: { tipo: client_1.ProdutoTipo.SERIE },
+                include: { meta: true },
+            });
             const MAX_DISTANCE = termBusca.length > 8 ? 2 : termBusca.length > 5 ? 1 : 0;
-            seriesFiltradas = this.series.filter((serie) => {
+            series = todas.filter((serie) => {
                 const tituloSerie = this.normalize(serie.titulo);
                 const distance = levenshtein.get(termBusca, tituloSerie);
                 return distance <= MAX_DISTANCE;
             });
         }
-        return seriesFiltradas;
+        return series;
     }
-    updateSerie(id, updatedData) {
-        const index = this.series.findIndex((serie) => serie.id === id);
-        if (index === -1) {
+    async addSerie(data) {
+        return this.prisma.$transaction(async (tx) => {
+            return tx.serie.create({
+                data: {
+                    titulo: data.titulo,
+                    detalhes: data.detalhes,
+                    imagem: data.imagem,
+                    estoque: data.estoque,
+                    valorUnitario: data.valorUnitario,
+                    avaliacao: data.avaliacao,
+                    tipo: client_1.ProdutoTipo.SERIE,
+                    meta: {
+                        create: {
+                            temporada: data.meta.temporada,
+                            tema: this.normalize(data.meta.tema),
+                        },
+                    },
+                },
+                include: {
+                    meta: true,
+                },
+            });
+        });
+    }
+    async updateImage(id, novaImagem) {
+        try {
+            return await this.prisma.serie.update({
+                where: { id },
+                data: { imagem: novaImagem },
+                include: { meta: true },
+            });
+        }
+        catch {
             throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
         }
-        const current = this.series[index];
-        this.series[index] = {
-            ...current,
-            ...updatedData,
-            descricao: {
-                ...current.descricao,
-                ...(updatedData.descricao || {}),
-            },
-        };
-        return this.series[index];
     }
-    deleteSerie(id) {
-        const index = this.series.findIndex((serie) => serie.id === id);
-        if (index === -1) {
+    async addAvaliacao(id, avaliacao) {
+        try {
+            return await this.prisma.serie.update({
+                where: { id },
+                data: { avaliacao },
+            });
+        }
+        catch {
             throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
         }
-        const titulo = this.series[index].titulo;
-        this.series.splice(index, 1);
-        return `Série "${titulo}" removida com sucesso.`;
     }
-    atualizarEstoque(id, quantidade) {
-        const serie = this.series.find((s) => s.id === id);
-        if (!serie) {
+    async updateSerie(id, updatedData) {
+        try {
+            return await this.prisma.serie.update({
+                where: { id },
+                data: {
+                    titulo: updatedData.titulo,
+                    detalhes: updatedData.detalhes,
+                    imagem: updatedData.imagem,
+                    estoque: updatedData.estoque,
+                    valorUnitario: updatedData.valorUnitario,
+                    avaliacao: updatedData.avaliacao,
+                    meta: updatedData.meta
+                        ? {
+                            update: {
+                                temporada: updatedData.meta.temporada,
+                                tema: updatedData.meta.tema
+                                    ? this.normalize(updatedData.meta.tema)
+                                    : undefined,
+                            },
+                        }
+                        : undefined,
+                },
+                include: {
+                    meta: true,
+                },
+            });
+        }
+        catch {
+            throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
+        }
+    }
+    async deleteSerie(id) {
+        try {
+            await this.prisma.serie.delete({
+                where: { id },
+            });
+            return `Série removida com sucesso.`;
+        }
+        catch {
+            throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada.`);
+        }
+    }
+    async atualizarEstoque(id, quantidade) {
+        try {
+            return await this.prisma.serie.update({
+                where: { id },
+                data: {
+                    estoque: {
+                        decrement: quantidade,
+                    },
+                },
+            });
+        }
+        catch {
             throw new common_1.NotFoundException(`Série com ID "${id}" não encontrada para atualizar estoque.`);
         }
-        serie.estoque = Math.max(0, serie.estoque - quantidade);
+    }
+    async ordemAlfabetica() {
+        return this.prisma.serie.findMany({
+            where: {
+                tipo: client_1.ProdutoTipo.SERIE,
+            },
+            include: {
+                meta: true,
+            },
+            orderBy: {
+                titulo: 'asc',
+            },
+        });
     }
 };
 exports.SeriesService = SeriesService;
 exports.SeriesService = SeriesService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], SeriesService);
 //# sourceMappingURL=series.service.js.map

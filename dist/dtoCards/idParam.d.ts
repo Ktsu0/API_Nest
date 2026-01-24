@@ -1,3 +1,3 @@
 export declare class IdParamDto {
-    id: string;
+    id: number;
 }

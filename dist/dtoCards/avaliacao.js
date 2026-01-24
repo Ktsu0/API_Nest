@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AvaliacaoDTO = void 0;
 const class_validator_1 = require("class-validator");
+const library_1 = require("@prisma/client/runtime/library");
 class AvaliacaoDTO {
     ID;
     avaliacao;
@@ -26,6 +27,6 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.Max)(5),
     (0, class_validator_1.Min)(1),
-    __metadata("design:type", Number)
+    __metadata("design:type", library_1.Decimal)
 ], AvaliacaoDTO.prototype, "avaliacao", void 0);
 //# sourceMappingURL=avaliacao.js.map

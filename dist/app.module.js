@@ -13,6 +13,7 @@ const app_controller_1 = require("./app.controller");
 const users_module_1 = require("./users/users.module");
 const carrinho_module_1 = require("./carrinho/carrinho.module");
 const anime_module_1 = require("./cardsAnime/anime.module");
+const prisma_service_1 = require("./prisma.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -20,7 +21,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [serie_module_1.SeriesModule, users_module_1.UserModule, carrinho_module_1.CarrinhoModule, anime_module_1.AnimeModule],
         controllers: [app_controller_1.AppController],
-        providers: [],
+        providers: [prisma_service_1.PrismaService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

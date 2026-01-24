@@ -5,9 +5,9 @@ export class CarItem {
   @IsNotEmpty()
   tipo: 'serie' | 'anime';
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  produtoId: string;
+  produtoId: number;
 
   @IsString()
   @IsNotEmpty()

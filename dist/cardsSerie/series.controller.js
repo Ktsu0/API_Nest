@@ -29,19 +29,19 @@ let SeriesController = class SeriesController {
     constructor(seriesService) {
         this.seriesService = seriesService;
     }
-    findAll() {
+    async findAll() {
         return this.seriesService.findAll();
     }
-    findOne(params) {
+    async findOne(params) {
         return this.seriesService.findOne(params.id);
     }
-    findTema(params) {
+    async findTema(params) {
         return this.seriesService.findTema(params.tema);
     }
-    ordemAlfabetica() {
+    async ordemAlfabetica() {
         return this.seriesService.ordemAlfabetica();
     }
-    findByTitle(q) {
+    async findByTitle(q) {
         if (!q) {
             return this.seriesService.findAll();
         }
@@ -50,15 +50,15 @@ let SeriesController = class SeriesController {
     addSerie(serie) {
         return this.seriesService.addSerie(serie);
     }
-    addAvaliacao(id, avaliacaoDTO) {
-        this.seriesService.addAvaliacao(id, avaliacaoDTO.avaliacao);
+    async addAvaliacao(id, avaliacaoDTO) {
+        await this.seriesService.addAvaliacao(Number(id), avaliacaoDTO.avaliacao);
         return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
     }
-    updateSerie(id, updatedData) {
-        const serie = this.seriesService.updateSerie(id, updatedData);
+    async updateSerie(id, updatedData) {
+        const serie = await this.seriesService.updateSerie(Number(id), updatedData);
         return serie;
     }
-    deleteSerie(params) {
+    async deleteSerie(params) {
         return this.seriesService.deleteSerie(params.id);
     }
 };
@@ -67,34 +67,34 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [idParam_1.IdParamDto]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Get)('tema/:tema'),
     __param(0, (0, common_1.Param)('tema')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [temaParam_1.TemaParamDto]),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "findTema", null);
 __decorate([
     (0, common_1.Get)('ordem/alfabetica'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "ordemAlfabetica", null);
 __decorate([
     (0, common_1.Get)('search'),
     __param(0, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "findByTitle", null);
 __decorate([
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
@@ -110,7 +110,7 @@ __decorate([
     __param(1, (0, common_1.Body)('avaliacao')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, avaliacao_1.AvaliacaoDTO]),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "addAvaliacao", null);
 __decorate([
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
@@ -119,7 +119,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, updateCard_1.UpdateCardDto]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "updateSerie", null);
 __decorate([
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
@@ -127,7 +127,7 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [idParam_1.IdParamDto]),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "deleteSerie", null);
 exports.SeriesController = SeriesController = __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),

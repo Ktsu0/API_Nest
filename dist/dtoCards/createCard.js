@@ -12,10 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCard = void 0;
 const class_validator_1 = require("class-validator");
 const descricao_1 = require("./descricao");
+const library_1 = require("@prisma/client/runtime/library");
 class CreateCard {
     id;
     titulo;
-    descricao;
+    meta;
     detalhes;
     imagem;
     estoque;
@@ -36,7 +37,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsObject)(),
     __metadata("design:type", descricao_1.Descricao)
-], CreateCard.prototype, "descricao", void 0);
+], CreateCard.prototype, "meta", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
@@ -58,7 +59,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", library_1.Decimal)
 ], CreateCard.prototype, "valorUnitario", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
@@ -66,7 +67,7 @@ __decorate([
     (0, class_validator_1.IsPositive)(),
     (0, class_validator_1.Max)(5),
     (0, class_validator_1.Min)(1),
-    __metadata("design:type", Number)
+    __metadata("design:type", library_1.Decimal)
 ], CreateCard.prototype, "avaliacao", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),

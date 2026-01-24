@@ -1,6 +1,6 @@
 export declare class CarItem {
     tipo: 'serie' | 'anime';
-    produtoId: string;
+    produtoId: number;
     titulo: string;
     valorUnitario: number;
     quantidadeDesejada: number;

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { AnimeService } from './anime.service';
-import type { Serie } from 'src/model/series.model';
+import { Serie } from '@prisma/client';
 import { CreateCard } from 'src/dtoCards/createCard';
 import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';
@@ -28,24 +28,24 @@ export class AnimeController {
   constructor(private readonly animesService: AnimeService) {}
 
   @Get()
-  findAll(): Serie[] {
+  async findAll(): Promise<Serie[]> {
     return this.animesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param() params: IdParamDto): Serie {
+  async findOne(@Param() params: IdParamDto): Promise<Serie> {
     return this.animesService.findOne(params.id);
   }
   @Get('tema/:tema')
-  findTema(@Param('tema') params: TemaParamDto): Serie[] {
+  async findTema(@Param('tema') params: TemaParamDto): Promise<Serie[]> {
     return this.animesService.findTema(params.tema);
   }
   @Get('ordem/alfabetica')
-  ordemAlfabetica(): Serie[] {
+  async ordemAlfabetica(): Promise<Serie[]> {
     return this.animesService.ordemAlfabetica();
   }
   @Get('search')
-  findByTitle(@Query('q') q: string): Serie[] {
+  async findByTitle(@Query('q') q: string): Promise<Serie[]> {
     if (!q) {
       return this.animesService.findAll();
     }
@@ -58,27 +58,27 @@ export class AnimeController {
   }
 
   @Post(':id/avaliacao')
-  addAvaliacao(
+  async addAvaliacao(
     @Param('id') id: string,
     @Body('avaliacao') avaliacaoDTO: AvaliacaoDTO,
-  ): string {
-    this.animesService.addAvaliacao(id, avaliacaoDTO.avaliacao);
+  ): Promise<string> {
+    await this.animesService.addAvaliacao(Number(id), avaliacaoDTO.avaliacao);
     return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
   }
 
   @RolesG(Roles.ADMIN)
   @Put(':id')
-  updateAnime(
+  async updateAnime(
     @Param('id') id: string,
     @Body() updatedData: UpdateCardDto,
-  ): Serie {
-    const anime = this.animesService.updateAnime(id, updatedData);
+  ): Promise<Serie> {
+    const anime = await this.animesService.updateAnime(Number(id), updatedData);
     return anime;
   }
 
   @RolesG(Roles.ADMIN)
   @Delete(':id')
-  deleteAnime(@Param() params: IdParamDto): string {
+  async deleteAnime(@Param() params: IdParamDto): Promise<string> {
     return this.animesService.deleteAnime(params.id);
   }
 }

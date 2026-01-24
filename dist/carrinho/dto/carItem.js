@@ -26,9 +26,9 @@ __decorate([
     __metadata("design:type", String)
 ], CarItem.prototype, "tipo", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], CarItem.prototype, "produtoId", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),

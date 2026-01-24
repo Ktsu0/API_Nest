@@ -10,12 +10,14 @@ export class CarrinhoController {
   constructor(private readonly carrinhoService: CarrinhoService) {}
 
   @Post('validar')
-  validarCarrinho(@Body() itensCarrinho: CarInput[]): CarValidacao {
+  async validarCarrinho(
+    @Body() itensCarrinho: CarInput[],
+  ): Promise<CarValidacao> {
     return this.carrinhoService.validarCarrinho(itensCarrinho);
   }
 
   @Post('comprar')
-  finalizarCompra(@Body() itensCarrinho: CarInput[]): string[] {
+  async finalizarCompra(@Body() itensCarrinho: CarInput[]): Promise<string[]> {
     return this.carrinhoService.finalizarCompra(itensCarrinho);
   }
 }

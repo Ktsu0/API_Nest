@@ -13,6 +13,7 @@ const users_controller_1 = require("./users.controller");
 const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 const jwt_strategy_1 = require("./stategies/jwt.strategy");
+const prisma_service_1 = require("../prisma.service");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
@@ -26,7 +27,7 @@ exports.UserModule = UserModule = __decorate([
             }),
         ],
         controllers: [users_controller_1.UserController],
-        providers: [users_service_1.UserService, jwt_strategy_1.JwtStrategy],
+        providers: [users_service_1.UserService, jwt_strategy_1.JwtStrategy, prisma_service_1.PrismaService],
         exports: [users_service_1.UserService, jwt_strategy_1.JwtStrategy],
     })
 ], UserModule);

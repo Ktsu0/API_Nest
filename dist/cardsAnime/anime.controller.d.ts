@@ -1,5 +1,5 @@
 import { AnimeService } from './anime.service';
-import type { Serie } from 'src/model/series.model';
+import { Serie } from '@prisma/client';
 import { CreateCard } from 'src/dtoCards/createCard';
 import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';
@@ -8,13 +8,13 @@ import { TemaParamDto } from 'src/dtoCards/temaParam';
 export declare class AnimeController {
     private readonly animesService;
     constructor(animesService: AnimeService);
-    findAll(): Serie[];
-    findOne(params: IdParamDto): Serie;
-    findTema(params: TemaParamDto): Serie[];
-    ordemAlfabetica(): Serie[];
-    findByTitle(q: string): Serie[];
+    findAll(): Promise<Serie[]>;
+    findOne(params: IdParamDto): Promise<Serie>;
+    findTema(params: TemaParamDto): Promise<Serie[]>;
+    ordemAlfabetica(): Promise<Serie[]>;
+    findByTitle(q: string): Promise<Serie[]>;
     addAnime(anime: CreateCard): any;
-    addAvaliacao(id: string, avaliacaoDTO: AvaliacaoDTO): string;
-    updateAnime(id: string, updatedData: UpdateCardDto): Serie;
-    deleteAnime(params: IdParamDto): string;
+    addAvaliacao(id: string, avaliacaoDTO: AvaliacaoDTO): Promise<string>;
+    updateAnime(id: string, updatedData: UpdateCardDto): Promise<Serie>;
+    deleteAnime(params: IdParamDto): Promise<string>;
 }

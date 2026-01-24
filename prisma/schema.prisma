@@ -24,7 +24,7 @@ model Serie {
   estoque       Int
   valorUnitario Decimal  @map("valor_unitario")
   avaliacao     Decimal?
-  tipo          String
+  tipo          ProdutoTipo
 
   metaId        Int      @map("meta_id")
   meta          SerieMeta @relation(fields: [metaId], references: [id])

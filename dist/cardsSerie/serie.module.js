@@ -10,6 +10,7 @@ exports.SeriesModule = void 0;
 const common_1 = require("@nestjs/common");
 const series_controller_1 = require("./series.controller");
 const series_service_1 = require("./series.service");
+const prisma_service_1 = require("../prisma.service");
 let SeriesModule = class SeriesModule {
 };
 exports.SeriesModule = SeriesModule;
@@ -17,7 +18,7 @@ exports.SeriesModule = SeriesModule = __decorate([
     (0, common_1.Module)({
         imports: [],
         controllers: [series_controller_1.SeriesController],
-        providers: [series_service_1.SeriesService],
+        providers: [series_service_1.SeriesService, prisma_service_1.PrismaService],
         exports: [series_service_1.SeriesService],
     })
 ], SeriesModule);

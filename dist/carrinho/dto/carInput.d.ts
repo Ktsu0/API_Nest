@@ -1,5 +1,5 @@
 export declare class CarInput {
     tipo: 'serie' | 'anime';
-    id: string;
+    id: number;
     quantidade: number;
 }
