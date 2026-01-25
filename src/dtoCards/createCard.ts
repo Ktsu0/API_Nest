@@ -11,12 +11,7 @@ import {
   Min,
 } from 'class-validator';
 import { Descricao } from './descricao';
-import { Decimal } from '@prisma/client/runtime/library';
-
 export class CreateCard {
-  @Allow()
-  id: string;
-
   @IsString()
   @IsNotEmpty()
   titulo: string;
@@ -29,7 +24,6 @@ export class CreateCard {
   detalhes: string;
 
   @IsString()
-  @IsUrl()
   @IsNotEmpty()
   imagem: string;
 
@@ -41,14 +35,14 @@ export class CreateCard {
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  valorUnitario: Decimal;
+  valorUnitario: number;
 
   @IsOptional()
   @IsNumber()
   @IsPositive()
   @Max(5)
   @Min(1)
-  avaliacao?: Decimal;
+  avaliacao?: number;
 
   @IsOptional()
   @IsString()

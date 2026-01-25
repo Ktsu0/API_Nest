@@ -16,7 +16,6 @@ exports.SeriesController = void 0;
 const common_1 = require("@nestjs/common");
 const series_service_1 = require("./series.service");
 const createCard_1 = require("../dtoCards/createCard");
-const avaliacao_1 = require("../dtoCards/avaliacao");
 const updateCard_1 = require("../dtoCards/updateCard");
 const idParam_1 = require("../dtoCards/idParam");
 const temaParam_1 = require("../dtoCards/temaParam");
@@ -32,9 +31,6 @@ let SeriesController = class SeriesController {
     async findAll() {
         return this.seriesService.findAll();
     }
-    async findOne(params) {
-        return this.seriesService.findOne(params.id);
-    }
     async findTema(params) {
         return this.seriesService.findTema(params.tema);
     }
@@ -47,16 +43,18 @@ let SeriesController = class SeriesController {
         }
         return this.seriesService.findTitulo(q);
     }
+    async findOne(params) {
+        return this.seriesService.findOne(params.id);
+    }
     addSerie(serie) {
         return this.seriesService.addSerie(serie);
     }
-    async addAvaliacao(id, avaliacaoDTO) {
-        await this.seriesService.addAvaliacao(Number(id), avaliacaoDTO.avaliacao);
-        return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
+    async addAvaliacao(id, avaliacao) {
+        await this.seriesService.addAvaliacao(Number(id), avaliacao);
+        return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
     }
     async updateSerie(id, updatedData) {
-        const serie = await this.seriesService.updateSerie(Number(id), updatedData);
-        return serie;
+        return this.seriesService.updateSerie(Number(id), updatedData);
     }
     async deleteSerie(params) {
         return this.seriesService.deleteSerie(params.id);
@@ -69,13 +67,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
-    __metadata("design:returntype", Promise)
-], SeriesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Get)('tema/:tema'),
     __param(0, (0, common_1.Param)('tema')),
@@ -97,6 +88,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "findByTitle", null);
 __decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
+    __metadata("design:returntype", Promise)
+], SeriesController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -105,14 +104,16 @@ __decorate([
     __metadata("design:returntype", Object)
 ], SeriesController.prototype, "addSerie", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, common_1.Post)(':id/avaliacao'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)('avaliacao')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, avaliacao_1.AvaliacaoDTO]),
+    __metadata("design:paramtypes", [String, Number]),
     __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "addAvaliacao", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -122,6 +123,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "updateSerie", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)()),
@@ -130,7 +132,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SeriesController.prototype, "deleteSerie", null);
 exports.SeriesController = SeriesController = __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, common_1.Controller)('series'),
     __metadata("design:paramtypes", [series_service_1.SeriesService])
 ], SeriesController);

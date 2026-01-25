@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { v4 as uuidv4 } from 'uuid';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
 import { LoginUserDto } from './dto/loginUser';
@@ -39,6 +39,7 @@ export class UserService {
     if (!user) return undefined;
 
     const isMatch = await bcrypt.compare(data.password, user.password);
+
     if (!isMatch) return undefined;
 
     return { access_token: this.createToken(user) };

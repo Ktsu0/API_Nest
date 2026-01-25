@@ -11,9 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { SeriesService } from './series.service';
-import { Serie } from '@prisma/client';
 import { CreateCard } from 'src/dtoCards/createCard';
-import { AvaliacaoDTO } from 'src/dtoCards/avaliacao';
 import { UpdateCardDto } from 'src/dtoCards/updateCard';
 import { IdParamDto } from 'src/dtoCards/idParam';
 import { TemaParamDto } from 'src/dtoCards/temaParam';
@@ -22,64 +20,66 @@ import { RolesGuard } from 'src/users/guards/roles.guard';
 import { Roles } from 'src/users/model/roles.enum';
 import { RolesG } from 'src/users/decorators/roles.decorator';
 
-@UseGuards(JwtAutGuard, RolesGuard)
 @Controller('series')
 export class SeriesController {
   constructor(private readonly seriesService: SeriesService) {}
 
   @Get()
-  async findAll(): Promise<Serie[]> {
+  async findAll(): Promise<any[]> {
     return this.seriesService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param() params: IdParamDto): Promise<Serie> {
-    return this.seriesService.findOne(params.id);
-  }
-
   @Get('tema/:tema')
-  async findTema(@Param('tema') params: TemaParamDto): Promise<Serie[]> {
+  async findTema(@Param('tema') params: TemaParamDto): Promise<any[]> {
     return this.seriesService.findTema(params.tema);
   }
 
   @Get('ordem/alfabetica')
-  async ordemAlfabetica(): Promise<Serie[]> {
+  async ordemAlfabetica(): Promise<any[]> {
     return this.seriesService.ordemAlfabetica();
   }
 
   @Get('search')
-  async findByTitle(@Query('q') q: string): Promise<Serie[]> {
+  async findByTitle(@Query('q') q: string): Promise<any[]> {
     if (!q) {
       return this.seriesService.findAll();
     }
     return this.seriesService.findTitulo(q);
   }
 
+  @Get(':id')
+  async findOne(@Param() params: IdParamDto): Promise<any> {
+    return this.seriesService.findOne(params.id);
+  }
+
+  @UseGuards(JwtAutGuard, RolesGuard)
   @RolesG(Roles.ADMIN)
   @Post()
   addSerie(@Body() serie: CreateCard): any {
     return this.seriesService.addSerie(serie);
   }
 
+  @UseGuards(JwtAutGuard, RolesGuard)
   @Post(':id/avaliacao')
   async addAvaliacao(
     @Param('id') id: string,
-    @Body('avaliacao') avaliacaoDTO: AvaliacaoDTO,
+    @Body('avaliacao') avaliacao: number,
   ): Promise<string> {
-    await this.seriesService.addAvaliacao(Number(id), avaliacaoDTO.avaliacao);
-    return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
+    await this.seriesService.addAvaliacao(Number(id), avaliacao);
+    return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
   }
 
+  @UseGuards(JwtAutGuard, RolesGuard)
   @RolesG(Roles.ADMIN)
   @Put(':id')
   async updateSerie(
     @Param('id') id: string,
     @Body() updatedData: UpdateCardDto,
-  ): Promise<Serie> {
-    const serie = await this.seriesService.updateSerie(Number(id), updatedData);
-    return serie;
+  ): Promise<any> {
+    return this.seriesService.updateSerie(Number(id), updatedData);
   }
 
+  @UseGuards(JwtAutGuard, RolesGuard)
   @RolesG(Roles.ADMIN)
   @Delete(':id')
   async deleteSerie(@Param() params: IdParamDto): Promise<string> {

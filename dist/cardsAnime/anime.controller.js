@@ -16,7 +16,6 @@ exports.AnimeController = void 0;
 const common_1 = require("@nestjs/common");
 const anime_service_1 = require("./anime.service");
 const createCard_1 = require("../dtoCards/createCard");
-const avaliacao_1 = require("../dtoCards/avaliacao");
 const updateCard_1 = require("../dtoCards/updateCard");
 const idParam_1 = require("../dtoCards/idParam");
 const temaParam_1 = require("../dtoCards/temaParam");
@@ -32,9 +31,6 @@ let AnimeController = class AnimeController {
     async findAll() {
         return this.animesService.findAll();
     }
-    async findOne(params) {
-        return this.animesService.findOne(params.id);
-    }
     async findTema(params) {
         return this.animesService.findTema(params.tema);
     }
@@ -47,16 +43,18 @@ let AnimeController = class AnimeController {
         }
         return this.animesService.findTitulo(q);
     }
+    async findOne(params) {
+        return this.animesService.findOne(params.id);
+    }
     addAnime(anime) {
         return this.animesService.addAnime(anime);
     }
-    async addAvaliacao(id, avaliacaoDTO) {
-        await this.animesService.addAvaliacao(Number(id), avaliacaoDTO.avaliacao);
-        return `Avaliação de ${avaliacaoDTO.avaliacao} adicionada à série com ID ${id}.`;
+    async addAvaliacao(id, avaliacao) {
+        await this.animesService.addAvaliacao(Number(id), avaliacao);
+        return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
     }
     async updateAnime(id, updatedData) {
-        const anime = await this.animesService.updateAnime(Number(id), updatedData);
-        return anime;
+        return this.animesService.updateAnime(Number(id), updatedData);
     }
     async deleteAnime(params) {
         return this.animesService.deleteAnime(params.id);
@@ -69,13 +67,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AnimeController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
-    __metadata("design:returntype", Promise)
-], AnimeController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Get)('tema/:tema'),
     __param(0, (0, common_1.Param)('tema')),
@@ -97,6 +88,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AnimeController.prototype, "findByTitle", null);
 __decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -105,14 +104,16 @@ __decorate([
     __metadata("design:returntype", Object)
 ], AnimeController.prototype, "addAnime", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, common_1.Post)(':id/avaliacao'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)('avaliacao')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, avaliacao_1.AvaliacaoDTO]),
+    __metadata("design:paramtypes", [String, Number]),
     __metadata("design:returntype", Promise)
 ], AnimeController.prototype, "addAvaliacao", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -122,6 +123,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AnimeController.prototype, "updateAnime", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)()),
@@ -130,7 +132,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AnimeController.prototype, "deleteAnime", null);
 exports.AnimeController = AnimeController = __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, common_1.Controller)('animes'),
     __metadata("design:paramtypes", [anime_service_1.AnimeService])
 ], AnimeController);

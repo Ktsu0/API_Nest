@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "titulo": "Breaking Bad",
+    "detalhes": "sda",
+    "imagem": "https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif",
+    "estoque": 12,
+    "valorUnitario": 30,
+    "avaliacao": null,
+    "tipo": "SERIE",
+    "metaId": 1,
+    "createdAt": "2026-01-25T00:19:16.644Z",
+    "updatedAt": "2026-01-25T00:19:16.644Z",
+    "meta": {
+      "id": 1,
+      "temporada": "9 temporadas",
+      "tema": "comedia/romance"
+    }
+  },
+  {
+    "id": 6,
+    "titulo": "Breaking Bad",
+    "detalhes": "sdsa",
+    "imagem": "https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif",
+    "estoque": 21321,
+    "valorUnitario": 123,
+    "avaliacao": null,
+    "tipo": "SERIE",
+    "metaId": 6,
+    "createdAt": "2026-01-25T01:34:51.949Z",
+    "updatedAt": "2026-01-25T01:34:51.949Z",
+    "meta": {
+      "id": 6,
+      "temporada": "9 temporadas",
+      "tema": "crime/drama"
+    }
+  },
+  {
+    "id": 7,
+    "titulo": "Os padrinhos Magicos s",
+    "detalhes": "sadda",
+    "imagem": "https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif",
+    "estoque": 12,
+    "valorUnitario": 2131,
+    "avaliacao": null,
+    "tipo": "SERIE",
+    "metaId": 7,
+    "createdAt": "2026-01-25T01:42:42.242Z",
+    "updatedAt": "2026-01-25T01:42:42.242Z",
+    "meta": {
+      "id": 7,
+      "temporada": "9 temporadas",
+      "tema": "comedia/romance"
+    }
+  },
+  {
+    "id": 2,
+    "titulo": "Test Series via Script",
+    "detalhes": "Testing integration",
+    "imagem": "https://via.placeholder.com/150",
+    "estoque": 10,
+    "valorUnitario": 50.5,
+    "avaliacao": null,
+    "tipo": "SERIE",
+    "metaId": 2,
+    "createdAt": "2026-01-25T00:26:33.454Z",
+    "updatedAt": "2026-01-25T00:26:33.454Z",
+    "meta": {
+      "id": 2,
+      "temporada": "1",
+      "tema": "test theme"
+    }
+  }
+]

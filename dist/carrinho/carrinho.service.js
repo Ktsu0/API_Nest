@@ -58,14 +58,14 @@ let CarrinhoService = class CarrinhoService {
             if (quantidade > estoque) {
                 validacao.validacao.erros.push(`Estoque insuficiente para "${titulo}". Pedido: ${quantidade}, Disponível: ${estoque}.`);
             }
-            const valorItem = valorUnitario.mul(quantidade);
+            const valorItem = Number(valorUnitario) * quantidade;
             totalItens += quantidade;
-            valorTotal = valorTotal.add(valorItem);
+            valorTotal = valorTotal.add(new client_1.Prisma.Decimal(valorItem));
             validacao.items.push({
                 tipo: tipo === client_1.ProdutoTipo.SERIE ? 'serie' : 'anime',
                 produtoId: id,
                 titulo,
-                valorUnitario: valorUnitario.toNumber(),
+                valorUnitario: Number(valorUnitario),
                 quantidadeDesejada: quantidade,
                 estoqueDisponivel: estoque,
             });

@@ -68,12 +68,12 @@ export class CarrinhoService {
       }
 
       // ==============================
-      // Cálculo financeiro com Decimal
+      // Cálculo financeiro
       // ==============================
-      const valorItem = valorUnitario.mul(quantidade);
+      const valorItem = Number(valorUnitario) * quantidade;
 
       totalItens += quantidade;
-      valorTotal = valorTotal.add(valorItem);
+      valorTotal = valorTotal.add(new Prisma.Decimal(valorItem));
 
       // ==============================
       // Registro do item validado
@@ -82,7 +82,7 @@ export class CarrinhoService {
         tipo: tipo === ProdutoTipo.SERIE ? 'serie' : 'anime',
         produtoId: id,
         titulo,
-        valorUnitario: valorUnitario.toNumber(),
+        valorUnitario: Number(valorUnitario),
         quantidadeDesejada: quantidade,
         estoqueDisponivel: estoque,
       });

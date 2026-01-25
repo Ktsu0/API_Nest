@@ -1,208 +1,29 @@
 import { PrismaService } from 'src/prisma.service';
-import { Decimal } from '@prisma/client/runtime/library';
 export declare class AnimeService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     private normalize;
-    findAll(): Promise<({
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    })[]>;
-    findOne(id: number): Promise<{
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
-    findTema(tema: string): Promise<({
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    })[]>;
-    findTitulo(searchTerm: string): Promise<({
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    })[]>;
-    addAnime(data: {
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao?: Decimal;
-        meta: {
-            temporada: string;
-            tema: string;
-        };
-    }): Promise<{
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
-    updateImage(id: number, novaImagem: string): Promise<{
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
-    addAvaliacao(id: number, avaliacao: Decimal): Promise<{
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
-    updateAnime(id: number, updatedData: {
-        titulo?: string;
-        detalhes?: string;
-        imagem?: string;
-        estoque?: number;
-        valorUnitario?: Decimal;
-        avaliacao?: Decimal;
-        meta?: {
-            temporada?: string;
-            tema?: string;
-        };
-    }): Promise<{
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
-    deleteAnime(id: number): Promise<string>;
+    private formatAnime;
+    findAll(): Promise<any[]>;
+    findOne(id: number): Promise<any>;
+    findTema(tema: string): Promise<any[]>;
+    findTitulo(searchTerm: string): Promise<any[]>;
+    addAvaliacao(id: number, avaliacao: number): Promise<string>;
     atualizarEstoque(id: number, quantidade: number): Promise<{
         id: number;
         titulo: string;
         detalhes: string;
         imagem: string;
         estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
+        valorUnitario: import("@prisma/client/runtime/library").Decimal;
+        avaliacao: import("@prisma/client/runtime/library").Decimal | null;
         tipo: import("@prisma/client").$Enums.ProdutoTipo;
         metaId: number;
         createdAt: Date;
         updatedAt: Date;
     }>;
-    ordemAlfabetica(): Promise<({
-        meta: {
-            id: number;
-            temporada: string;
-            tema: string;
-        };
-    } & {
-        id: number;
-        titulo: string;
-        detalhes: string;
-        imagem: string;
-        estoque: number;
-        valorUnitario: Decimal;
-        avaliacao: Decimal | null;
-        tipo: import("@prisma/client").$Enums.ProdutoTipo;
-        metaId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    })[]>;
+    addAnime(data: any): Promise<any>;
+    updateAnime(id: number, updatedData: any): Promise<any>;
+    deleteAnime(id: number): Promise<string>;
+    ordemAlfabetica(): Promise<any[]>;
 }
