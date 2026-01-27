@@ -11,17 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarrinhoService = void 0;
 const common_1 = require("@nestjs/common");
-const series_service_1 = require("./../cardsSerie/series.service");
-const anime_service_1 = require("./../cardsAnime/anime.service");
+const prisma_service_1 = require("../prisma.service");
 const client_1 = require("@prisma/client");
 let CarrinhoService = class CarrinhoService {
-    seriesService;
-    animesService;
-    constructor(seriesService, animesService) {
-        this.seriesService = seriesService;
-        this.animesService = animesService;
+    prisma;
+    constructor(prisma) {
+        this.prisma = prisma;
     }
     async validarCarrinho(itensCarrinho) {
+        console.log('[CarrinhoService] Validando itens:', JSON.stringify(itensCarrinho));
         const validacao = {
             items: [],
             validacao: {
@@ -33,69 +31,107 @@ let CarrinhoService = class CarrinhoService {
         let totalItens = 0;
         let valorTotal = new client_1.Prisma.Decimal(0);
         for (const item of itensCarrinho) {
-            let produto = null;
-            try {
-                if (item.tipo === 'serie') {
-                    produto = await this.seriesService.findOne(item.id);
-                }
-                else if (item.tipo === 'anime') {
-                    produto = await this.animesService.findOne(item.id);
-                }
-            }
-            catch {
-                produto = null;
-            }
+            const itemId = Number(item.id);
+            const itemTipo = String(item.tipo).toLowerCase();
+            const produto = await this.prisma.serie.findUnique({
+                where: { id: itemId },
+                select: {
+                    id: true,
+                    titulo: true,
+                    estoque: true,
+                    valorUnitario: true,
+                    tipo: true,
+                },
+            });
             if (!produto) {
-                validacao.validacao.erros.push(`Produto com ID ${item.id} não encontrado em nenhum catálogo.`);
+                validacao.validacao.erros.push(`Produto com ID ${item.id} não encontrado.`);
                 continue;
             }
-            const { id, titulo, estoque, valorUnitario, tipo } = produto;
-            const quantidade = item.quantidade;
-            if (quantidade <= 0) {
-                validacao.validacao.erros.push(`Quantidade inválida para "${titulo}".`);
+            const produtoTipoStr = String(produto.tipo).toLowerCase();
+            if (itemTipo !== produtoTipoStr) {
+                console.warn(`Divergência de tipo para ID ${produto.id}: Frontend=${itemTipo}, DB=${produtoTipoStr}`);
+            }
+            if (item.quantidade <= 0) {
+                validacao.validacao.erros.push(`Quantidade inválida para "${produto.titulo}".`);
                 continue;
             }
-            if (quantidade > estoque) {
-                validacao.validacao.erros.push(`Estoque insuficiente para "${titulo}". Pedido: ${quantidade}, Disponível: ${estoque}.`);
+            if (produto.estoque < item.quantidade) {
+                validacao.validacao.erros.push(`Estoque insuficiente para "${produto.titulo}". Pedido: ${item.quantidade}, Disponível: ${produto.estoque}.`);
             }
-            const valorItem = Number(valorUnitario) * quantidade;
-            totalItens += quantidade;
+            const valorItem = Number(produto.valorUnitario) * item.quantidade;
+            totalItens += item.quantidade;
             valorTotal = valorTotal.add(new client_1.Prisma.Decimal(valorItem));
             validacao.items.push({
-                tipo: tipo === client_1.ProdutoTipo.SERIE ? 'serie' : 'anime',
-                produtoId: id,
-                titulo,
-                valorUnitario: Number(valorUnitario),
-                quantidadeDesejada: quantidade,
-                estoqueDisponivel: estoque,
+                tipo: produtoTipoStr,
+                produtoId: produto.id,
+                titulo: produto.titulo,
+                valorUnitario: Number(produto.valorUnitario),
+                quantidadeDesejada: item.quantidade,
+                estoqueDisponivel: produto.estoque,
             });
         }
         validacao.validacao.totalItens = totalItens;
         validacao.validacao.valorTotal = Number(valorTotal.toFixed(2));
+        console.log('[CarrinhoService] Resultado da validação:', JSON.stringify(validacao));
         return validacao;
     }
     async finalizarCompra(itensCarrinho) {
-        const validacao = await this.validarCarrinho(itensCarrinho);
-        if (validacao.validacao.erros.length > 0) {
-            return validacao.validacao.erros;
-        }
-        for (const item of itensCarrinho) {
-            if (item.tipo === 'serie') {
-                await this.seriesService.atualizarEstoque(item.id, item.quantidade);
+        return this.prisma.$transaction(async (tx) => {
+            let totalItens = 0;
+            let valorTotal = new client_1.Prisma.Decimal(0);
+            const erros = [];
+            for (const item of itensCarrinho) {
+                const produto = await tx.serie.findUnique({
+                    where: { id: item.id },
+                    select: {
+                        id: true,
+                        titulo: true,
+                        estoque: true,
+                        valorUnitario: true,
+                        tipo: true,
+                    },
+                });
+                if (!produto) {
+                    erros.push(`Produto com ID ${item.id} não encontrado.`);
+                    continue;
+                }
+                const itemTipo = String(item.tipo).toLowerCase();
+                const produtoTipoStr = String(produto.tipo).toLowerCase();
+                if (itemTipo !== produtoTipoStr) {
+                    console.warn(`Divergência de tipo na compra para ID ${produto.id}: Frontend=${itemTipo}, DB=${produtoTipoStr}`);
+                }
+                if (item.quantidade <= 0) {
+                    erros.push(`Quantidade inválida para "${produto.titulo}".`);
+                    continue;
+                }
+                if (produto.estoque < item.quantidade) {
+                    erros.push(`Estoque insuficiente para "${produto.titulo}". Pedido: ${item.quantidade}, Disponível: ${produto.estoque}.`);
+                    continue;
+                }
+                await tx.serie.update({
+                    where: { id: produto.id },
+                    data: {
+                        estoque: {
+                            decrement: Number(item.quantidade),
+                        },
+                    },
+                });
+                const valorItem = Number(produto.valorUnitario) * item.quantidade;
+                totalItens += item.quantidade;
+                valorTotal = valorTotal.add(new client_1.Prisma.Decimal(valorItem));
             }
-            else if (item.tipo === 'anime') {
-                await this.animesService.atualizarEstoque(item.id, item.quantidade);
+            if (erros.length > 0) {
+                throw new common_1.BadRequestException(erros);
             }
-        }
-        return [
-            `Compra de ${validacao.validacao.totalItens} itens no total de R$ ${validacao.validacao.valorTotal.toFixed(2)} finalizada com sucesso.`,
-        ];
+            return [
+                `Compra de ${totalItens} itens no total de R$ ${Number(valorTotal.toFixed(2))} finalizada com sucesso.`,
+            ];
+        });
     }
 };
 exports.CarrinhoService = CarrinhoService;
 exports.CarrinhoService = CarrinhoService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [series_service_1.SeriesService,
-        anime_service_1.AnimeService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], CarrinhoService);
 //# sourceMappingURL=carrinho.service.js.map

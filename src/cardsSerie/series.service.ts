@@ -86,30 +86,46 @@ export class SeriesService {
   }
 
   async addAvaliacao(id: number, avaliacao: number) {
-    try {
-      await this.prisma.serie.update({
-        where: { id },
-        data: { avaliacao: Number(avaliacao) },
-      });
-      return `Avaliação adicionada com sucesso.`;
-    } catch {
-      throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
-    }
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        await tx.serie.update({
+          where: { id },
+          data: { avaliacao: Number(avaliacao) },
+        });
+        return `Avaliação adicionada com sucesso.`;
+      } catch {
+        throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
+      }
+    });
   }
 
   async atualizarEstoque(id: number, quantidade: number) {
-    try {
-      return await this.prisma.serie.update({
-        where: { id },
-        data: { estoque: { decrement: Number(quantidade) } },
-      });
-    } catch {
-      throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
-    }
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        return await tx.serie.update({
+          where: { id },
+          data: { estoque: { decrement: Number(quantidade) } },
+        });
+      } catch {
+        throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
+      }
+    });
   }
 
   async addSerie(data: any) {
+    console.log(
+      '[SeriesService] Recebido dados para criar:',
+      JSON.stringify(data),
+    );
     return this.prisma.$transaction(async (tx) => {
+      // Determina o tipo final: Usa o enviado ou o padrão do serviço
+      const tipoFinal =
+        data.tipo?.toUpperCase() === 'ANIME'
+          ? ProdutoTipo.ANIME
+          : ProdutoTipo.SERIE;
+
+      console.log(`[SeriesService] Classificando como: ${tipoFinal}`);
+
       const created = await tx.serie.create({
         data: {
           titulo: data.titulo,
@@ -118,7 +134,7 @@ export class SeriesService {
           estoque: Number(data.estoque),
           valorUnitario: Number(data.valorUnitario),
           avaliacao: data.avaliacao ? Number(data.avaliacao) : null,
-          tipo: ProdutoTipo.SERIE,
+          tipo: tipoFinal,
           meta: {
             create: {
               temporada: String(data.meta.temporada),
@@ -128,56 +144,71 @@ export class SeriesService {
         },
         include: { meta: true },
       });
+      console.log(
+        '[SeriesService] Objeto criado no banco:',
+        JSON.stringify(created),
+      );
       return this.formatSerie(created);
     });
   }
 
   async updateSerie(id: number, updatedData: any) {
-    try {
-      const updated = await this.prisma.serie.update({
-        where: { id },
-        data: {
-          titulo: updatedData.titulo,
-          detalhes: updatedData.detalhes,
-          imagem: updatedData.imagem,
-          estoque:
-            updatedData.estoque !== undefined
-              ? Number(updatedData.estoque)
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        const updated = await tx.serie.update({
+          where: { id },
+          data: {
+            titulo: updatedData.titulo,
+            detalhes: updatedData.detalhes,
+            imagem: updatedData.imagem,
+            estoque:
+              updatedData.estoque !== undefined
+                ? Number(updatedData.estoque)
+                : undefined,
+            valorUnitario:
+              updatedData.valorUnitario !== undefined
+                ? Number(updatedData.valorUnitario)
+                : undefined,
+            avaliacao:
+              updatedData.avaliacao !== undefined
+                ? Number(updatedData.avaliacao)
+                : undefined,
+            meta: updatedData.meta
+              ? {
+                  update: {
+                    temporada: updatedData.meta.temporada,
+                    tema: updatedData.meta.tema
+                      ? this.normalize(updatedData.meta.tema)
+                      : undefined,
+                  },
+                }
               : undefined,
-          valorUnitario:
-            updatedData.valorUnitario !== undefined
-              ? Number(updatedData.valorUnitario)
-              : undefined,
-          avaliacao:
-            updatedData.avaliacao !== undefined
-              ? Number(updatedData.avaliacao)
-              : undefined,
-          meta: updatedData.meta
-            ? {
-                update: {
-                  temporada: updatedData.meta.temporada,
-                  tema: updatedData.meta.tema
-                    ? this.normalize(updatedData.meta.tema)
-                    : undefined,
-                },
-              }
-            : undefined,
-        },
-        include: { meta: true },
-      });
-      return this.formatSerie(updated);
-    } catch (e) {
-      throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
-    }
+          },
+          include: { meta: true },
+        });
+        return this.formatSerie(updated);
+      } catch (e) {
+        throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
+      }
+    });
   }
 
   async deleteSerie(id: number) {
-    try {
-      await this.prisma.serie.delete({ where: { id } });
-      return `Série removida com sucesso.`;
-    } catch {
-      throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
-    }
+    console.log(`[SeriesService] Tentando deletar série ID: ${id}`);
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        const deleted = await tx.serie.delete({ where: { id } });
+        console.log(
+          `[SeriesService] Série ID: ${id} deletada com sucesso. Titulo: ${deleted.titulo}`,
+        );
+        return `Série removida com sucesso.`;
+      } catch (e) {
+        console.error(`[SeriesService] Erro ao deletar série ID: ${id}`, e);
+        throw new NotFoundException(
+          `Série com ID "${id}" não encontrada ou erro ao deletar.`,
+        );
+      }
+    });
   }
 
   async ordemAlfabetica() {

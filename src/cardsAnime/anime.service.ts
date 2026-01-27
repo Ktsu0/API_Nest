@@ -24,7 +24,6 @@ export class AnimeService {
   }
 
   async findAll() {
-    // Workaround for Postgres Enum cast error: fetch all and filter in memory
     const all = await this.prisma.serie.findMany({
       include: { meta: true },
       orderBy: { titulo: 'asc' },
@@ -86,30 +85,46 @@ export class AnimeService {
   }
 
   async addAvaliacao(id: number, avaliacao: number) {
-    try {
-      await this.prisma.serie.update({
-        where: { id },
-        data: { avaliacao: Number(avaliacao) },
-      });
-      return `Avaliação adicionada com sucesso.`;
-    } catch {
-      throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
-    }
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        await tx.serie.update({
+          where: { id },
+          data: { avaliacao: Number(avaliacao) },
+        });
+        return `Avaliação adicionada com sucesso.`;
+      } catch {
+        throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
+      }
+    });
   }
 
   async atualizarEstoque(id: number, quantidade: number) {
-    try {
-      return await this.prisma.serie.update({
-        where: { id },
-        data: { estoque: { decrement: Number(quantidade) } },
-      });
-    } catch {
-      throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
-    }
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        return await tx.serie.update({
+          where: { id },
+          data: { estoque: { decrement: Number(quantidade) } },
+        });
+      } catch {
+        throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
+      }
+    });
   }
 
   async addAnime(data: any) {
+    console.log(
+      '[AnimeService] Recebido dados para criar:',
+      JSON.stringify(data),
+    );
     return this.prisma.$transaction(async (tx) => {
+      // Determina o tipo final: Usa o enviado ou o padrão do serviço
+      const tipoFinal =
+        data.tipo?.toUpperCase() === 'SERIE'
+          ? ProdutoTipo.SERIE
+          : ProdutoTipo.ANIME;
+
+      console.log(`[AnimeService] Classificando como: ${tipoFinal}`);
+
       const created = await tx.serie.create({
         data: {
           titulo: data.titulo,
@@ -118,7 +133,7 @@ export class AnimeService {
           estoque: Number(data.estoque),
           valorUnitario: Number(data.valorUnitario),
           avaliacao: data.avaliacao ? Number(data.avaliacao) : null,
-          tipo: ProdutoTipo.ANIME,
+          tipo: tipoFinal,
           meta: {
             create: {
               temporada: String(data.meta.temporada),
@@ -128,56 +143,71 @@ export class AnimeService {
         },
         include: { meta: true },
       });
+      console.log(
+        '[AnimeService] Objeto criado no banco:',
+        JSON.stringify(created),
+      );
       return this.formatAnime(created);
     });
   }
 
   async updateAnime(id: number, updatedData: any) {
-    try {
-      const updated = await this.prisma.serie.update({
-        where: { id },
-        data: {
-          titulo: updatedData.titulo,
-          detalhes: updatedData.detalhes,
-          imagem: updatedData.imagem,
-          estoque:
-            updatedData.estoque !== undefined
-              ? Number(updatedData.estoque)
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        const updated = await tx.serie.update({
+          where: { id },
+          data: {
+            titulo: updatedData.titulo,
+            detalhes: updatedData.detalhes,
+            imagem: updatedData.imagem,
+            estoque:
+              updatedData.estoque !== undefined
+                ? Number(updatedData.estoque)
+                : undefined,
+            valorUnitario:
+              updatedData.valorUnitario !== undefined
+                ? Number(updatedData.valorUnitario)
+                : undefined,
+            avaliacao:
+              updatedData.avaliacao !== undefined
+                ? Number(updatedData.avaliacao)
+                : undefined,
+            meta: updatedData.meta
+              ? {
+                  update: {
+                    temporada: updatedData.meta.temporada,
+                    tema: updatedData.meta.tema
+                      ? this.normalize(updatedData.meta.tema)
+                      : undefined,
+                  },
+                }
               : undefined,
-          valorUnitario:
-            updatedData.valorUnitario !== undefined
-              ? Number(updatedData.valorUnitario)
-              : undefined,
-          avaliacao:
-            updatedData.avaliacao !== undefined
-              ? Number(updatedData.avaliacao)
-              : undefined,
-          meta: updatedData.meta
-            ? {
-                update: {
-                  temporada: updatedData.meta.temporada,
-                  tema: updatedData.meta.tema
-                    ? this.normalize(updatedData.meta.tema)
-                    : undefined,
-                },
-              }
-            : undefined,
-        },
-        include: { meta: true },
-      });
-      return this.formatAnime(updated);
-    } catch (e) {
-      throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
-    }
+          },
+          include: { meta: true },
+        });
+        return this.formatAnime(updated);
+      } catch (e) {
+        throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
+      }
+    });
   }
 
   async deleteAnime(id: number) {
-    try {
-      await this.prisma.serie.delete({ where: { id } });
-      return `Anime removido com sucesso.`;
-    } catch {
-      throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
-    }
+    console.log(`[AnimeService] Tentando deletar anime ID: ${id}`);
+    return this.prisma.$transaction(async (tx) => {
+      try {
+        const deleted = await tx.serie.delete({ where: { id } });
+        console.log(
+          `[AnimeService] Anime ID: ${id} deletada com sucesso. Titulo: ${deleted.titulo}`,
+        );
+        return `Anime removido com sucesso.`;
+      } catch (e) {
+        console.error(`[AnimeService] Erro ao deletar anime ID: ${id}`, e);
+        throw new NotFoundException(
+          `Anime com ID "${id}" não encontrado ou erro ao deletar.`,
+        );
+      }
+    });
   }
 
   async ordemAlfabetica() {

@@ -17,7 +17,7 @@ class IdParamDto {
 }
 exports.IdParamDto = IdParamDto;
 __decorate([
-    (0, class_validator_1.IsNumberString)(),
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_transformer_1.Transform)(({ value }) => parseInt(value, 10)),
     __metadata("design:type", Number)

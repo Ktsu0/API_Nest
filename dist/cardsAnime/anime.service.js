@@ -114,30 +114,39 @@ let AnimeService = class AnimeService {
         return filtered.map((a) => this.formatAnime(a));
     }
     async addAvaliacao(id, avaliacao) {
-        try {
-            await this.prisma.serie.update({
-                where: { id },
-                data: { avaliacao: Number(avaliacao) },
-            });
-            return `Avaliação adicionada com sucesso.`;
-        }
-        catch {
-            throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado.`);
-        }
+        return this.prisma.$transaction(async (tx) => {
+            try {
+                await tx.serie.update({
+                    where: { id },
+                    data: { avaliacao: Number(avaliacao) },
+                });
+                return `Avaliação adicionada com sucesso.`;
+            }
+            catch {
+                throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado.`);
+            }
+        });
     }
     async atualizarEstoque(id, quantidade) {
-        try {
-            return await this.prisma.serie.update({
-                where: { id },
-                data: { estoque: { decrement: Number(quantidade) } },
-            });
-        }
-        catch {
-            throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado.`);
-        }
+        return this.prisma.$transaction(async (tx) => {
+            try {
+                return await tx.serie.update({
+                    where: { id },
+                    data: { estoque: { decrement: Number(quantidade) } },
+                });
+            }
+            catch {
+                throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado.`);
+            }
+        });
     }
     async addAnime(data) {
+        console.log('[AnimeService] Recebido dados para criar:', JSON.stringify(data));
         return this.prisma.$transaction(async (tx) => {
+            const tipoFinal = data.tipo?.toUpperCase() === 'SERIE'
+                ? client_1.ProdutoTipo.SERIE
+                : client_1.ProdutoTipo.ANIME;
+            console.log(`[AnimeService] Classificando como: ${tipoFinal}`);
             const created = await tx.serie.create({
                 data: {
                     titulo: data.titulo,
@@ -146,7 +155,7 @@ let AnimeService = class AnimeService {
                     estoque: Number(data.estoque),
                     valorUnitario: Number(data.valorUnitario),
                     avaliacao: data.avaliacao ? Number(data.avaliacao) : null,
-                    tipo: client_1.ProdutoTipo.ANIME,
+                    tipo: tipoFinal,
                     meta: {
                         create: {
                             temporada: String(data.meta.temporada),
@@ -156,53 +165,61 @@ let AnimeService = class AnimeService {
                 },
                 include: { meta: true },
             });
+            console.log('[AnimeService] Objeto criado no banco:', JSON.stringify(created));
             return this.formatAnime(created);
         });
     }
     async updateAnime(id, updatedData) {
-        try {
-            const updated = await this.prisma.serie.update({
-                where: { id },
-                data: {
-                    titulo: updatedData.titulo,
-                    detalhes: updatedData.detalhes,
-                    imagem: updatedData.imagem,
-                    estoque: updatedData.estoque !== undefined
-                        ? Number(updatedData.estoque)
-                        : undefined,
-                    valorUnitario: updatedData.valorUnitario !== undefined
-                        ? Number(updatedData.valorUnitario)
-                        : undefined,
-                    avaliacao: updatedData.avaliacao !== undefined
-                        ? Number(updatedData.avaliacao)
-                        : undefined,
-                    meta: updatedData.meta
-                        ? {
-                            update: {
-                                temporada: updatedData.meta.temporada,
-                                tema: updatedData.meta.tema
-                                    ? this.normalize(updatedData.meta.tema)
-                                    : undefined,
-                            },
-                        }
-                        : undefined,
-                },
-                include: { meta: true },
-            });
-            return this.formatAnime(updated);
-        }
-        catch (e) {
-            throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado.`);
-        }
+        return this.prisma.$transaction(async (tx) => {
+            try {
+                const updated = await tx.serie.update({
+                    where: { id },
+                    data: {
+                        titulo: updatedData.titulo,
+                        detalhes: updatedData.detalhes,
+                        imagem: updatedData.imagem,
+                        estoque: updatedData.estoque !== undefined
+                            ? Number(updatedData.estoque)
+                            : undefined,
+                        valorUnitario: updatedData.valorUnitario !== undefined
+                            ? Number(updatedData.valorUnitario)
+                            : undefined,
+                        avaliacao: updatedData.avaliacao !== undefined
+                            ? Number(updatedData.avaliacao)
+                            : undefined,
+                        meta: updatedData.meta
+                            ? {
+                                update: {
+                                    temporada: updatedData.meta.temporada,
+                                    tema: updatedData.meta.tema
+                                        ? this.normalize(updatedData.meta.tema)
+                                        : undefined,
+                                },
+                            }
+                            : undefined,
+                    },
+                    include: { meta: true },
+                });
+                return this.formatAnime(updated);
+            }
+            catch (e) {
+                throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado.`);
+            }
+        });
     }
     async deleteAnime(id) {
-        try {
-            await this.prisma.serie.delete({ where: { id } });
-            return `Anime removido com sucesso.`;
-        }
-        catch {
-            throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado.`);
-        }
+        console.log(`[AnimeService] Tentando deletar anime ID: ${id}`);
+        return this.prisma.$transaction(async (tx) => {
+            try {
+                const deleted = await tx.serie.delete({ where: { id } });
+                console.log(`[AnimeService] Anime ID: ${id} deletada com sucesso. Titulo: ${deleted.titulo}`);
+                return `Anime removido com sucesso.`;
+            }
+            catch (e) {
+                console.error(`[AnimeService] Erro ao deletar anime ID: ${id}`, e);
+                throw new common_1.NotFoundException(`Anime com ID "${id}" não encontrado ou erro ao deletar.`);
+            }
+        });
     }
     async ordemAlfabetica() {
         return this.findAll();

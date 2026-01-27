@@ -27,9 +27,12 @@ let RolesGuard = class RolesGuard {
             return true;
         const request = context.switchToHttp().getRequest();
         const user = request.user;
+        console.log(`[RolesGuard] Rota exige: ${JSON.stringify(requiredRoles)}`);
+        console.log(`[RolesGuard] Usuário: ${user?.email}, Roles: ${JSON.stringify(user?.roles)}`);
         if (!user)
             throw new common_1.ForbiddenException('Usuário não autenticado');
         const hasPermission = requiredRoles.some((role) => user.roles?.includes(role));
+        console.log(`[RolesGuard] Permissão concedida? ${hasPermission}`);
         if (!hasPermission)
             throw new common_1.ForbiddenException('Acesso negado: permissão insuficiente');
         return true;
