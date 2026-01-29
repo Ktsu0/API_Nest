@@ -20,6 +20,7 @@ export class SeriesService {
       ...serie,
       valorUnitario: serie.valorUnitario ? Number(serie.valorUnitario) : 0,
       avaliacao: serie.avaliacao ? Number(serie.avaliacao) : null,
+      votos: serie.votos || 0,
     };
   }
 
@@ -87,15 +88,22 @@ export class SeriesService {
 
   async addAvaliacao(id: number, avaliacao: number) {
     return this.prisma.$transaction(async (tx) => {
-      try {
-        await tx.serie.update({
-          where: { id },
-          data: { avaliacao: Number(avaliacao) },
-        });
-        return `Avaliação adicionada com sucesso.`;
-      } catch {
+      const serie = await tx.serie.findUnique({ where: { id } });
+      if (!serie)
         throw new NotFoundException(`Série com ID "${id}" não encontrada.`);
-      }
+
+      const totalVotos = (serie.votos || 0) + 1;
+      const somaAtual = Number(serie.avaliacao || 0) * (serie.votos || 0);
+      const novaMedia = (somaAtual + Number(avaliacao)) / totalVotos;
+
+      await tx.serie.update({
+        where: { id },
+        data: {
+          avaliacao: Number(novaMedia.toFixed(2)),
+          votos: totalVotos,
+        },
+      });
+      return `Avaliação de ${avaliacao} processada. Nova média: ${novaMedia.toFixed(2)}`;
     });
   }
 

@@ -17,6 +17,7 @@ export declare class AnimeService {
         estoque: number;
         valorUnitario: import("@prisma/client/runtime/library").Decimal;
         avaliacao: import("@prisma/client/runtime/library").Decimal | null;
+        votos: number;
         tipo: import("@prisma/client").$Enums.ProdutoTipo;
         metaId: number;
         createdAt: Date;

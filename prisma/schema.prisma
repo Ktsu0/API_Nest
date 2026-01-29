@@ -24,6 +24,7 @@ model Serie {
   estoque       Int
   valorUnitario Decimal  @map("valor_unitario")
   avaliacao     Decimal?
+  votos         Int      @default(0)
   tipo          ProdutoTipo
 
   metaId        Int      @map("meta_id")

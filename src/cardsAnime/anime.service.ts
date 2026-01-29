@@ -20,6 +20,7 @@ export class AnimeService {
       ...anime,
       valorUnitario: anime.valorUnitario ? Number(anime.valorUnitario) : 0,
       avaliacao: anime.avaliacao ? Number(anime.avaliacao) : null,
+      votos: anime.votos || 0,
     };
   }
 
@@ -86,15 +87,22 @@ export class AnimeService {
 
   async addAvaliacao(id: number, avaliacao: number) {
     return this.prisma.$transaction(async (tx) => {
-      try {
-        await tx.serie.update({
-          where: { id },
-          data: { avaliacao: Number(avaliacao) },
-        });
-        return `Avaliação adicionada com sucesso.`;
-      } catch {
+      const anime = await tx.serie.findUnique({ where: { id } });
+      if (!anime)
         throw new NotFoundException(`Anime com ID "${id}" não encontrado.`);
-      }
+
+      const totalVotos = (anime.votos || 0) + 1;
+      const somaAtual = Number(anime.avaliacao || 0) * (anime.votos || 0);
+      const novaMedia = (somaAtual + Number(avaliacao)) / totalVotos;
+
+      await tx.serie.update({
+        where: { id },
+        data: {
+          avaliacao: Number(novaMedia.toFixed(2)),
+          votos: totalVotos,
+        },
+      });
+      return `Avaliação de ${avaliacao} processada. Nova média: ${novaMedia.toFixed(2)}`;
     });
   }
 
