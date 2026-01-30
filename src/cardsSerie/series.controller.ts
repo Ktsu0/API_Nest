@@ -9,7 +9,6 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-
 import { SeriesService } from './series.service';
 import { CreateCard } from '../dtoCards/createCard';
 import { UpdateCardDto } from '../dtoCards/updateCard';

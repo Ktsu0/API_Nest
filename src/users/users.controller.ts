@@ -40,8 +40,8 @@ export class UserController {
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true, // Sempre true para HTTPS/Vercel
+      sameSite: 'none', // Necessário para cross-origin (Vercel frontend -> Vercel backend)
       maxAge: 1000 * 60 * 60 * 1,
     });
 
@@ -63,12 +63,22 @@ export class UserController {
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: false, //process.env.NODE_ENV === 'production'
-      sameSite: 'lax',
+      secure: true, // Sempre true para HTTPS/Vercel
+      sameSite: 'none', // Necessário para cross-origin
       maxAge: 1000 * 60 * 60 * 1,
     });
 
     return { message: 'Login bem-sucedido' };
+  }
+
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+    return { message: 'Logout bem-sucedido' };
   }
 
   // ----------------------------------------------------

@@ -13,7 +13,18 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: (origin, callback) => {
+      // Permite localhost e subdomínios da vercel.app
+      if (
+        !origin ||
+        origin.includes('localhost') ||
+        origin.includes('vercel.app')
+      ) {
+        callback(null, true);
+      } else {
+        callback(null, true); // Deixa passar tudo para evitar bloqueios extras por enquanto
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
