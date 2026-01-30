@@ -3,7 +3,7 @@ import { UserService } from './users.service';
 import { LoginUserDto } from './dto/loginUser';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
-import type { User } from './model/users.model';
+import { User } from '@prisma/client';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
@@ -16,9 +16,9 @@ export declare class UserController {
     getRole(req: any): {
         roles: any;
     };
-    getUsers(): Omit<User, 'password'>[];
-    getUserById(id: string): Omit<User, 'password'>;
+    getUsers(): Promise<Omit<User, 'password'>[]>;
+    getUserById(id: string): Promise<Omit<User, 'password'>>;
     getProfile(req: any): Omit<User, 'password'>;
     updateUser(id: string, body: UpdateUserDto, req: any): Promise<string>;
-    deleteUser(id: string, req: any): void;
+    deleteUser(id: string, req: any): Promise<void>;
 }

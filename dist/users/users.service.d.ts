@@ -2,12 +2,13 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
 import { LoginUserDto } from './dto/loginUser';
-import type { User } from './model/users.model';
+import { PrismaService } from '../prisma.service';
+import { User } from '@prisma/client';
 export declare class UserService {
     private readonly jwtService;
+    private readonly prisma;
     private readonly saltRounds;
-    private users;
-    constructor(jwtService: JwtService);
+    constructor(jwtService: JwtService, prisma: PrismaService);
     private createToken;
     loginUser(data: LoginUserDto): Promise<{
         access_token: string;
@@ -16,9 +17,9 @@ export declare class UserService {
         access_token: string;
     }>;
     updateUser(id: string, data: UpdateUserDto): Promise<string>;
-    getAllUsers(): Omit<User, 'password'>[];
-    findUserByEmail(email: string): User | undefined;
-    findUserById(id: string): User | undefined;
-    findUserSafeById(id: string): Omit<User, 'password'> | undefined;
-    deleteUser(id: string): boolean;
+    getAllUsers(): Promise<Omit<User, 'password'>[]>;
+    findUserByEmail(email: string): Promise<User | null>;
+    findUserById(id: string): Promise<User | null>;
+    findUserSafeById(id: string): Promise<Omit<User, 'password'> | null>;
+    deleteUser(id: string): Promise<void>;
 }

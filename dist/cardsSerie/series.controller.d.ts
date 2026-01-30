@@ -1,8 +1,8 @@
 import { SeriesService } from './series.service';
-import { CreateCard } from 'src/dtoCards/createCard';
-import { UpdateCardDto } from 'src/dtoCards/updateCard';
-import { IdParamDto } from 'src/dtoCards/idParam';
-import { TemaParamDto } from 'src/dtoCards/temaParam';
+import { CreateCard } from '../dtoCards/createCard';
+import { UpdateCardDto } from '../dtoCards/updateCard';
+import { IdParamDto } from '../dtoCards/idParam';
+import { TemaParamDto } from '../dtoCards/temaParam';
 export declare class SeriesController {
     private readonly seriesService;
     constructor(seriesService: SeriesService);

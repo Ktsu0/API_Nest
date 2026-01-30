@@ -18,7 +18,7 @@ const users_service_1 = require("./users.service");
 const loginUser_1 = require("./dto/loginUser");
 const createUser_1 = require("./dto/createUser");
 const updateUser_1 = require("./dto/updateUser");
-const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
+const jwt_auth_guard_1 = require("../users/guards/jwt-auth.guard");
 let UserController = class UserController {
     userService;
     constructor(userService) {
@@ -51,11 +51,11 @@ let UserController = class UserController {
     getRole(req) {
         return { roles: req.user.roles };
     }
-    getUsers() {
-        return this.userService.getAllUsers();
+    async getUsers() {
+        return await this.userService.getAllUsers();
     }
-    getUserById(id) {
-        const user = this.userService.findUserSafeById(id);
+    async getUserById(id) {
+        const user = await this.userService.findUserSafeById(id);
         if (!user) {
             throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
         }
@@ -69,18 +69,18 @@ let UserController = class UserController {
             throw new common_1.UnauthorizedException('Você não tem permissão para atualizar este perfil.');
         }
         if (body.email) {
-            const existingUser = this.userService.findUserByEmail(body.email);
+            const existingUser = await this.userService.findUserByEmail(body.email);
             if (existingUser && existingUser.id !== id) {
                 throw new common_1.BadRequestException('Este e-mail já está em uso por outro usuário.');
             }
         }
         return await this.userService.updateUser(id, body);
     }
-    deleteUser(id, req) {
+    async deleteUser(id, req) {
         if (req.user.id !== id) {
             throw new common_1.UnauthorizedException('Você não tem permissão para deletar este perfil.');
         }
-        this.userService.deleteUser(id);
+        await this.userService.deleteUser(id);
     }
 };
 exports.UserController = UserController;
@@ -113,7 +113,7 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUsers", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
@@ -121,7 +121,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserById", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
@@ -149,7 +149,7 @@ __decorate([
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),

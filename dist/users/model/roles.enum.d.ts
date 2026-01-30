@@ -1,4 +1,1 @@
-export declare enum Roles {
-    USER = "USUARIO",
-    ADMIN = "ADMIN"
-}
+export { UserRole as Roles } from '@prisma/client';

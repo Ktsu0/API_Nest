@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 export declare class AnimeService {
     private readonly prisma;
     constructor(prisma: PrismaService);

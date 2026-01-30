@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { CarrinhoValidacao, CarrinhoInputItem } from './models/carrinho.model';
 export declare class CarrinhoService {
     private readonly prisma;

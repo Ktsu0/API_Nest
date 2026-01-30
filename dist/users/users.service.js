@@ -45,16 +45,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
-const uuid_1 = require("uuid");
 const bcrypt = __importStar(require("bcryptjs"));
-const bancoUsers_1 = require("./model/bancoUsers");
-const roles_enum_1 = require("./model/roles.enum");
+const prisma_service_1 = require("../prisma.service");
+const client_1 = require("@prisma/client");
 let UserService = class UserService {
     jwtService;
+    prisma;
     saltRounds = 10;
-    users = [...bancoUsers_1.usuarios];
-    constructor(jwtService) {
+    constructor(jwtService, prisma) {
         this.jwtService = jwtService;
+        this.prisma = prisma;
     }
     createToken(user) {
         const payload = {
@@ -65,7 +65,9 @@ let UserService = class UserService {
         return this.jwtService.sign(payload);
     }
     async loginUser(data) {
-        const user = this.users.find((u) => u.email === data.email);
+        const user = await this.prisma.user.findUnique({
+            where: { email: data.email },
+        });
         if (!user)
             return undefined;
         const isMatch = await bcrypt.compare(data.password, user.password);
@@ -74,69 +76,89 @@ let UserService = class UserService {
         return { access_token: this.createToken(user) };
     }
     async addUser(data) {
+        const existingUser = await this.prisma.user.findUnique({
+            where: { email: data.email },
+        });
+        if (existingUser) {
+            throw new common_1.BadRequestException('E-mail já cadastrado.');
+        }
         const hashedPassword = await bcrypt.hash(data.password, this.saltRounds);
-        const role = data.email === 'teste1@gmail.com' ? roles_enum_1.Roles.ADMIN : roles_enum_1.Roles.USER;
-        const newUser = {
-            id: (0, uuid_1.v4)(),
-            email: data.email,
-            password: hashedPassword,
-            firstName: data.firstName || '',
-            lastName: data.lastName || '',
-            Cpf: data.Cpf || '',
-            telefone: data.telefone || '',
-            cep: data.cep || '',
-            genero: data.genero || '',
-            nascimento: data.nascimento || '',
-            roles: [role],
-        };
-        this.users.push(newUser);
+        const role = data.email === 'teste1@gmail.com' ? client_1.UserRole.ADMIN : client_1.UserRole.USUARIO;
+        const newUser = await this.prisma.user.create({
+            data: {
+                email: data.email,
+                password: hashedPassword,
+                firstName: data.firstName || '',
+                lastName: data.lastName || '',
+                Cpf: data.Cpf || '',
+                telefone: data.telefone || '',
+                cep: data.cep || '',
+                genero: data.genero || '',
+                nascimento: data.nascimento || '',
+                roles: [role],
+            },
+        });
         return { access_token: this.createToken(newUser) };
     }
     async updateUser(id, data) {
-        const index = this.users.findIndex((u) => u.id === id);
-        if (index === -1) {
+        const user = await this.prisma.user.findUnique({ where: { id } });
+        if (!user) {
             throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
         }
         let newPasswordHash;
         if (data.password) {
             newPasswordHash = await bcrypt.hash(data.password, this.saltRounds);
         }
-        const updatedUser = {
-            ...this.users[index],
-            ...data,
-            password: newPasswordHash || this.users[index].password,
-        };
-        this.users[index] = updatedUser;
-        return this.createToken(updatedUser);
+        const updatedUser = await this.prisma.user.update({
+            where: { id },
+            data: {
+                ...data,
+                password: newPasswordHash,
+            },
+        });
+        const updateData = { ...data };
+        if (data.password) {
+            updateData.password = await bcrypt.hash(data.password, this.saltRounds);
+        }
+        const finalUpdatedUser = await this.prisma.user.update({
+            where: { id },
+            data: updateData,
+        });
+        return this.createToken(finalUpdatedUser);
     }
-    getAllUsers() {
-        return this.users.map(({ password, ...u }) => u);
+    async getAllUsers() {
+        const users = await this.prisma.user.findMany();
+        return users.map(({ password, ...u }) => u);
     }
-    findUserByEmail(email) {
-        return this.users.find((u) => u.email === email);
+    async findUserByEmail(email) {
+        return this.prisma.user.findUnique({ where: { email } });
     }
-    findUserById(id) {
-        return this.users.find((u) => u.id === id);
+    async findUserById(id) {
+        return this.prisma.user.findUnique({ where: { id } });
     }
-    findUserSafeById(id) {
-        const user = this.findUserById(id);
+    async findUserSafeById(id) {
+        const user = await this.prisma.user.findUnique({ where: { id } });
         if (!user)
-            return undefined;
+            return null;
         const { password, ...safe } = user;
         return safe;
     }
-    deleteUser(id) {
-        const before = this.users.length;
-        this.users = this.users.filter((u) => u.id !== id);
-        if (this.users.length === before) {
-            throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    async deleteUser(id) {
+        try {
+            await this.prisma.user.delete({ where: { id } });
         }
-        return true;
+        catch (error) {
+            if (error.code === 'P2025') {
+                throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado.`);
+            }
+            throw error;
+        }
     }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [jwt_1.JwtService])
+    __metadata("design:paramtypes", [jwt_1.JwtService,
+        prisma_service_1.PrismaService])
 ], UserService);
 //# sourceMappingURL=users.service.js.map

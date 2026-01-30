@@ -33,7 +33,7 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         this.userService = userService;
     }
     async validate(payload) {
-        const user = this.userService.findUserSafeById(payload.sub);
+        const user = await this.userService.findUserSafeById(payload.sub);
         if (!user) {
             throw new common_1.UnauthorizedException('Token inválido ou usuário não encontrado.');
         }

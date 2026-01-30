@@ -12,7 +12,7 @@ const users_service_1 = require("./users.service");
 const users_controller_1 = require("./users.controller");
 const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
-const jwt_strategy_1 = require("./stategies/jwt.strategy");
+const jwt_strategy_1 = require("../users/stategies/jwt.strategy");
 const prisma_service_1 = require("../prisma.service");
 let UserModule = class UserModule {
 };

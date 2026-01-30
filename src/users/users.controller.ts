@@ -21,7 +21,7 @@ import { LoginUserDto } from './dto/loginUser';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
 import { User } from '@prisma/client';
-import { JwtAutGuard } from 'src/users/guards/jwt-auth.guard';
+import { JwtAutGuard } from '../users/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UserController {
