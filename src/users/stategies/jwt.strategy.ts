@@ -3,7 +3,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UserService } from 'src/users/users.service'; // Ajuste o caminho conforme sua estrutura
+import { UserService } from '../users.service';
 import { Request } from 'express';
 
 // O payload do token, que definimos na função createToken

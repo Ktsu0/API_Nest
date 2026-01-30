@@ -8,7 +8,7 @@ import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
 import { LoginUserDto } from './dto/loginUser';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { User, UserRole } from '@prisma/client';
 
 @Injectable()

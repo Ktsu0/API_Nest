@@ -11,14 +11,14 @@ import {
 } from '@nestjs/common';
 
 import { AnimeService } from './anime.service';
-import { CreateCard } from 'src/dtoCards/createCard';
-import { UpdateCardDto } from 'src/dtoCards/updateCard';
-import { IdParamDto } from 'src/dtoCards/idParam';
-import { TemaParamDto } from 'src/dtoCards/temaParam';
-import { JwtAutGuard } from 'src/users/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/users/guards/roles.guard';
-import { RolesG } from 'src/users/decorators/roles.decorator';
-import { Roles } from 'src/users/model/roles.enum';
+import { CreateCard } from '../dtoCards/createCard';
+import { UpdateCardDto } from '../dtoCards/updateCard';
+import { IdParamDto } from '../dtoCards/idParam';
+import { TemaParamDto } from '../dtoCards/temaParam';
+import { JwtAutGuard } from '../users/guards/jwt-auth.guard';
+import { RolesGuard } from '../users/guards/roles.guard';
+import { RolesG } from '../users/decorators/roles.decorator';
+import { Roles } from '../users/model/roles.enum';
 
 @Controller('animes')
 export class AnimeController {

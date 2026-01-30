@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { CarrinhoValidacao, CarrinhoInputItem } from './models/carrinho.model';
 import { ProdutoTipo, Prisma } from '@prisma/client';
 

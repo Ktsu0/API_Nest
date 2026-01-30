@@ -2,9 +2,9 @@
 import { Module } from '@nestjs/common';
 import { CarrinhoController } from './carrinho.controller';
 import { CarrinhoService } from './carrinho.service';
-import { SeriesModule } from 'src/cardsSerie/serie.module';
-import { AnimeModule } from 'src/cardsAnime/anime.module';
-import { PrismaService } from 'src/prisma.service';
+import { SeriesModule } from '../cardsSerie/serie.module';
+import { AnimeModule } from '../cardsAnime/anime.module';
+import { PrismaService } from '../prisma.service';
 
 @Module({
   imports: [AnimeModule, SeriesModule],
