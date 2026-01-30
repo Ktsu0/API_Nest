@@ -1,20 +1,24 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
 import { LoginUserDto } from './dto/loginUser';
-import type { User } from './model/users.model';
-import { usuarios } from './model/bancoUsers';
-import { Roles } from './model/roles.enum';
+import { PrismaService } from 'src/prisma.service';
+import { User, UserRole } from '@prisma/client';
 
 @Injectable()
 export class UserService {
   private readonly saltRounds = 10;
-  private users: User[] = [...usuarios];
 
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   // ----------------------------------------------------
   // TOKEN JWT
@@ -34,7 +38,9 @@ export class UserService {
   async loginUser(
     data: LoginUserDto,
   ): Promise<{ access_token: string } | undefined> {
-    const user = this.users.find((u) => u.email === data.email);
+    const user = await this.prisma.user.findUnique({
+      where: { email: data.email },
+    });
 
     if (!user) return undefined;
 
@@ -49,25 +55,33 @@ export class UserService {
   // CRIAR USUÁRIO
   // ----------------------------------------------------
   async addUser(data: CreateUserDto): Promise<{ access_token: string }> {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (existingUser) {
+      throw new BadRequestException('E-mail já cadastrado.');
+    }
+
     const hashedPassword = await bcrypt.hash(data.password, this.saltRounds);
 
-    const role = data.email === 'teste1@gmail.com' ? Roles.ADMIN : Roles.USER;
+    const role: UserRole =
+      data.email === 'teste1@gmail.com' ? UserRole.ADMIN : UserRole.USUARIO;
 
-    const newUser: User = {
-      id: uuidv4(),
-      email: data.email,
-      password: hashedPassword,
-      firstName: data.firstName || '',
-      lastName: data.lastName || '',
-      Cpf: data.Cpf || '',
-      telefone: data.telefone || '',
-      cep: data.cep || '',
-      genero: data.genero || '',
-      nascimento: data.nascimento || '',
-      roles: [role],
-    };
-
-    this.users.push(newUser);
+    const newUser = await this.prisma.user.create({
+      data: {
+        email: data.email,
+        password: hashedPassword,
+        firstName: data.firstName || '',
+        lastName: data.lastName || '',
+        Cpf: data.Cpf || '',
+        telefone: data.telefone || '',
+        cep: data.cep || '',
+        genero: data.genero || '',
+        nascimento: data.nascimento || '',
+        roles: [role],
+      },
+    });
 
     return { access_token: this.createToken(newUser) };
   }
@@ -76,9 +90,9 @@ export class UserService {
   // ATUALIZAR USUÁRIO
   // ----------------------------------------------------
   async updateUser(id: string, data: UpdateUserDto): Promise<string> {
-    const index = this.users.findIndex((u) => u.id === id);
+    const user = await this.prisma.user.findUnique({ where: { id } });
 
-    if (index === -1) {
+    if (!user) {
       throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
     }
 
@@ -88,35 +102,50 @@ export class UserService {
       newPasswordHash = await bcrypt.hash(data.password, this.saltRounds);
     }
 
-    const updatedUser: User = {
-      ...this.users[index],
-      ...data,
-      password: newPasswordHash || this.users[index].password,
-    };
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: {
+        ...data,
+        password: newPasswordHash, // Se for undefined, o Prisma ignora se usarmos undefined? Não, precisamos tratar
+      },
+    });
+    // Ajuste para password opcional no update
+    // O spread ...data pode conter password. Se conter, e queremos hashear, precisamos remover do spread e colocar o hash.
+    // Mas data é UpdateUserDto, que tem password opcional.
+    // Melhor fazer:
+    const updateData: any = { ...data };
+    if (data.password) {
+      updateData.password = await bcrypt.hash(data.password, this.saltRounds);
+    }
 
-    this.users[index] = updatedUser;
+    // Vou refazer o update call corretamente abaixo
+    const finalUpdatedUser = await this.prisma.user.update({
+      where: { id },
+      data: updateData,
+    });
 
-    return this.createToken(updatedUser);
+    return this.createToken(finalUpdatedUser);
   }
 
   // ----------------------------------------------------
   // GET
   // ----------------------------------------------------
-  getAllUsers(): Omit<User, 'password'>[] {
-    return this.users.map(({ password, ...u }) => u);
+  async getAllUsers(): Promise<Omit<User, 'password'>[]> {
+    const users = await this.prisma.user.findMany();
+    return users.map(({ password, ...u }) => u);
   }
 
-  findUserByEmail(email: string): User | undefined {
-    return this.users.find((u) => u.email === email);
+  async findUserByEmail(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { email } });
   }
 
-  findUserById(id: string): User | undefined {
-    return this.users.find((u) => u.id === id);
+  async findUserById(id: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { id } });
   }
 
-  findUserSafeById(id: string): Omit<User, 'password'> | undefined {
-    const user = this.findUserById(id);
-    if (!user) return undefined;
+  async findUserSafeById(id: string): Promise<Omit<User, 'password'> | null> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) return null;
 
     const { password, ...safe } = user;
     return safe;
@@ -125,14 +154,15 @@ export class UserService {
   // ----------------------------------------------------
   // DELETE
   // ----------------------------------------------------
-  deleteUser(id: string): boolean {
-    const before = this.users.length;
-    this.users = this.users.filter((u) => u.id !== id);
-
-    if (this.users.length === before) {
-      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+  async deleteUser(id: string): Promise<void> {
+    try {
+      await this.prisma.user.delete({ where: { id } });
+    } catch (error) {
+      // P2025 é o código do Prisma para "Record to delete does not exist"
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+      }
+      throw error;
     }
-
-    return true;
   }
 }

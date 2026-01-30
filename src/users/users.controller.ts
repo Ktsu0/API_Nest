@@ -20,7 +20,7 @@ import { UserService } from './users.service';
 import { LoginUserDto } from './dto/loginUser';
 import { CreateUserDto } from './dto/createUser';
 import { UpdateUserDto } from './dto/updateUser';
-import type { User } from './model/users.model';
+import { User } from '@prisma/client';
 import { JwtAutGuard } from 'src/users/guards/jwt-auth.guard';
 
 @Controller('users')
@@ -84,17 +84,17 @@ export class UserController {
   @UseGuards(JwtAutGuard) // ⬅️ Protegido
   @Get()
   // Retorna uma lista de usuários, usando a versão segura do Service
-  getUsers(): Omit<User, 'password'>[] {
+  async getUsers(): Promise<Omit<User, 'password'>[]> {
     // Assumindo que getAllUsers foi ajustado para retornar Omit<User, 'password'>[]
-    return this.userService.getAllUsers();
+    return await this.userService.getAllUsers();
   }
 
   @UseGuards(JwtAutGuard) // ⬅️ Protegido
   @Get(':id')
   // Retorna um único usuário (versão segura)
-  getUserById(@Param('id') id: string): Omit<User, 'password'> {
+  async getUserById(@Param('id') id: string): Promise<Omit<User, 'password'>> {
     // Usamos findUserSafeById para garantir que a senha não retorne
-    const user = this.userService.findUserSafeById(id);
+    const user = await this.userService.findUserSafeById(id);
     if (!user) {
       throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
     }
@@ -123,6 +123,7 @@ export class UserController {
     // ⬅️ Retorna APENAS o Novo Token
 
     // ⚠️ Verificação de autorização: Permite que o usuário só atualize o próprio perfil
+    // req.user.id é string (uuid), id é string (uuid)
     if (req.user.id !== id) {
       throw new UnauthorizedException(
         'Você não tem permissão para atualizar este perfil.',
@@ -131,7 +132,7 @@ export class UserController {
 
     // Verifica a disponibilidade do novo e-mail (se fornecido)
     if (body.email) {
-      const existingUser = this.userService.findUserByEmail(body.email);
+      const existingUser = await this.userService.findUserByEmail(body.email);
       if (existingUser && existingUser.id !== id) {
         throw new BadRequestException(
           'Este e-mail já está em uso por outro usuário.',
@@ -149,7 +150,7 @@ export class UserController {
   @UseGuards(JwtAutGuard) // ⬅️ Protegido
   @Delete(':id')
   @HttpCode(204)
-  deleteUser(@Param('id') id: string, @Req() req): void {
+  async deleteUser(@Param('id') id: string, @Req() req): Promise<void> {
     // ⚠️ Verificação de autorização: Permite que o usuário só delete o próprio perfil
     if (req.user.id !== id) {
       throw new UnauthorizedException(
@@ -157,6 +158,6 @@ export class UserController {
       );
     }
 
-    this.userService.deleteUser(id);
+    await this.userService.deleteUser(id);
   }
 }

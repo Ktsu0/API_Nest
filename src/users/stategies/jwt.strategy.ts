@@ -36,7 +36,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload) {
     // Busca o usuário pelo ID contido no token (payload.sub)
-    const user = this.userService.findUserSafeById(payload.sub);
+    const user = await this.userService.findUserSafeById(payload.sub);
 
     if (!user) {
       throw new UnauthorizedException(
