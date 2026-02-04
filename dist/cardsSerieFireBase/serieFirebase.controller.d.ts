@@ -11,7 +11,7 @@ export declare class SerieFirebaseController {
     ordemAlfabetica(): Promise<any[]>;
     findByTitle(q: string): Promise<any[]>;
     findOne(params: IdParamDto): Promise<any>;
-    addSerie(serie: CreateCard): Promise<any>;
+    addSerie(req: any, serie: CreateCard): Promise<any>;
     addAvaliacao(id: string, avaliacao: number): Promise<string>;
     updateSerie(id: string, updatedData: UpdateCardDto): Promise<any>;
     deleteSerie(params: IdParamDto): Promise<string>;

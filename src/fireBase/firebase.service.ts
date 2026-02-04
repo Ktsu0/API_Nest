@@ -7,6 +7,14 @@ export class FirebaseService implements OnModuleInit {
 
   onModuleInit() {
     if (admin.apps.length === 0) {
+      console.log(
+        '[FirebaseService] Inicializando com ProjectID:',
+        process.env.FIREBASE_PROJECT_ID,
+      );
+      console.log(
+        '[FirebaseService] Client Email:',
+        process.env.FIREBASE_CLIENT_EMAIL,
+      );
       admin.initializeApp({
         credential: admin.credential.cert({
           projectId: process.env.FIREBASE_PROJECT_ID,

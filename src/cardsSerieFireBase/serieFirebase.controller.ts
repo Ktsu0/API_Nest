@@ -9,6 +9,7 @@ import {
   Put,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { SerieFirebaseService } from './serieFirebase.service';
 import { CreateCard } from '../dtoCardsFireBase/createCard';
@@ -57,7 +58,12 @@ export class SerieFirebaseController {
   @UseGuards(JwtAutGuard, RolesGuard)
   @RolesG(Roles.ADMIN)
   @Post()
-  addSerie(@Body() serie: CreateCard): Promise<any> {
+  addSerie(@Req() req, @Body() serie: CreateCard): Promise<any> {
+    console.log(
+      '[SerieFirebaseController] Adicionando série:',
+      JSON.stringify(serie),
+    );
+    console.log('[SerieFirebaseController] Por usuário:', req.user?.email);
     return this.serieService.addSerie(serie);
   }
 

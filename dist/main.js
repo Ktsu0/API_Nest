@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
 const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const path_1 = require("path");
 const common_1 = require("@nestjs/common");
+const all_exceptions_filter_1 = require("./all-exceptions.filter");
 const cookieParser = require('cookie-parser');
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
@@ -29,6 +31,7 @@ async function bootstrap() {
         transform: true,
         forbidNonWhitelisted: true,
     }));
+    app.useGlobalFilters(new all_exceptions_filter_1.AllExceptionsFilter());
     await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();

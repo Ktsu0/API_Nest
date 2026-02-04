@@ -122,29 +122,34 @@ export class SerieFirebaseService {
   // -------------------------------
 
   async addSerie(data: any): Promise<Serie> {
-    const ref = this.collection.doc();
+    try {
+      const ref = this.collection.doc();
 
-    const payload = {
-      titulo: data.titulo,
-      titulo_normalized: this.normalize(data.titulo),
-      detalhes: data.detalhes,
-      imagem: data.imagem,
-      estoque: Number(data.estoque),
-      valorUnitario: Number(data.valorUnitario),
-      avaliacao: data.avaliacao ? Number(data.avaliacao) : undefined,
-      votos: 0,
-      tipo: 'SERIE',
-      meta: {
-        temporada: String(data.meta?.temporada || ''),
-        tema: String(data.meta?.tema || ''),
-        tema_normalized: this.normalize(data.meta?.tema || ''),
-      },
-      createdAt: new Date(),
-    };
+      const payload = {
+        titulo: data.titulo,
+        titulo_normalized: this.normalize(data.titulo),
+        detalhes: data.detalhes,
+        imagem: data.imagem,
+        estoque: Number(data.estoque),
+        valorUnitario: Number(data.valorUnitario),
+        avaliacao: data.avaliacao ? Number(data.avaliacao) : undefined,
+        votos: 0,
+        tipo: 'SERIE',
+        meta: {
+          temporada: String(data.meta?.temporada || ''),
+          tema: String(data.meta?.tema || ''),
+          tema_normalized: this.normalize(data.meta?.tema || ''),
+        },
+        createdAt: new Date(),
+      };
 
-    await ref.set(payload);
+      await ref.set(payload);
 
-    return this.formatSerie(this.mapFirestoreSerie(ref.id, payload));
+      return this.formatSerie(this.mapFirestoreSerie(ref.id, payload));
+    } catch (error) {
+      console.error('Erro ao adicionar série no Firebase:', error);
+      throw error;
+    }
   }
 
   async updateSerie(id: string, updatedData: any): Promise<Serie> {

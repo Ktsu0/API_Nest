@@ -46,7 +46,9 @@ let SerieFirebaseController = class SerieFirebaseController {
     async findOne(params) {
         return this.serieService.findOne(params.id);
     }
-    addSerie(serie) {
+    addSerie(req, serie) {
+        console.log('[SerieFirebaseController] Adicionando série:', JSON.stringify(serie));
+        console.log('[SerieFirebaseController] Por usuário:', req.user?.email);
         return this.serieService.addSerie(serie);
     }
     async addAvaliacao(id, avaliacao) {
@@ -98,9 +100,10 @@ __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [createCard_1.CreateCard]),
+    __metadata("design:paramtypes", [Object, createCard_1.CreateCard]),
     __metadata("design:returntype", Promise)
 ], SerieFirebaseController.prototype, "addSerie", null);
 __decorate([
