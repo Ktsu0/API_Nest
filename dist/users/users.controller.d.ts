@@ -13,6 +13,9 @@ export declare class UserController {
     login(res: Response, loginDto: LoginUserDto): Promise<{
         message: string;
     }>;
+    logout(res: Response): Promise<{
+        message: string;
+    }>;
     getRole(req: any): {
         roles: any;
     };

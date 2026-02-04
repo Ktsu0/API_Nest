@@ -10,7 +10,16 @@ async function bootstrap() {
     app.useStaticAssets((0, path_1.join)(__dirname, '..', 'public'));
     app.use(cookieParser());
     app.enableCors({
-        origin: 'http://localhost:3000',
+        origin: (origin, callback) => {
+            if (!origin ||
+                origin.includes('localhost') ||
+                origin.includes('vercel.app')) {
+                callback(null, true);
+            }
+            else {
+                callback(null, true);
+            }
+        },
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true,
     });

@@ -1,0 +1,138 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AnimeController = void 0;
+const common_1 = require("@nestjs/common");
+const animeFireBase_service_1 = require("./animeFireBase.service");
+const createCard_1 = require("../dtoCards/createCard");
+const updateCard_1 = require("../dtoCards/updateCard");
+const idParam_1 = require("../dtoCards/idParam");
+const temaParam_1 = require("../dtoCards/temaParam");
+const jwt_auth_guard_1 = require("../users/guards/jwt-auth.guard");
+const roles_guard_1 = require("../users/guards/roles.guard");
+const roles_decorator_1 = require("../users/decorators/roles.decorator");
+const roles_enum_1 = require("../users/model/roles.enum");
+let AnimeController = class AnimeController {
+    animesService;
+    constructor(animesService) {
+        this.animesService = animesService;
+    }
+    async findAll() {
+        return this.animesService.findAll();
+    }
+    async findTema(params) {
+        return this.animesService.findTema(params.tema);
+    }
+    async ordemAlfabetica() {
+        return this.animesService.ordemAlfabetica();
+    }
+    async findByTitle(q) {
+        if (!q) {
+            return this.animesService.findAll();
+        }
+        return this.animesService.findTitulo(q);
+    }
+    async findOne(params) {
+        return this.animesService.findOne(params.id);
+    }
+    addAnime(anime) {
+        return this.animesService.addAnime(anime);
+    }
+    async addAvaliacao(id, avaliacao) {
+        await this.animesService.addAvaliacao(Number(id), avaliacao);
+        return `Avaliação de ${avaliacao} adicionada à série com ID ${id}.`;
+    }
+    async updateAnime(id, updatedData) {
+        return this.animesService.updateAnime(Number(id), updatedData);
+    }
+    async deleteAnime(params) {
+        return this.animesService.deleteAnime(params.id);
+    }
+};
+exports.AnimeController = AnimeController;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('tema/:tema'),
+    __param(0, (0, common_1.Param)('tema')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [temaParam_1.TemaParamDto]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "findTema", null);
+__decorate([
+    (0, common_1.Get)('ordem/alfabetica'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "ordemAlfabetica", null);
+__decorate([
+    (0, common_1.Get)('search'),
+    __param(0, (0, common_1.Query)('q')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "findByTitle", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [createCard_1.CreateCard]),
+    __metadata("design:returntype", Object)
+], AnimeController.prototype, "addAnime", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
+    (0, common_1.Post)(':id/avaliacao'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)('avaliacao')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "addAvaliacao", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, updateCard_1.UpdateCardDto]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "updateAnime", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.RolesG)(roles_enum_1.Roles.ADMIN),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [idParam_1.IdParamDto]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "deleteAnime", null);
+exports.AnimeController = AnimeController = __decorate([
+    (0, common_1.Controller)('animes'),
+    __metadata("design:paramtypes", [animeFireBase_service_1.AnimeService])
+], AnimeController);
+//# sourceMappingURL=animeFireBase.controller.js.map

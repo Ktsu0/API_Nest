@@ -28,8 +28,8 @@ let UserController = class UserController {
         const { access_token } = await this.userService.addUser(registerDto);
         res.cookie('access_token', access_token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true,
+            sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 1,
         });
         return { message: 'Registro bem-sucedido' };
@@ -42,11 +42,19 @@ let UserController = class UserController {
         const { access_token } = result;
         res.cookie('access_token', access_token, {
             httpOnly: true,
-            secure: false,
-            sameSite: 'lax',
+            secure: true,
+            sameSite: 'none',
             maxAge: 1000 * 60 * 60 * 1,
         });
         return { message: 'Login bem-sucedido' };
+    }
+    async logout(res) {
+        res.clearCookie('access_token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+        });
+        return { message: 'Logout bem-sucedido' };
     }
     getRole(req) {
         return { roles: req.user.roles };
@@ -100,6 +108,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, loginUser_1.LoginUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('logout'),
+    __param(0, (0, common_1.Res)({ passthrough: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "logout", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAutGuard),
     (0, common_1.Get)('role'),
