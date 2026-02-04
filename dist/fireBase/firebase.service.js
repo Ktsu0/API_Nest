@@ -57,6 +57,7 @@ let FirebaseService = class FirebaseService {
             });
         }
         this.firestore = admin.firestore();
+        this.firestore.settings({ ignoreUndefinedProperties: true });
     }
     get db() {
         return this.firestore;

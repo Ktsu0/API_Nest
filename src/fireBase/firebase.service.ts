@@ -25,6 +25,7 @@ export class FirebaseService implements OnModuleInit {
     }
 
     this.firestore = admin.firestore();
+    this.firestore.settings({ ignoreUndefinedProperties: true });
   }
 
   // Getter público tipado
