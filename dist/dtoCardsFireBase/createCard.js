@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCard = void 0;
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
 const descricao_1 = require("./descricao");
 class CreateCard {
     titulo;
@@ -30,6 +31,8 @@ __decorate([
 ], CreateCard.prototype, "titulo", void 0);
 __decorate([
     (0, class_validator_1.IsObject)(),
+    (0, class_validator_1.ValidateNested)(),
+    (0, class_transformer_1.Type)(() => descricao_1.Descricao),
     __metadata("design:type", descricao_1.Descricao)
 ], CreateCard.prototype, "meta", void 0);
 __decorate([

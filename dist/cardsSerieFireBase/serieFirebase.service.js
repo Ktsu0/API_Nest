@@ -71,7 +71,7 @@ let SerieFirebaseService = class SerieFirebaseService {
         return {
             id,
             titulo: String(data.titulo || ''),
-            descricao: {
+            meta: {
                 temporada: String(data.meta?.temporada || ''),
                 tema: String(data.meta?.tema || ''),
             },
@@ -79,6 +79,7 @@ let SerieFirebaseService = class SerieFirebaseService {
             imagem: String(data.imagem || ''),
             estoque: Number(data.estoque || 0),
             valorUnitario: Number(data.valorUnitario || 0),
+            votos: Number(data.votos || 0),
             avaliacao: data.avaliacao !== undefined ? Number(data.avaliacao) : undefined,
             tipo: data.tipo ? String(data.tipo) : undefined,
         };

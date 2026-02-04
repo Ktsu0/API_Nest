@@ -24,35 +24,38 @@ let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    async addUser(res, registerDto) {
+    async addUser(req, res, registerDto) {
         const { access_token } = await this.userService.addUser(registerDto);
+        const isProduction = req.protocol === 'https';
         res.cookie('access_token', access_token, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'none',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 1000 * 60 * 60 * 1,
         });
         return { message: 'Registro bem-sucedido' };
     }
-    async login(res, loginDto) {
+    async login(req, res, loginDto) {
         const result = await this.userService.loginUser(loginDto);
         if (!result) {
             throw new common_1.BadRequestException('E-mail ou senha inválidos.');
         }
         const { access_token } = result;
+        const isProduction = req.protocol === 'https';
         res.cookie('access_token', access_token, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'none',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 1000 * 60 * 60 * 1,
         });
         return { message: 'Login bem-sucedido' };
     }
-    async logout(res) {
+    async logout(req, res) {
+        const isProduction = req.protocol === 'https';
         res.clearCookie('access_token', {
             httpOnly: true,
-            secure: true,
-            sameSite: 'none',
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
         });
         return { message: 'Logout bem-sucedido' };
     }
@@ -94,25 +97,28 @@ let UserController = class UserController {
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Res)({ passthrough: true })),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, createUser_1.CreateUserDto]),
+    __metadata("design:paramtypes", [Object, Object, createUser_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "addUser", null);
 __decorate([
     (0, common_1.Post)('login'),
-    __param(0, (0, common_1.Res)({ passthrough: true })),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, loginUser_1.LoginUserDto]),
+    __metadata("design:paramtypes", [Object, Object, loginUser_1.LoginUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
 __decorate([
     (0, common_1.Post)('logout'),
-    __param(0, (0, common_1.Res)({ passthrough: true })),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "logout", null);
 __decorate([

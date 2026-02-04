@@ -1,7 +1,7 @@
 export interface Serie {
     id: string;
     titulo: string;
-    descricao: {
+    meta: {
         temporada: string;
         tema: string;
     };
@@ -9,6 +9,7 @@ export interface Serie {
     imagem: string;
     estoque: number;
     valorUnitario: number;
+    votos: number;
     avaliacao?: number;
     tipo?: string;
 }

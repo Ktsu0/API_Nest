@@ -9,14 +9,19 @@ import {
   IsUrl,
   Max,
   Min,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { Descricao } from './descricao';
+
 export class CreateCard {
   @IsString()
   @IsNotEmpty()
   titulo: string;
 
   @IsObject()
+  @ValidateNested()
+  @Type(() => Descricao)
   meta: Descricao;
 
   @IsString()

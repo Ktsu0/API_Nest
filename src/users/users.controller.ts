@@ -33,15 +33,18 @@ export class UserController {
 
   @Post()
   async addUser(
+    @Req() req,
     @Res({ passthrough: true }) res: Response,
     @Body() registerDto: CreateUserDto,
   ) {
     const { access_token } = await this.userService.addUser(registerDto);
 
+    const isProduction = req.protocol === 'https';
+
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: true, // Sempre true para HTTPS/Vercel
-      sameSite: 'none', // Necessário para cross-origin (Vercel frontend -> Vercel backend)
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 1000 * 60 * 60 * 1,
     });
 
@@ -50,6 +53,7 @@ export class UserController {
 
   @Post('login')
   async login(
+    @Req() req,
     @Res({ passthrough: true }) res: Response,
     @Body() loginDto: LoginUserDto,
   ) {
@@ -61,10 +65,12 @@ export class UserController {
 
     const { access_token } = result;
 
+    const isProduction = req.protocol === 'https';
+
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: true, // Sempre true para HTTPS/Vercel
-      sameSite: 'none', // Necessário para cross-origin
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 1000 * 60 * 60 * 1,
     });
 
@@ -72,11 +78,13 @@ export class UserController {
   }
 
   @Post('logout')
-  async logout(@Res({ passthrough: true }) res: Response) {
+  async logout(@Req() req, @Res({ passthrough: true }) res: Response) {
+    const isProduction = req.protocol === 'https';
+
     res.clearCookie('access_token', {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
     });
     return { message: 'Logout bem-sucedido' };
   }

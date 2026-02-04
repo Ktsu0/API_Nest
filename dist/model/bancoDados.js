@@ -5,521 +5,521 @@ const topSeries = [
     {
         id: '1',
         titulo: 'Breaking Bad',
-        descricao: {
+        meta: {
             temporada: '5 temporadas',
             tema: 'Crime/Drama',
         },
         detalhes: 'Acompanhe a história de Walter White, um professor de química diagnosticado com câncer, que decide fabricar metanfetamina para garantir o futuro da família, entrando no perigoso mundo do crime.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '2',
         titulo: 'Game of Thrones',
-        descricao: {
+        meta: {
             temporada: '8 temporadas',
             tema: 'Fantasia/Drama',
         },
         detalhes: 'Famílias nobres lutam pelo controle dos Sete Reinos de Westeros. Intrigas políticas, batalhas épicas e dragões moldam o destino do reino.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '3',
         titulo: 'Stranger Things',
-        descricao: {
+        meta: {
             temporada: '4 temporadas',
             tema: 'Ficção Científica/Terror',
         },
         detalhes: 'Na pequena cidade de Hawkins, Indiana, um grupo de crianças descobre mistérios sobrenaturais e segredos do governo enquanto procuram seu amigo desaparecido.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 59.99,
+        valorUnitario: 59.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '4',
         titulo: 'The Witcher',
-        descricao: {
+        meta: {
             temporada: '2 temporadas',
             tema: 'Fantasia/Ação',
         },
         detalhes: 'Geralt de Rívia, caçador de monstros, luta para encontrar seu lugar em um mundo onde humanos podem ser mais cruéis que as próprias criaturas, enfrentando perigos e dilemas morais.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '5',
         titulo: 'Friends',
-        descricao: {
+        meta: {
             temporada: '10 temporadas',
             tema: 'Comédia/Romance',
         },
         detalhes: 'Acompanhe as aventuras e desventuras de seis amigos vivendo em Nova York, lidando com amor, trabalho e os altos e baixos da vida cotidiana.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '6',
         titulo: 'The Mandalorian',
-        descricao: {
+        meta: {
             temporada: '2 temporadas',
             tema: 'Ação/Ficção Científica',
         },
         detalhes: 'Um caçador de recompensas viaja pelo espaço, enfrentando inimigos e protegendo uma criança misteriosa conhecida como Grogu (Baby Yoda).',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 59.99,
+        valorUnitario: 59.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '7',
         titulo: 'Sherlock',
-        descricao: {
+        meta: {
             temporada: '4 temporadas',
             tema: 'Mistério/Drama',
         },
         detalhes: 'Versão moderna de Sherlock Holmes resolvendo crimes complexos em Londres, com a ajuda de seu parceiro Dr. John Watson.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '8',
         titulo: 'The Office',
-        descricao: {
+        meta: {
             temporada: '9 temporadas',
             tema: 'Comédia',
         },
         detalhes: 'Uma visão humorística da rotina diária dos funcionários de um escritório de vendas de papel na Pensilvânia, mostrando situações engraçadas e personagens excêntricos.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '9',
         titulo: 'Better Call Saul',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Crime/Drama',
         },
         detalhes: 'Spin-off de Breaking Bad, focado no advogado Jimmy McGill e sua transformação no moralmente flexível Saul Goodman, navegando pelo submundo do crime.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 29.99,
+        valorUnitario: 29.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '10',
         titulo: 'Stranger Things: Hawkins',
-        descricao: {
+        meta: {
             temporada: '1 temporada (Especial)',
             tema: 'Ficção/Terror',
         },
         detalhes: 'Episódios especiais que exploram acontecimentos paralelos na cidade de Hawkins, revelando mais segredos do Mundo Invertido e detalhes dos personagens.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '11',
         titulo: 'Peaky Blinders',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Crime/Drama Histórico',
         },
         detalhes: 'Após a Primeira Guerra Mundial, a família Shelby constrói um império criminoso em Birmingham, Inglaterra, enfrentando inimigos políticos e rivais implacáveis.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '12',
         titulo: 'Vikings',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Histórico/Ação',
         },
         detalhes: 'Acompanha Ragnar Lothbrok, um lendário guerreiro nórdico, em suas jornadas de conquista, batalhas e poder nos tempos dos vikings.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 69.99,
+        valorUnitario: 69.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '13',
         titulo: 'The Boys',
-        descricao: {
+        meta: {
             temporada: '4 temporadas',
             tema: 'Ação/Sátira',
         },
         detalhes: 'Em um mundo onde super-heróis abusam de sua fama e poder, um grupo de vigilantes decide enfrentá-los para expor a verdade por trás da corporação que os controla.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '14',
         titulo: 'The Crown',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Drama/Histórico',
         },
         detalhes: 'A série retrata a vida da Rainha Elizabeth II desde sua ascensão ao trono, explorando eventos políticos e pessoais ao longo das décadas.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 79.99,
+        valorUnitario: 79.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '15',
         titulo: 'Dark',
-        descricao: {
+        meta: {
             temporada: '3 temporadas',
             tema: 'Ficção Científica/Suspense',
         },
         detalhes: 'Em uma pequena cidade alemã, o desaparecimento de uma criança revela segredos sombrios e um mistério que atravessa gerações e viagens no tempo.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 29.99,
+        valorUnitario: 29.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '16',
         titulo: 'The Last of Us',
-        descricao: {
+        meta: {
             temporada: '1 temporada',
             tema: 'Drama/Pós-Apocalíptico',
         },
         detalhes: 'Após um surto devastador, Joel e Ellie embarcam em uma jornada perigosa pelos Estados Unidos em busca de esperança e sobrevivência.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '17',
         titulo: 'Black Mirror',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Ficção Científica/Antologia',
         },
         detalhes: 'Cada episódio apresenta uma história independente explorando o lado obscuro da tecnologia e seu impacto na sociedade moderna.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '18',
         titulo: 'The Walking Dead',
-        descricao: {
+        meta: {
             temporada: '11 temporadas',
             tema: 'Terror/Pós-Apocalíptico',
         },
         detalhes: 'Um grupo de sobreviventes luta para permanecer vivo em um mundo dominado por zumbis, enfrentando perigos tanto dos mortos quanto dos vivos.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '19',
         titulo: 'Narcos',
-        descricao: {
+        meta: {
             temporada: '3 temporadas',
             tema: 'Crime/Histórico',
         },
         detalhes: 'Baseada em eventos reais, a série retrata a ascensão e queda de Pablo Escobar e o narcotráfico colombiano nos anos 1980.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 69.99,
+        valorUnitario: 69.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '20',
         titulo: 'Loki',
-        descricao: {
+        meta: {
             temporada: '2 temporadas',
             tema: 'Aventura/Ficção Científica',
         },
         detalhes: 'Após roubar o Tesseract, Loki é capturado pela Autoridade de Variância Temporal e embarca em uma jornada que desafia o tempo e o destino.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 29.99,
+        valorUnitario: 29.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '21',
         titulo: 'House of the Dragon',
-        descricao: {
+        meta: {
             temporada: '2 temporadas',
             tema: 'Fantasia/Drama',
         },
         detalhes: 'Prelúdio de Game of Thrones, acompanha a casa Targaryen em sua ascensão e queda, marcada por intrigas e dragões poderosos.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '22',
         titulo: 'Arcane',
-        descricao: {
+        meta: {
             temporada: '1 temporada',
             tema: 'Animação/Fantasia',
         },
         detalhes: 'Baseada no universo de League of Legends, a série explora as origens de personagens icônicos entre as cidades de Piltover e Zaun.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '23',
         titulo: 'Rick and Morty',
-        descricao: {
+        meta: {
             temporada: '7 temporadas',
             tema: 'Animação/Ficção Científica',
         },
         detalhes: 'As aventuras interdimensionais de um cientista excêntrico e seu neto em uma sátira ácida sobre a existência e a loucura.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '24',
         titulo: 'The Umbrella Academy',
-        descricao: {
+        meta: {
             temporada: '4 temporadas',
             tema: 'Aventura/Ficção Científica',
         },
         detalhes: 'Irmãos adotivos com poderes extraordinários se reúnem após a morte do pai adotivo para impedir o apocalipse.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '25',
         titulo: 'Money Heist (La Casa de Papel)',
-        descricao: {
+        meta: {
             temporada: '5 temporadas',
             tema: 'Crime/Suspense',
         },
         detalhes: 'Um grupo de criminosos, liderado pelo enigmático Professor, executa o maior assalto da história da Espanha.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 79.99,
+        valorUnitario: 79.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '26',
         titulo: 'Squid Game',
-        descricao: {
+        meta: {
             temporada: '1 temporada',
             tema: 'Suspense/Drama',
         },
         detalhes: 'Pessoas endividadas participam de jogos infantis mortais em busca de um prêmio bilionário — e a sobrevivência.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '27',
         titulo: 'Breaking Bad: El Camino',
-        descricao: {
+        meta: {
             temporada: '1 temporada (Filme)',
             tema: 'Crime/Drama',
         },
         detalhes: 'Continuação direta de Breaking Bad, mostrando a fuga de Jesse Pinkman em busca de redenção após os eventos finais da série.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '28',
         titulo: 'The Punisher',
-        descricao: {
+        meta: {
             temporada: '2 temporadas',
             tema: 'Ação/Crime',
         },
         detalhes: 'Após perder sua família, Frank Castle busca vingança contra aqueles que o traíram, tornando-se o vigilante conhecido como Justiceiro.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '29',
         titulo: 'WandaVision',
-        descricao: {
+        meta: {
             temporada: '1 temporada',
             tema: 'Fantasia/Ficção Científica',
         },
         detalhes: 'Wanda Maximoff cria uma realidade alternativa perfeita com Visão, mas o mistério por trás dessa ilusão logo vem à tona.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '30',
         titulo: 'The Expanse',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Ficção Científica/Drama',
         },
         detalhes: 'Em um futuro onde a humanidade colonizou o sistema solar, tensões políticas e conspirações ameaçam a frágil paz entre planetas.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '31',
         titulo: 'Chernobyl',
-        descricao: {
+        meta: {
             temporada: '1 temporada',
             tema: 'Histórico/Drama',
         },
         detalhes: 'Baseada em eventos reais, mostra a catástrofe nuclear de 1986 na Ucrânia e os esforços heroicos para conter suas consequências.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '32',
         titulo: 'Lost',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Mistério/Ficção Científica',
         },
         detalhes: 'Sobreviventes de um desastre aéreo ficam presos em uma ilha misteriosa cheia de segredos e eventos sobrenaturais.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '33',
         titulo: 'Supernatural',
-        descricao: {
+        meta: {
             temporada: '15 temporadas',
             tema: 'Terror/Fantasia',
         },
         detalhes: 'Os irmãos Winchester caçam demônios, fantasmas e outras criaturas sobrenaturais enquanto enfrentam seus próprios demônios internos.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '34',
         titulo: 'Westworld',
-        descricao: {
+        meta: {
             temporada: '4 temporadas',
             tema: 'Ficção Científica/Drama',
         },
         detalhes: 'Um parque temático futurista habitado por androides revela uma trama complexa sobre consciência e livre arbítrio.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '35',
         titulo: 'Succession',
-        descricao: {
+        meta: {
             temporada: '4 temporadas',
             tema: 'Drama/Comédia',
         },
         detalhes: 'Uma poderosa família bilionária disputa o controle de um império de mídia enquanto intrigas e traições se desenrolam.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '36',
         titulo: 'The Handmaid’s Tale',
-        descricao: {
+        meta: {
             temporada: '5 temporadas',
             tema: 'Drama/Distopia',
         },
         detalhes: 'Em um futuro totalitário, mulheres são forçadas a servir como reprodutoras em um regime religioso opressor.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '37',
         titulo: 'Lucifer',
-        descricao: {
+        meta: {
             temporada: '6 temporadas',
             tema: 'Fantasia/Policial',
         },
         detalhes: 'Entediado com o inferno, Lucifer Morningstar decide viver em Los Angeles e ajudar a polícia a resolver crimes.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 59.99,
+        valorUnitario: 59.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '38',
         titulo: 'Dexter',
-        descricao: {
+        meta: {
             temporada: '8 temporadas',
             tema: 'Crime/Suspense',
         },
         detalhes: 'Um analista forense de Miami leva uma vida dupla como serial killer que elimina criminosos que escaparam da justiça.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 69.99,
+        valorUnitario: 69.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '39',
         titulo: 'How I Met Your Mother',
-        descricao: {
+        meta: {
             temporada: '9 temporadas',
             tema: 'Comédia/Romance',
         },
         detalhes: 'Ted Mosby conta aos filhos como conheceu a mãe deles, relembrando momentos hilários e emocionantes com seus amigos em Nova York.',
         imagem: 'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
         estoque: 20,
-        valorUnitario: 49.99,
+        valorUnitario: 49.99, votos: 0,
         tipo: 'serie',
     },
     {
         id: '40',
         titulo: 'Prison Break',
-        descricao: {
+        meta: {
             temporada: '5 temporadas',
             tema: 'Ação/Suspense',
         },
         detalhes: 'Michael Scofield elabora um plano genial para tirar seu irmão inocente da prisão, enfrentando conspirações e perigos mortais.',
         imagem: 'https://i.gifer.com/M4cG.gif',
         estoque: 20,
-        valorUnitario: 39.99,
+        valorUnitario: 39.99, votos: 0,
         tipo: 'serie',
     },
 ];
@@ -527,391 +527,391 @@ const topAnimes = [
     {
         id: '41',
         titulo: 'Attack on Titan',
-        descricao: {
+        meta: {
             temporada: '4 Temporadas',
             tema: 'Ação/Fantasia Sombria',
         },
         detalhes: 'Em um mundo onde a humanidade vive cercada por muralhas para se proteger de gigantes humanoides devoradores de homens chamados Titãs, Eren Yeager se junta ao corpo de investigação para buscar vingança.',
         imagem: 'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
         estoque: 25,
-        valorUnitario: 59.9,
+        valorUnitario: 59.9, votos: 0,
         tipo: 'anime',
     },
     {
         id: '42',
         titulo: 'Death Note',
-        descricao: {
+        meta: {
             temporada: '1 Temporada',
             tema: 'Mistério/Suspense',
         },
         detalhes: 'Light Yagami encontra um caderno capaz de matar qualquer pessoa cujo nome seja escrito nele. Ele decide usá-lo para eliminar criminosos e criar um novo mundo.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 18,
-        valorUnitario: 45.0,
+        valorUnitario: 45.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '43',
         titulo: 'One Piece',
-        descricao: {
+        meta: {
             temporada: '1000+ Episódios',
             tema: 'Aventura/Shonen',
         },
         detalhes: 'Monkey D. Luffy e sua tripulação, os Piratas do Chapéu de Palha, navegam pelo Grand Line em busca do tesouro supremo conhecido como One Piece, que tornará Luffy o Rei dos Piratas.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 35,
-        valorUnitario: 65.5,
+        valorUnitario: 65.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '44',
         titulo: 'Jujutsu Kaisen',
-        descricao: {
+        meta: {
             temporada: '2 Temporadas',
             tema: 'Sobrenatural/Ação',
         },
         detalhes: 'Um estudante se junta a uma organização secreta de feiticeiros Jujutsu após engolir um objeto amaldiçoado, tornando-se hospedeiro de uma poderosa maldição.',
         imagem: 'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
         estoque: 30,
-        valorUnitario: 58.9,
+        valorUnitario: 58.9, votos: 0,
         tipo: 'anime',
     },
     {
         id: '45',
         titulo: 'My Hero Academia',
-        descricao: {
+        meta: {
             temporada: '6 Temporadas',
             tema: 'Ação/Superpoderes',
         },
         detalhes: 'Em um mundo onde quase todas as pessoas têm superpoderes, o garoto Izuku Midoriya, sem poderes, sonha em ser um herói e acaba sendo escolhido como sucessor do maior herói do mundo.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 22,
-        valorUnitario: 51.99,
+        valorUnitario: 51.99, votos: 0,
         tipo: 'anime',
     },
     {
         id: '46',
         titulo: 'Fullmetal Alchemist: Brotherhood',
-        descricao: {
+        meta: {
             temporada: '1 Temporada',
             tema: 'Fantasia/Aventura',
         },
         detalhes: 'Dois irmãos buscam a Pedra Filosofal após tentarem, sem sucesso, reviver a mãe usando Alquimia, perdendo partes de seus corpos no processo.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 28,
-        valorUnitario: 54.9,
+        valorUnitario: 54.9, votos: 0,
         tipo: 'anime',
     },
     {
         id: '47',
         titulo: 'Demon Slayer: Kimetsu no Yaiba',
-        descricao: {
+        meta: {
             temporada: '3 Temporadas',
             tema: 'Ação/Histórico',
         },
         detalhes: 'Tanjiro Kamado se junta ao Esquadrão de Caça-Demônios para vingar a morte de sua família e encontrar uma cura para sua irmã, que foi transformada em demônio.',
         imagem: 'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
         estoque: 33,
-        valorUnitario: 61.99,
+        valorUnitario: 61.99, votos: 0,
         tipo: 'anime',
     },
     {
         id: '48',
         titulo: 'Hunter x Hunter (2011)',
-        descricao: {
+        meta: {
             temporada: '6 Temporadas',
             tema: 'Aventura/Ação',
         },
         detalhes: 'Gon Freecss deixa sua casa para fazer o exame Hunter e encontrar seu pai, um Hunter lendário que o abandonou quando era criança.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 15,
-        valorUnitario: 52.5,
+        valorUnitario: 52.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '49',
         titulo: 'Spy x Family',
-        descricao: {
+        meta: {
             temporada: '2 Temporadas',
             tema: 'Comédia/Espionagem',
         },
         detalhes: 'Um espião, uma assassina e uma telepata se unem para formar uma "família" falsa, cada um mantendo sua identidade secreta para cumprir suas próprias missões.',
         imagem: 'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
         estoque: 27,
-        valorUnitario: 47.9,
+        valorUnitario: 47.9, votos: 0,
         tipo: 'anime',
     },
     {
         id: '50',
         titulo: 'Cowboy Bebop',
-        descricao: {
+        meta: {
             temporada: '1 Temporada',
             tema: 'Sci-Fi/Ação',
         },
         detalhes: 'Acompanha as desventuras de um grupo de caçadores de recompensas viajando pela galáxia a bordo da nave espacial Bebop, enquanto fogem de seus passados.',
         imagem: 'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
         estoque: 12,
-        valorUnitario: 40.0,
+        valorUnitario: 40.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '51',
         titulo: 'Haikyuu!!',
-        descricao: {
+        meta: {
             temporada: '4 Temporadas',
             tema: 'Esportes/Drama',
         },
         detalhes: 'Shoyo Hinata, apesar de sua baixa estatura, quer se tornar um grande jogador de vôlei. Ele se junta ao clube de sua escola e enfrenta rivais incríveis.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 19,
-        valorUnitario: 53.0,
+        valorUnitario: 53.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '52',
         titulo: 'Code Geass',
-        descricao: {
+        meta: {
             temporada: '2 Temporadas',
             tema: 'Mecha/Estratégia',
         },
         detalhes: 'Em um Japão ocupado, o exilado príncipe Lelouch recebe um poder misterioso (Geass) e decide usá-lo para destruir o império tirânico que dominou o mundo.',
         imagem: 'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
         estoque: 17,
-        valorUnitario: 48.5,
+        valorUnitario: 48.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '53',
         titulo: 'Naruto Shippuden',
-        descricao: {
+        meta: {
             temporada: '500 Episódios',
             tema: 'Ação/Ninja',
         },
         detalhes: 'A continuação da jornada de Naruto Uzumaki para se tornar o Hokage, o líder de sua vila, enquanto enfrenta ameaças globais e busca resgatar seu amigo Sasuke.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 26,
-        valorUnitario: 56.9,
+        valorUnitario: 56.9, votos: 0,
         tipo: 'anime',
     },
     {
         id: '54',
         titulo: 'Chainsaw Man',
-        descricao: {
+        meta: {
             temporada: '1 Temporada',
             tema: 'Ação/Terror',
         },
         detalhes: 'Denji se une ao Demônio da Motosserra, Pochita, e se torna um híbrido caçador de demônios, trabalhando para uma agência governamental secreta.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 31,
-        valorUnitario: 60.5,
+        valorUnitario: 60.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '55',
         titulo: 'One Punch Man',
-        descricao: {
+        meta: {
             temporada: '2 Temporadas',
             tema: 'Comédia/Super-Herói',
         },
         detalhes: 'Saitama, um herói que pode derrotar qualquer inimigo com apenas um soco, luta contra o tédio enquanto procura um adversário à sua altura.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 23,
-        valorUnitario: 49.0,
+        valorUnitario: 49.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '56',
         titulo: 'Evangelion',
-        descricao: {
+        meta: {
             temporada: '1 Temporada + Filmes',
             tema: 'Mecha/Psicológico',
         },
         detalhes: 'Jovens pilotos são forçados a pilotar robôs gigantes (Evas) para combater criaturas monstruosas conhecidas como Anjos e salvar a humanidade.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 14,
-        valorUnitario: 55.0,
+        valorUnitario: 55.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '57',
         titulo: 'Vinland Saga',
-        descricao: {
+        meta: {
             temporada: '2 Temporadas',
             tema: 'Histórico/Aventura',
         },
         detalhes: 'Acompanha a história de Thorfinn, um jovem viking que busca vingança pelo assassinato de seu pai, tornando-se mercenário e buscando uma terra de paz.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 16,
-        valorUnitario: 57.5,
+        valorUnitario: 57.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '58',
         titulo: 'Steins;Gate',
-        descricao: {
+        meta: {
             temporada: '1 Temporada',
             tema: 'Sci-Fi/Suspense',
         },
         detalhes: 'Um grupo de amigos descobre acidentalmente como enviar mensagens ao passado, o que desencadeia uma cadeia de eventos que ameaça o futuro.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 10,
-        valorUnitario: 62.0,
+        valorUnitario: 62.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '59',
         titulo: 'Dragon Ball Z',
-        descricao: {
+        meta: {
             temporada: '291 Episódios',
             tema: 'Ação/Luta',
         },
         detalhes: 'As aventuras de Goku, que defende a Terra contra vilões intergalácticos, humanoides e máquinas poderosas, enquanto busca se superar em combate.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 29,
-        valorUnitario: 50.99,
+        valorUnitario: 50.99, votos: 0,
         tipo: 'anime',
     },
     {
         id: '60',
         titulo: 'Pokémon',
-        descricao: {
+        meta: {
             temporada: 'Muitas Temporadas',
             tema: 'Aventura/Infantil',
         },
         detalhes: 'Ash Ketchum e seu parceiro Pokémon, Pikachu, viajam pelo mundo capturando e treinando Pokémon para se tornarem Mestres Pokémon.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 40,
-        valorUnitario: 39.9,
+        valorUnitario: 39.9, votos: 0,
         tipo: 'anime',
     },
     {
         id: '61',
         titulo: 'Mob Psycho 100',
-        descricao: {
+        meta: {
             temporada: '3 Temporadas',
             tema: 'Comédia/Psíquico',
         },
         detalhes: 'Shigeo Kageyama, um garoto com poderes psíquicos imensos, tenta levar uma vida normal enquanto trabalha para um falso exorcista e controla suas emoções.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 21,
-        valorUnitario: 53.5,
+        valorUnitario: 53.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '62',
         titulo: 'Re:Zero',
-        descricao: {
+        meta: {
             temporada: '2 Temporadas',
             tema: 'Isekai/Fantasia',
         },
         detalhes: 'Subaru Natsuki é invocado para um mundo de fantasia e descobre que tem a habilidade de voltar no tempo após a morte, usando isso para salvar seus amigos e a si mesmo.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 13,
-        valorUnitario: 58.0,
+        valorUnitario: 58.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '63',
         titulo: 'Gintama',
-        descricao: {
+        meta: {
             temporada: '367 Episódios',
             tema: 'Comédia/Sci-Fi',
         },
         detalhes: 'Em um Japão invadido por alienígenas, Gintoki Sakata e seus amigos fazem bicos para sobreviver, em meio a piadas, paródias e momentos de ação séria.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 15,
-        valorUnitario: 46.9,
+        valorUnitario: 46.9, votos: 0,
         tipo: 'anime',
     },
     {
         id: '64',
         titulo: 'Black Clover',
-        descricao: {
+        meta: {
             temporada: '4 Temporadas',
             tema: 'Fantasia/Magia',
         },
         detalhes: 'Asta, um garoto sem magia em um mundo de magia, sonha em se tornar o Rei Mago. Ele recebe um grimório raro e embarca em uma jornada para provar seu valor.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 24,
-        valorUnitario: 50.0,
+        valorUnitario: 50.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '65',
         titulo: 'Violet Evergarden',
-        descricao: {
+        meta: {
             temporada: '1 Temporada',
             tema: 'Drama/Slice of Life',
         },
         detalhes: 'Uma ex-soldado, que lutou na guerra, se torna uma "Boneca de Automemória" para entender o significado das palavras "Eu te amo" que ouviu pela última vez.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 9,
-        valorUnitario: 63.99,
+        valorUnitario: 63.99, votos: 0,
         tipo: 'anime',
     },
     {
         id: '66',
         titulo: 'Tokyo Ghoul',
-        descricao: {
+        meta: {
             temporada: '4 Temporadas',
             tema: 'Terror/Sobrenatural',
         },
         detalhes: 'Kaneki Ken se transforma em um "Ghoul" (criaturas que se alimentam de humanos) e deve se adaptar à sua nova vida na sociedade Ghoul, mantendo sua identidade secreta.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 11,
-        valorUnitario: 44.5,
+        valorUnitario: 44.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '67',
         titulo: 'Your Name (Kimi no Na wa)',
-        descricao: {
+        meta: {
             temporada: 'Filme',
             tema: 'Romance/Fantasia',
         },
         detalhes: 'Um garoto em Tóquio e uma garota em uma pequena cidade rural trocam de corpo misteriosamente, forjando uma conexão que transcende o tempo.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 8,
-        valorUnitario: 68.0,
+        valorUnitario: 68.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '68',
         titulo: 'Boku no Hero Academia: The Movie',
-        descricao: {
+        meta: {
             temporada: 'Filme',
             tema: 'Ação/Superpoderes',
         },
         detalhes: 'Filme de My Hero Academia com uma missão de alto risco para a turma 1-A, onde o destino da sociedade de heróis está em jogo.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 18,
-        valorUnitario: 59.5,
+        valorUnitario: 59.5, votos: 0,
         tipo: 'anime',
     },
     {
         id: '69',
         titulo: "Jojo's Bizarre Adventure",
-        descricao: {
+        meta: {
             temporada: '6 Partes',
             tema: 'Aventura/Ação',
         },
         detalhes: 'A saga da família Joestar, cujos membros estão destinados a enfrentar forças sobrenaturais malignas ao longo de várias gerações.',
         imagem: 'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
         estoque: 17,
-        valorUnitario: 54.0,
+        valorUnitario: 54.0, votos: 0,
         tipo: 'anime',
     },
     {
         id: '70',
         titulo: 'Danganronpa: The Animation',
-        descricao: {
+        meta: {
             temporada: '1 Temporada',
             tema: 'Mistério/Psicológico',
         },
         detalhes: 'Um grupo de estudantes de elite é forçado a participar de um jogo mortal em sua escola. Para se formar, um aluno deve assassinar um colega e não ser descoberto.',
         imagem: 'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
         estoque: 14,
-        valorUnitario: 47.5,
+        valorUnitario: 47.5, votos: 0,
         tipo: 'anime',
     },
 ];

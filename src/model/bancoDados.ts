@@ -4,7 +4,7 @@ const topSeries: Serie[] = [
   {
     id: '1',
     titulo: 'Breaking Bad',
-    descricao: {
+    meta: {
       temporada: '5 temporadas',
       tema: 'Crime/Drama',
     },
@@ -12,13 +12,13 @@ const topSeries: Serie[] = [
       'Acompanhe a história de Walter White, um professor de química diagnosticado com câncer, que decide fabricar metanfetamina para garantir o futuro da família, entrando no perigoso mundo do crime.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '2',
     titulo: 'Game of Thrones',
-    descricao: {
+    meta: {
       temporada: '8 temporadas',
       tema: 'Fantasia/Drama',
     },
@@ -27,13 +27,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '3',
     titulo: 'Stranger Things',
-    descricao: {
+    meta: {
       temporada: '4 temporadas',
       tema: 'Ficção Científica/Terror',
     },
@@ -41,13 +41,13 @@ const topSeries: Serie[] = [
       'Na pequena cidade de Hawkins, Indiana, um grupo de crianças descobre mistérios sobrenaturais e segredos do governo enquanto procuram seu amigo desaparecido.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 59.99,
+    valorUnitario: 59.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '4',
     titulo: 'The Witcher',
-    descricao: {
+    meta: {
       temporada: '2 temporadas',
       tema: 'Fantasia/Ação',
     },
@@ -56,13 +56,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '5',
     titulo: 'Friends',
-    descricao: {
+    meta: {
       temporada: '10 temporadas',
       tema: 'Comédia/Romance',
     },
@@ -70,13 +70,13 @@ const topSeries: Serie[] = [
       'Acompanhe as aventuras e desventuras de seis amigos vivendo em Nova York, lidando com amor, trabalho e os altos e baixos da vida cotidiana.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '6',
     titulo: 'The Mandalorian',
-    descricao: {
+    meta: {
       temporada: '2 temporadas',
       tema: 'Ação/Ficção Científica',
     },
@@ -85,13 +85,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 59.99,
+    valorUnitario: 59.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '7',
     titulo: 'Sherlock',
-    descricao: {
+    meta: {
       temporada: '4 temporadas',
       tema: 'Mistério/Drama',
     },
@@ -99,13 +99,13 @@ const topSeries: Serie[] = [
       'Versão moderna de Sherlock Holmes resolvendo crimes complexos em Londres, com a ajuda de seu parceiro Dr. John Watson.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '8',
     titulo: 'The Office',
-    descricao: {
+    meta: {
       temporada: '9 temporadas',
       tema: 'Comédia',
     },
@@ -114,13 +114,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '9',
     titulo: 'Better Call Saul',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Crime/Drama',
     },
@@ -128,13 +128,13 @@ const topSeries: Serie[] = [
       'Spin-off de Breaking Bad, focado no advogado Jimmy McGill e sua transformação no moralmente flexível Saul Goodman, navegando pelo submundo do crime.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 29.99,
+    valorUnitario: 29.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '10',
     titulo: 'Stranger Things: Hawkins',
-    descricao: {
+    meta: {
       temporada: '1 temporada (Especial)',
       tema: 'Ficção/Terror',
     },
@@ -143,13 +143,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '11',
     titulo: 'Peaky Blinders',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Crime/Drama Histórico',
     },
@@ -157,13 +157,13 @@ const topSeries: Serie[] = [
       'Após a Primeira Guerra Mundial, a família Shelby constrói um império criminoso em Birmingham, Inglaterra, enfrentando inimigos políticos e rivais implacáveis.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '12',
     titulo: 'Vikings',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Histórico/Ação',
     },
@@ -172,13 +172,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 69.99,
+    valorUnitario: 69.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '13',
     titulo: 'The Boys',
-    descricao: {
+    meta: {
       temporada: '4 temporadas',
       tema: 'Ação/Sátira',
     },
@@ -186,13 +186,13 @@ const topSeries: Serie[] = [
       'Em um mundo onde super-heróis abusam de sua fama e poder, um grupo de vigilantes decide enfrentá-los para expor a verdade por trás da corporação que os controla.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '14',
     titulo: 'The Crown',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Drama/Histórico',
     },
@@ -201,13 +201,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 79.99,
+    valorUnitario: 79.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '15',
     titulo: 'Dark',
-    descricao: {
+    meta: {
       temporada: '3 temporadas',
       tema: 'Ficção Científica/Suspense',
     },
@@ -215,13 +215,13 @@ const topSeries: Serie[] = [
       'Em uma pequena cidade alemã, o desaparecimento de uma criança revela segredos sombrios e um mistério que atravessa gerações e viagens no tempo.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 29.99,
+    valorUnitario: 29.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '16',
     titulo: 'The Last of Us',
-    descricao: {
+    meta: {
       temporada: '1 temporada',
       tema: 'Drama/Pós-Apocalíptico',
     },
@@ -230,13 +230,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '17',
     titulo: 'Black Mirror',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Ficção Científica/Antologia',
     },
@@ -244,13 +244,13 @@ const topSeries: Serie[] = [
       'Cada episódio apresenta uma história independente explorando o lado obscuro da tecnologia e seu impacto na sociedade moderna.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '18',
     titulo: 'The Walking Dead',
-    descricao: {
+    meta: {
       temporada: '11 temporadas',
       tema: 'Terror/Pós-Apocalíptico',
     },
@@ -258,13 +258,13 @@ const topSeries: Serie[] = [
       'Um grupo de sobreviventes luta para permanecer vivo em um mundo dominado por zumbis, enfrentando perigos tanto dos mortos quanto dos vivos.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '19',
     titulo: 'Narcos',
-    descricao: {
+    meta: {
       temporada: '3 temporadas',
       tema: 'Crime/Histórico',
     },
@@ -273,13 +273,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 69.99,
+    valorUnitario: 69.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '20',
     titulo: 'Loki',
-    descricao: {
+    meta: {
       temporada: '2 temporadas',
       tema: 'Aventura/Ficção Científica',
     },
@@ -287,13 +287,13 @@ const topSeries: Serie[] = [
       'Após roubar o Tesseract, Loki é capturado pela Autoridade de Variância Temporal e embarca em uma jornada que desafia o tempo e o destino.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 29.99,
+    valorUnitario: 29.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '21',
     titulo: 'House of the Dragon',
-    descricao: {
+    meta: {
       temporada: '2 temporadas',
       tema: 'Fantasia/Drama',
     },
@@ -302,13 +302,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '22',
     titulo: 'Arcane',
-    descricao: {
+    meta: {
       temporada: '1 temporada',
       tema: 'Animação/Fantasia',
     },
@@ -316,13 +316,13 @@ const topSeries: Serie[] = [
       'Baseada no universo de League of Legends, a série explora as origens de personagens icônicos entre as cidades de Piltover e Zaun.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '23',
     titulo: 'Rick and Morty',
-    descricao: {
+    meta: {
       temporada: '7 temporadas',
       tema: 'Animação/Ficção Científica',
     },
@@ -331,13 +331,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '24',
     titulo: 'The Umbrella Academy',
-    descricao: {
+    meta: {
       temporada: '4 temporadas',
       tema: 'Aventura/Ficção Científica',
     },
@@ -345,13 +345,13 @@ const topSeries: Serie[] = [
       'Irmãos adotivos com poderes extraordinários se reúnem após a morte do pai adotivo para impedir o apocalipse.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '25',
     titulo: 'Money Heist (La Casa de Papel)',
-    descricao: {
+    meta: {
       temporada: '5 temporadas',
       tema: 'Crime/Suspense',
     },
@@ -360,13 +360,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 79.99,
+    valorUnitario: 79.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '26',
     titulo: 'Squid Game',
-    descricao: {
+    meta: {
       temporada: '1 temporada',
       tema: 'Suspense/Drama',
     },
@@ -374,13 +374,13 @@ const topSeries: Serie[] = [
       'Pessoas endividadas participam de jogos infantis mortais em busca de um prêmio bilionário — e a sobrevivência.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '27',
     titulo: 'Breaking Bad: El Camino',
-    descricao: {
+    meta: {
       temporada: '1 temporada (Filme)',
       tema: 'Crime/Drama',
     },
@@ -389,13 +389,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '28',
     titulo: 'The Punisher',
-    descricao: {
+    meta: {
       temporada: '2 temporadas',
       tema: 'Ação/Crime',
     },
@@ -403,13 +403,13 @@ const topSeries: Serie[] = [
       'Após perder sua família, Frank Castle busca vingança contra aqueles que o traíram, tornando-se o vigilante conhecido como Justiceiro.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '29',
     titulo: 'WandaVision',
-    descricao: {
+    meta: {
       temporada: '1 temporada',
       tema: 'Fantasia/Ficção Científica',
     },
@@ -417,13 +417,13 @@ const topSeries: Serie[] = [
       'Wanda Maximoff cria uma realidade alternativa perfeita com Visão, mas o mistério por trás dessa ilusão logo vem à tona.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '30',
     titulo: 'The Expanse',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Ficção Científica/Drama',
     },
@@ -432,13 +432,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '31',
     titulo: 'Chernobyl',
-    descricao: {
+    meta: {
       temporada: '1 temporada',
       tema: 'Histórico/Drama',
     },
@@ -446,13 +446,13 @@ const topSeries: Serie[] = [
       'Baseada em eventos reais, mostra a catástrofe nuclear de 1986 na Ucrânia e os esforços heroicos para conter suas consequências.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '32',
     titulo: 'Lost',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Mistério/Ficção Científica',
     },
@@ -461,13 +461,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '33',
     titulo: 'Supernatural',
-    descricao: {
+    meta: {
       temporada: '15 temporadas',
       tema: 'Terror/Fantasia',
     },
@@ -475,13 +475,13 @@ const topSeries: Serie[] = [
       'Os irmãos Winchester caçam demônios, fantasmas e outras criaturas sobrenaturais enquanto enfrentam seus próprios demônios internos.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '34',
     titulo: 'Westworld',
-    descricao: {
+    meta: {
       temporada: '4 temporadas',
       tema: 'Ficção Científica/Drama',
     },
@@ -490,13 +490,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '35',
     titulo: 'Succession',
-    descricao: {
+    meta: {
       temporada: '4 temporadas',
       tema: 'Drama/Comédia',
     },
@@ -504,13 +504,13 @@ const topSeries: Serie[] = [
       'Uma poderosa família bilionária disputa o controle de um império de mídia enquanto intrigas e traições se desenrolam.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '36',
     titulo: 'The Handmaid’s Tale',
-    descricao: {
+    meta: {
       temporada: '5 temporadas',
       tema: 'Drama/Distopia',
     },
@@ -519,13 +519,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '37',
     titulo: 'Lucifer',
-    descricao: {
+    meta: {
       temporada: '6 temporadas',
       tema: 'Fantasia/Policial',
     },
@@ -533,13 +533,13 @@ const topSeries: Serie[] = [
       'Entediado com o inferno, Lucifer Morningstar decide viver em Los Angeles e ajudar a polícia a resolver crimes.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 59.99,
+    valorUnitario: 59.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '38',
     titulo: 'Dexter',
-    descricao: {
+    meta: {
       temporada: '8 temporadas',
       tema: 'Crime/Suspense',
     },
@@ -547,13 +547,13 @@ const topSeries: Serie[] = [
       'Um analista forense de Miami leva uma vida dupla como serial killer que elimina criminosos que escaparam da justiça.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 69.99,
+    valorUnitario: 69.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '39',
     titulo: 'How I Met Your Mother',
-    descricao: {
+    meta: {
       temporada: '9 temporadas',
       tema: 'Comédia/Romance',
     },
@@ -562,13 +562,13 @@ const topSeries: Serie[] = [
     imagem:
       'https://media1.tenor.com/m/aaJh1Cjv4Y0AAAAd/macaco-dan%C3%A7ando.gif',
     estoque: 20,
-    valorUnitario: 49.99,
+    valorUnitario: 49.99, votos: 0,
     tipo: 'serie',
   },
   {
     id: '40',
     titulo: 'Prison Break',
-    descricao: {
+    meta: {
       temporada: '5 temporadas',
       tema: 'Ação/Suspense',
     },
@@ -576,7 +576,7 @@ const topSeries: Serie[] = [
       'Michael Scofield elabora um plano genial para tirar seu irmão inocente da prisão, enfrentando conspirações e perigos mortais.',
     imagem: 'https://i.gifer.com/M4cG.gif',
     estoque: 20,
-    valorUnitario: 39.99,
+    valorUnitario: 39.99, votos: 0,
     tipo: 'serie',
   },
 ];
@@ -585,7 +585,7 @@ const topAnimes: Serie[] = [
   {
     id: '41',
     titulo: 'Attack on Titan',
-    descricao: {
+    meta: {
       temporada: '4 Temporadas',
       tema: 'Ação/Fantasia Sombria',
     },
@@ -594,13 +594,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 25,
-    valorUnitario: 59.9,
+    valorUnitario: 59.9, votos: 0,
     tipo: 'anime',
   },
   {
     id: '42',
     titulo: 'Death Note',
-    descricao: {
+    meta: {
       temporada: '1 Temporada',
       tema: 'Mistério/Suspense',
     },
@@ -609,13 +609,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 18,
-    valorUnitario: 45.0,
+    valorUnitario: 45.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '43',
     titulo: 'One Piece',
-    descricao: {
+    meta: {
       temporada: '1000+ Episódios',
       tema: 'Aventura/Shonen',
     },
@@ -624,13 +624,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 35,
-    valorUnitario: 65.5,
+    valorUnitario: 65.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '44',
     titulo: 'Jujutsu Kaisen',
-    descricao: {
+    meta: {
       temporada: '2 Temporadas',
       tema: 'Sobrenatural/Ação',
     },
@@ -639,13 +639,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 30,
-    valorUnitario: 58.9,
+    valorUnitario: 58.9, votos: 0,
     tipo: 'anime',
   },
   {
     id: '45',
     titulo: 'My Hero Academia',
-    descricao: {
+    meta: {
       temporada: '6 Temporadas',
       tema: 'Ação/Superpoderes',
     },
@@ -654,13 +654,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 22,
-    valorUnitario: 51.99,
+    valorUnitario: 51.99, votos: 0,
     tipo: 'anime',
   },
   {
     id: '46',
     titulo: 'Fullmetal Alchemist: Brotherhood',
-    descricao: {
+    meta: {
       temporada: '1 Temporada',
       tema: 'Fantasia/Aventura',
     },
@@ -669,13 +669,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 28,
-    valorUnitario: 54.9,
+    valorUnitario: 54.9, votos: 0,
     tipo: 'anime',
   },
   {
     id: '47',
     titulo: 'Demon Slayer: Kimetsu no Yaiba',
-    descricao: {
+    meta: {
       temporada: '3 Temporadas',
       tema: 'Ação/Histórico',
     },
@@ -684,13 +684,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 33,
-    valorUnitario: 61.99,
+    valorUnitario: 61.99, votos: 0,
     tipo: 'anime',
   },
   {
     id: '48',
     titulo: 'Hunter x Hunter (2011)',
-    descricao: {
+    meta: {
       temporada: '6 Temporadas',
       tema: 'Aventura/Ação',
     },
@@ -699,13 +699,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 15,
-    valorUnitario: 52.5,
+    valorUnitario: 52.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '49',
     titulo: 'Spy x Family',
-    descricao: {
+    meta: {
       temporada: '2 Temporadas',
       tema: 'Comédia/Espionagem',
     },
@@ -714,13 +714,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 27,
-    valorUnitario: 47.9,
+    valorUnitario: 47.9, votos: 0,
     tipo: 'anime',
   },
   {
     id: '50',
     titulo: 'Cowboy Bebop',
-    descricao: {
+    meta: {
       temporada: '1 Temporada',
       tema: 'Sci-Fi/Ação',
     },
@@ -729,13 +729,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 12,
-    valorUnitario: 40.0,
+    valorUnitario: 40.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '51',
     titulo: 'Haikyuu!!',
-    descricao: {
+    meta: {
       temporada: '4 Temporadas',
       tema: 'Esportes/Drama',
     },
@@ -744,13 +744,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 19,
-    valorUnitario: 53.0,
+    valorUnitario: 53.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '52',
     titulo: 'Code Geass',
-    descricao: {
+    meta: {
       temporada: '2 Temporadas',
       tema: 'Mecha/Estratégia',
     },
@@ -759,13 +759,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/02ebb2a5b826aa24794494fa42e9fe3f/tumblr_ojtx8nvIvA1tdnwpwo1_540.gif',
     estoque: 17,
-    valorUnitario: 48.5,
+    valorUnitario: 48.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '53',
     titulo: 'Naruto Shippuden',
-    descricao: {
+    meta: {
       temporada: '500 Episódios',
       tema: 'Ação/Ninja',
     },
@@ -774,13 +774,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 26,
-    valorUnitario: 56.9,
+    valorUnitario: 56.9, votos: 0,
     tipo: 'anime',
   },
   {
     id: '54',
     titulo: 'Chainsaw Man',
-    descricao: {
+    meta: {
       temporada: '1 Temporada',
       tema: 'Ação/Terror',
     },
@@ -789,13 +789,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 31,
-    valorUnitario: 60.5,
+    valorUnitario: 60.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '55',
     titulo: 'One Punch Man',
-    descricao: {
+    meta: {
       temporada: '2 Temporadas',
       tema: 'Comédia/Super-Herói',
     },
@@ -804,13 +804,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 23,
-    valorUnitario: 49.0,
+    valorUnitario: 49.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '56',
     titulo: 'Evangelion',
-    descricao: {
+    meta: {
       temporada: '1 Temporada + Filmes',
       tema: 'Mecha/Psicológico',
     },
@@ -819,13 +819,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 14,
-    valorUnitario: 55.0,
+    valorUnitario: 55.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '57',
     titulo: 'Vinland Saga',
-    descricao: {
+    meta: {
       temporada: '2 Temporadas',
       tema: 'Histórico/Aventura',
     },
@@ -834,13 +834,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 16,
-    valorUnitario: 57.5,
+    valorUnitario: 57.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '58',
     titulo: 'Steins;Gate',
-    descricao: {
+    meta: {
       temporada: '1 Temporada',
       tema: 'Sci-Fi/Suspense',
     },
@@ -849,13 +849,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 10,
-    valorUnitario: 62.0,
+    valorUnitario: 62.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '59',
     titulo: 'Dragon Ball Z',
-    descricao: {
+    meta: {
       temporada: '291 Episódios',
       tema: 'Ação/Luta',
     },
@@ -864,13 +864,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 29,
-    valorUnitario: 50.99,
+    valorUnitario: 50.99, votos: 0,
     tipo: 'anime',
   },
   {
     id: '60',
     titulo: 'Pokémon',
-    descricao: {
+    meta: {
       temporada: 'Muitas Temporadas',
       tema: 'Aventura/Infantil',
     },
@@ -879,13 +879,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 40,
-    valorUnitario: 39.9,
+    valorUnitario: 39.9, votos: 0,
     tipo: 'anime',
   },
   {
     id: '61',
     titulo: 'Mob Psycho 100',
-    descricao: {
+    meta: {
       temporada: '3 Temporadas',
       tema: 'Comédia/Psíquico',
     },
@@ -894,13 +894,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 21,
-    valorUnitario: 53.5,
+    valorUnitario: 53.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '62',
     titulo: 'Re:Zero',
-    descricao: {
+    meta: {
       temporada: '2 Temporadas',
       tema: 'Isekai/Fantasia',
     },
@@ -909,13 +909,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 13,
-    valorUnitario: 58.0,
+    valorUnitario: 58.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '63',
     titulo: 'Gintama',
-    descricao: {
+    meta: {
       temporada: '367 Episódios',
       tema: 'Comédia/Sci-Fi',
     },
@@ -924,13 +924,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 15,
-    valorUnitario: 46.9,
+    valorUnitario: 46.9, votos: 0,
     tipo: 'anime',
   },
   {
     id: '64',
     titulo: 'Black Clover',
-    descricao: {
+    meta: {
       temporada: '4 Temporadas',
       tema: 'Fantasia/Magia',
     },
@@ -939,13 +939,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 24,
-    valorUnitario: 50.0,
+    valorUnitario: 50.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '65',
     titulo: 'Violet Evergarden',
-    descricao: {
+    meta: {
       temporada: '1 Temporada',
       tema: 'Drama/Slice of Life',
     },
@@ -954,13 +954,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 9,
-    valorUnitario: 63.99,
+    valorUnitario: 63.99, votos: 0,
     tipo: 'anime',
   },
   {
     id: '66',
     titulo: 'Tokyo Ghoul',
-    descricao: {
+    meta: {
       temporada: '4 Temporadas',
       tema: 'Terror/Sobrenatural',
     },
@@ -969,13 +969,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 11,
-    valorUnitario: 44.5,
+    valorUnitario: 44.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '67',
     titulo: 'Your Name (Kimi no Na wa)',
-    descricao: {
+    meta: {
       temporada: 'Filme',
       tema: 'Romance/Fantasia',
     },
@@ -984,13 +984,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 8,
-    valorUnitario: 68.0,
+    valorUnitario: 68.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '68',
     titulo: 'Boku no Hero Academia: The Movie',
-    descricao: {
+    meta: {
       temporada: 'Filme',
       tema: 'Ação/Superpoderes',
     },
@@ -999,13 +999,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 18,
-    valorUnitario: 59.5,
+    valorUnitario: 59.5, votos: 0,
     tipo: 'anime',
   },
   {
     id: '69',
     titulo: "Jojo's Bizarre Adventure",
-    descricao: {
+    meta: {
       temporada: '6 Partes',
       tema: 'Aventura/Ação',
     },
@@ -1014,13 +1014,13 @@ const topAnimes: Serie[] = [
     imagem:
       'https://gifdb.com/images/high/nezuko-kamado-running-from-tsuyuri-kr6je7qh37oo3jds.gif',
     estoque: 17,
-    valorUnitario: 54.0,
+    valorUnitario: 54.0, votos: 0,
     tipo: 'anime',
   },
   {
     id: '70',
     titulo: 'Danganronpa: The Animation',
-    descricao: {
+    meta: {
       temporada: '1 Temporada',
       tema: 'Mistério/Psicológico',
     },
@@ -1029,7 +1029,7 @@ const topAnimes: Serie[] = [
     imagem:
       'https://64.media.tumblr.com/cfe94270d5c299277082e2bedac18cc3/5b8b2bb08f6422a5-bb/s540x810/8751be747544326fa67082efd39ee4ae27e7587b.gif',
     estoque: 14,
-    valorUnitario: 47.5,
+    valorUnitario: 47.5, votos: 0,
     tipo: 'anime',
   },
 ];

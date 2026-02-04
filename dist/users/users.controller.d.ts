@@ -7,13 +7,13 @@ import { User } from '@prisma/client';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    addUser(res: Response, registerDto: CreateUserDto): Promise<{
+    addUser(req: any, res: Response, registerDto: CreateUserDto): Promise<{
         message: string;
     }>;
-    login(res: Response, loginDto: LoginUserDto): Promise<{
+    login(req: any, res: Response, loginDto: LoginUserDto): Promise<{
         message: string;
     }>;
-    logout(res: Response): Promise<{
+    logout(req: any, res: Response): Promise<{
         message: string;
     }>;
     getRole(req: any): {
